@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 let {readFileSync} = require('fs');
-let {token, prefix} = require('./config.js');
+let prefix = ".cc";
 let generalCommands = require('./js/command/general/commands.js')
 let nsfwCommands = require('./js/command/nsfw/commands.js')
 client.on('ready', () => {
