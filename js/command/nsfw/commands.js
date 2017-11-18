@@ -31,10 +31,8 @@ let nsfwCommands = function() {
 
         },
         adduser: function addMember(msg, command, args, console) {
-            console.log("Adding user")
             let nsfwRole = msg.guild.roles.find("name", "NSFW")
             let target = findMember(msg, args[0])
-            console.log(msg, args[0], target)
             target.addRole(nsfwRole).then(function(result) {
                 msg.channel.send(`${target.user.username} is now a NSFW member!`)
             }).catch(function(error) {
@@ -48,10 +46,8 @@ let nsfwCommands = function() {
             msg.channel.send('', image)
         },
         removeuser: function removeMember(msg, command, args) {
-            console.log("Adding user")
             let nsfwRole = msg.guild.roles.find("name", "NSFW")
             let target = findMember(msg, args[0])
-            console.log(msg, args[0], target)
             target.removeRole(nsfwRole).then(function(result) {
                 msg.channel.send(`${target.user.username} has been removed from NSFW role!`)
             }).catch(function(error) {
