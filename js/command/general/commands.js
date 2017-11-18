@@ -40,7 +40,19 @@ let generalCommands = function() {
                 msg.reply('you are not in a voice channel.');
             }
         },
-        play: function playMusic(msg) {},
+        play: function playMusic(msg) {
+            if (msg.member.voiceChannel) {
+                let voiceChannel = instance.channel.find("id", msg.member.voiceChannel.id);
+                if (voiceChannel) {
+                    voiceChannel.connection.playFile('http://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3');
+                    msg.reply('am I playing music?')
+                } else {
+                    msg.reply("not in your voice channel.")
+                }
+            } else {
+                msg.reply('dude. You have to be in a voice chat.')
+            }
+        },
         leavevoice: function stopMusic(msg, command, args, instance) {
             let voiceConnection = instance.channels.findAll("type", "voice").find(function(channel) {
                 return channel.guild.id === msg.guild.id;
