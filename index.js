@@ -17,7 +17,6 @@ function onMessage(msg){
 	if(_prefix !== prefix)
 		return;
 	console.log(args)
-	window.msg = msg
 	let type = args.shift();
 	//user wants a general command
 	if(type === '-g') {
