@@ -1,0 +1,7 @@
+{
+  "name": "test",
+  "main": "index.html",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  }
+}

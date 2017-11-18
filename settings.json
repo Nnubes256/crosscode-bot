@@ -1,0 +1,73 @@
+[{
+	"type": "start"
+}, {
+	"type": "loadmap",
+	"name": "rhombus-sqr.dng-top",
+	"once": true
+}, {
+	"type": "loadmap",
+	"name": "rookie-harbor.teleporter",
+	"once": true
+}, {
+	"type": "eventtriggered",
+	"name": "plot.apollo.apolloWins",
+	"value": 1,
+	"once": true
+}, {
+	"type": "eventtriggered",
+	"name": "maps.coldDng/b3/room7.upgradeGet",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.coldDng/g/shadeRoom._entity43_triggered",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "quests.finished.maroon-tree-defend.solved",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.heatDng/f2/roomCold.upgradeGet",
+	"value": true,
+	"once": true
+}, {
+	"type": "loadmap",
+	"name": "autumn-fall.path-07",
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "quests.finished.daft-frobbit.solved",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.waveDng/b1/center-05Element.upgradeGet",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.waveDng/b1/boss.bossDefeated",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.shockDng/f2/roomElement.upgradeGet",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.shockDng/f3/roomBoss.bossDefeated",
+	"value": true,
+	"once": true
+},  {
+	"type": "eventtriggered",
+	"name": "maps.treeDng/f2/room-01.apeDefeated",
+	"value": true,
+	"once": true
+}]
+
+
+
