@@ -13,7 +13,8 @@ let generalCommands = function() {
         return data.split("\n");
     }();
     let helpText = readFileSync('js/command/general/help.txt', 'utf8');
-    let fanart = new require('./crosscode-fanart.js');
+    let FanArt = require('./crosscode-fanart.js');
+    let fanArt = new FanArt();
     return {
         cloudlea: function showCloudLea(msg) {
             let image = new(Discord.RichEmbed || Discord.MessageEmbed);
@@ -48,7 +49,6 @@ let generalCommands = function() {
         },
         hi: function greetUser(msg) {
             let emoji = getEmoji(msg, 'leaCheese')
-            console.log(emoji)
             let message = 'hi!!! ' + emoji.toString()
             msg.channel.send(message)
         },
@@ -73,7 +73,7 @@ let generalCommands = function() {
             })
         },
         fanart: function showFanArt(msg) {
-            msg.channel.send('', fanart.getRandomArt())
+            msg.channel.send('', fanArt.getRandomArt())
         },
         thinking: function think(msg) {
             msg.react('🤔')
