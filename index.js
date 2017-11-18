@@ -23,7 +23,7 @@ function onMessage(msg) {
         let func = nsfwCommands[command]
         func(msg, command, args, console)
     } else {
-        let command = args.shift();
+        let command = type;
         let func = generalCommands[command] || generalCommands.error
         func(msg, command, args, client)
     }
