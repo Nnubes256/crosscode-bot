@@ -26,7 +26,7 @@ class CrossCodeStream {
             },
             uri: 'https://api.twitch.tv/kraken/search/streams?query=CrossCode'
         }).then(function(response) {
-            window.response_json = JSON.parse(response)
+            let response_json = JSON.parse(response)
             _instance.list = response_json.streams.reduce(function(obj, element) {
                 if (element.game === "CrossCode") obj.push({
                     streamURL: element.channel.url,
