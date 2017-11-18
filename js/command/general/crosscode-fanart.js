@@ -1,4 +1,4 @@
-let parser = new(DOMParser || require('xmldom').DOMParser);
+let parser = new(require('xmldom').DOMParser);
 let rp = require('request-promise');
 //name, link, image url
 let {
