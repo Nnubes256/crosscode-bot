@@ -1,7 +1,18 @@
 {
-  "name": "test",
+  "name": "CrossCodeBot",
+  "version" : "0.0.1",
+  "description" : "CrossCode bot",
+  "keywords" : [
+	"crosscode",
+	"bot"
+  ],
+  "author" : "ac2pic",
+  "license" : "MIT",
   "main": "index.js",
   "dependencies": {
     "discord.js": "^11.2.1"
-  }
+  },
+  "engines" : {
+	"node" : "6.11.2"
+  },
 }
