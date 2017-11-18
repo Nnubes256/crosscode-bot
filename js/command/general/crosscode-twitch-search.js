@@ -7,12 +7,14 @@ class CrossCodeStream {
         this.updateList()
     }
     listToString() {
-        this.list_string = this.list.reduce(function(str, element) {
+        this.list_string = "Streaming CrossCode\n";
+        this.list_string += this.list.reduce(function(str, element) {
             str += '---------------------------------------------------------------' +
                 `${element.streamName} by ${element.displayName} (in ${element.language})\n` +
                 `${element.streamURL}\n` +
                 '---------------------------------------------------------------\n'
-        }, "Streaming CrossCode\n")
+        }, "") || "*Tumble weeds rolling*";
+
     }
     getList() {
         return this.list_string;
@@ -35,7 +37,7 @@ class CrossCodeStream {
                     displayName: element.channel.display_name
                 });
                 return obj;
-            }, []);
+            }, []) || [];
             _instance.listToString()
         });
 
