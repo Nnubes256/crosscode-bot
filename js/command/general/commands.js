@@ -42,9 +42,11 @@ let generalCommands = function() {
         },
         play: function playMusic(msg) {},
         leavevoice: function stopMusic(msg, command, args, instance) {
-            let voiceConnection = instance.voiceConnections.get(msg.channel.id)
+            let voiceConnection = instance.channels.findAll("type", "voice").find(function(channel) {
+                return channel.guild.id === msg.guild.id;
+            })
             if (voiceConnection) {
-                voiceConnection.disconnect()
+                voiceConnection.leave()
                 msg.reply("left the voice channel!");
             } else {
                 msg.reply("but I'm not in a voice channel!");
