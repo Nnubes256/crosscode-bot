@@ -42,3 +42,4 @@ class CrossCodeStream {
 
     }
 }
+module.exports = CrossCodeStream
