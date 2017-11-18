@@ -40,7 +40,7 @@ let generalCommands = function() {
                 msg.reply('you are not in a voice channel.');
             }
         },
-        play: function playMusic(msg) {
+        play: function playMusic(msg, command, args, instance) {
             if (msg.member.voiceChannel) {
                 let voiceChannel = instance.channel.find("id", msg.member.voiceChannel.id);
                 if (voiceChannel) {
