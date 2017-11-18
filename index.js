@@ -18,18 +18,14 @@ function onMessage(msg) {
         return;
     let type = args.shift();
     //user wants a general command
-    if (type === '-g') {
+    if (type === "-nsfw") {
+        let command = args.shift()
+        let func = nsfwCommands[command]
+        func(msg, command, args, console)
+    } else {
         let command = args.shift();
         let func = generalCommands[command] || generalCommands.error
         func(msg, command, args, client)
-    } else if (type === "-nsfw") {
-        let command = args.shift()
-        let func = nsfwCommands[command]
-        try {
-            func(msg, command, args, console)
-        } catch (e) {
-            console.log(e)
-        }
     }
 }
 client.on('message', onMessage);
