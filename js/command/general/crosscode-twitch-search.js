@@ -19,7 +19,8 @@ class CrossCodeStream {
         return this.list_string;
     }
     updateList() {
-        this.list = await rp({
+        let _instance = this
+        rp({
             headers: {
                 'Accept': 'application/vnd.twitchtv.v5+json',
                 'Client-ID': process.env.TWITCH_CLIENT_ID
@@ -27,7 +28,7 @@ class CrossCodeStream {
             uri: 'https://api.twitch.tv/kraken/search/streams?query=CrossCode'
         }).then(function(response) {
             window.response_json = JSON.parse(response)
-            return response_json.streams.reduce(function(obj, element) {
+            _instance.list = response_json.streams.reduce(function(obj, element) {
                 if (element.game === "CrossCode") obj.push({
                     streamURL: element.channel.url,
                     language: element.channel.broadcaster_language,
@@ -36,7 +37,8 @@ class CrossCodeStream {
                 });
                 return obj;
             }, []);
+            _instance.listToString()
         });
-        this.listToString()
+
     }
 }
