@@ -1,6 +1,4 @@
 ```diff
--You can now do ".cc -nsfw addme"
----(with manlea)
 +New bot commands are:
 - .cc -g sleep
 - .cc -g game against (example: .cc -g game  Emilie)
