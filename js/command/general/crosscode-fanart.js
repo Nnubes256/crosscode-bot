@@ -5,7 +5,7 @@ let {
     createRichEmbed
 } = require('./../../discord-util.js');
 class CrossCodeFanArt {
-    constructor(console) {
+    constructor() {
         let url = 'http://backend.deviantart.com/rss.xml?q=boost%3Apopular+in%3Afanart+crosscode&type=deviation'
         this.images = []
         this.defaultImage = createRichEmbed({
