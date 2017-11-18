@@ -20,13 +20,12 @@ class CrossCodeFanArt {
         }).then(function(response) {
             let fanart_xml = parser.parseFromString(response, 'text/xml');
             let fanart_items = fanart_xml.getElementsByTagName('item')
-            console.log(fanart_items)
-            for (let fan_item of fanart_items) {
+            for (let index = 0; index < fanart_items.length; index++) {
+                let fan_item = fanart_items.item(index)
                 let title = fan_item.getElementsByTagName("title")[0].textContent
                 let author = fan_item.getElementsByTagName("media:credit")[0].textContent
                 let postLink = fan_item.getElementsByTagName("link")[0].textContent
                 let link = fan_item.getElementsByTagName("media:content")[0].getAttribute("url")
-
                 _instance.images.push(createRichEmbed({
                     title: `${title} - by ${author}`,
                     description: postLink,
