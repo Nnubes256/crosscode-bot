@@ -46,7 +46,6 @@ let generalCommands = function() {
                 if (voiceChannel) {
                     try {
                         voiceChannel.connection.playFile('http://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3');
-
                     } catch (e) {
                         console.log(e)
                     }
