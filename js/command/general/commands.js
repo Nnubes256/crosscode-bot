@@ -2,16 +2,18 @@ let generalCommands = function() {
     const Discord = require("discord.js");
     let {
         getEmoji,
-        findMember
-    } = require('./../../discord-util.js')
+        findMember,
+        createRichEmbed
+    } = require('./../../discord-util.js');
     let {
         readFileSync
-    } = require('fs')
+    } = require('fs');
     let streamArtLink = function getStreamArt() {
         data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
-    }()
-    let helpText = readFileSync('js/command/general/help.txt', 'utf8')
+    }();
+    let helpText = readFileSync('js/command/general/help.txt', 'utf8');
+    let fanart = new require('./crosscode-fanart.js');
     return {
         cloudlea: function showCloudLea(msg) {
             let image = new(Discord.RichEmbed || Discord.MessageEmbed);
@@ -19,25 +21,26 @@ let generalCommands = function() {
             msg.channel.send('', image);
         },
         sleep: function sleep(msg, command, args, instance) {
-            instance.destroy()
+            instance.destroy();
         },
         joinvoice: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
                 msg.member.voiceChannel.join().then(function(success) {
-                    msg.reply('I joined.')
+                    msg.reply('I joined.');
                 }).catch(function(error) {
-                    msg.reply(`${error}`)
+                    msg.reply(`${error}`);
                 })
             } else {
-                msg.reply('you are not in a voice channel.')
+                msg.reply('you are not in a voice channel.');
             }
         },
         hug: function hugUser(msg) {
-
+            console.log('todo .cc -g hug')
         },
         language: function language(msg) {
-            let image = new(Discord.RichEmbed || Discord.MessageEmbed)
-            image.setImage('https://crosscode.gamepedia.com/media/crosscode.gamepedia.com/thumb/a/a8/Javascript.png/1200px-Javascript.png?version=b86bd949c87fff5ccf1480ec0038508a')
+            let image = createRichEmbed({
+                image: 'https://crosscode.gamepedia.com/media/crosscode.gamepedia.com/thumb/a/a8/Javascript.png/1200px-Javascript.png?version=b86bd949c87fff5ccf1480ec0038508a'
+            });
             msg.channel.send('', image)
         },
         game: function setGame(msg, command, args, instance) {
@@ -57,17 +60,20 @@ let generalCommands = function() {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
         },
-        art: function showStreamArt(msg) {
-            let image = new(Discord.RichEmbed || Discord.MessageEmbed);
-            image.setDescription("Random stream art")
+        streamart: function showStreamArt(msg) {
             let index = parseInt(Math.random() * streamArtLink.length)
-            console.log(streamArtLink[index])
-            image.setImage(streamArtLink[index])
+            let image = createRichEmbed({
+                description: "Random stream art",
+                image: streamArtLink[index]
+            });
             msg.channel.send('', image).then(function(result) {
                 console.log("Success", result)
             }).catch(function(error) {
                 console.log("Image", error)
             })
+        },
+        fanart: function showFanArt(msg) {
+            msg.channel.send('', fanart.getRandomArt())
         },
         thinking: function think(msg) {
             msg.react('🤔')

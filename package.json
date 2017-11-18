@@ -1,18 +1,21 @@
 {
   "name": "CrossCodeBot",
-  "version" : "0.0.1",
-  "description" : "CrossCode bot",
-  "keywords" : [
-	"crosscode",
-	"bot"
+  "version": "0.0.1",
+  "description": "CrossCode bot",
+  "keywords": [
+    "crosscode",
+    "bot"
   ],
-  "author" : "ac2pic",
-  "license" : "MIT",
+  "author": "ac2pic",
+  "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^11.2.1"
+    "discord.js": "^11.2.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "xmldom": "^0.1.27"
   },
-  "engines" : {
-	"node" : "6.11.2"
+  "engines": {
+    "node": "6.11.2"
   }
 }

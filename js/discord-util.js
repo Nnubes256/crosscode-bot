@@ -26,3 +26,12 @@ exports.findMember = function(object, string) {
     }
     return member;
 }
+
+exports.createRichEmbed = function(opts) {
+    let richEmbed = new(Discord.RichEmbed || Discord.MessageEmbed);
+    opts.description && richEmbed.setDescription(opts.description)
+    opts.image && richEmbed.setImage(opts.image)
+    opts.title && richEmbed.setTitle(opts.title)
+    opts.author && richEmbed.setAuthor(opts.author)
+    return richEmbed;
+}
