@@ -8,7 +8,7 @@ let generalCommands = require('./js/command/general/commands.js')
 let nsfwCommands = require('./js/command/nsfw/commands.js')
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    //client.user.setAvatar('avatar/manlea.png')
+    client.user.setAvatar('avatar/cloudlea.png')
 });
 
 function onMessage(msg) {
