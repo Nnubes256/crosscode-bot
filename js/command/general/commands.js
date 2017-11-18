@@ -45,7 +45,7 @@ let generalCommands = function() {
         },
         language: function language(msg) {
             let image = createRichEmbed({
-                image: 'https://crosscode.gamepedia.com/media/crosscode.gamepedia.com/thumb/a/a8/Javascript.png/1200px-Javascript.png?version=b86bd949c87fff5ccf1480ec0038508a'
+                image: 'https://cdn.discordapp.com/attachments/376138665954377728/381560390384877578/Javascript_DeathStareLea.gif'
             });
             msg.channel.send('', image)
         },
