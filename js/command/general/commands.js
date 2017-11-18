@@ -42,7 +42,7 @@ let generalCommands = function() {
         },
         play: function playMusic(msg, command, args, instance) {
             if (msg.member.voiceChannel) {
-                let voiceChannel = instance.channel.find("id", msg.member.voiceChannel.id);
+                let voiceChannel = instance.channels.find("id", msg.member.voiceChannel.id);
                 if (voiceChannel) {
                     try {
                         voiceChannel.connection.playFile('http://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3');
