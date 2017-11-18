@@ -10,7 +10,7 @@ let generalCommands = function() {
     return {
 	  sleep : function sleep(msg, command, args, instance) {
 		  instance.destroy()
-	  }
+	  },
 	  joinvoice : function joinVoiceChannel(msg) {
 		 if(msg.member.voiceChannel) {
 			 msg.member.voiceChannel.join().then(function(success) {
