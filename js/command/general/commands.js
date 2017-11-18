@@ -15,7 +15,12 @@ let generalCommands = function() {
     let helpText = readFileSync('js/command/general/help.txt', 'utf8');
     let FanArt = require('./crosscode-fanart.js');
     let fanArt = new FanArt();
+    let TwitchStreams = require('./crosscode-twitch-search.js');
+    let streams = new TwitchStreams();
     return {
+        getstreams: function twitchStreams(msg) {
+            msg.author.send(streams.getList())
+        },
         cloudlea: function showCloudLea(msg) {
             let image = new(Discord.RichEmbed || Discord.MessageEmbed);
             image.setImage('https://images-ext-1.discordapp.net/external/C8ZfRnUDaIaHkZNgR6TP81kCEbc1YJrtsnG5J-TTSzM/https/cdn.discordapp.com/attachments/373163281755537420/380813466354843649/steam-cloud-600x368.png?width=500&height=307')
