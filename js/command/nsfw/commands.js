@@ -40,11 +40,6 @@ let nsfwCommands = function() {
             })
 
         },
-        "language": function nani(msg) {
-            let image = new(Discord.RichEmbed || Discord.MessageEmbed)
-            image.setImage('https://crosscode.gamepedia.com/media/crosscode.gamepedia.com/thumb/a/a8/Javascript.png/1200px-Javascript.png?version=b86bd949c87fff5ccf1480ec0038508a')
-            msg.channel.send('', image)
-        },
         removeuser: function removeMember(msg, command, args) {
             let nsfwRole = msg.guild.roles.find("name", "NSFW")
             let target = findMember(msg, args[0])
