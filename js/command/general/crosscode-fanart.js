@@ -15,7 +15,7 @@ class CrossCodeFanArt {
         rp({
             uri: url,
             headers: {
-                'User-Agent': navigator.userAgent
+                'User-Agent': 'crosscodebot'
             }
         }).then(function(response) {
             let fanart_xml = parser.parseFromString(response, 'text/xml');
