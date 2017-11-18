@@ -44,7 +44,12 @@ let generalCommands = function() {
             if (msg.member.voiceChannel) {
                 let voiceChannel = instance.channel.find("id", msg.member.voiceChannel.id);
                 if (voiceChannel) {
-                    voiceChannel.connection.playFile('http://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3');
+                    try {
+                        voiceChannel.connection.playFile('http://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3');
+
+                    } catch (e) {
+                        console.log(e)
+                    }
                     msg.reply('am I playing music?')
                 } else {
                     msg.reply("not in your voice channel.")
