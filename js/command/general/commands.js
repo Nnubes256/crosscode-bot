@@ -29,7 +29,7 @@ let generalCommands = function() {
         sleep: function sleep(msg, command, args, instance) {
             instance.destroy();
         },
-        joinvoice: function joinVoiceChannel(msg) {
+        joinvoice: function joinVoiceChannel(msg, command, args, instance) {
             if (msg.member.voiceChannel) {
                 msg.member.voiceChannel.join().then(function(success) {
                     msg.reply('I joined.');
@@ -38,6 +38,18 @@ let generalCommands = function() {
                 })
             } else {
                 msg.reply('you are not in a voice channel.');
+            }
+        },
+        play: function playMusic(msg) {
+            msg.
+        },
+        leavevoice: function stopMusic(msg, command, args, instance) {
+            let voiceConnection = instance.voiceConnections.get(msg.channel.id)
+            if (voiceConnection) {
+                voiceConnection.disconnect()
+                msg.reply("left the voice channel!");
+            } else {
+                msg.reply("but I'm not in a voice channel!");
             }
         },
         hug: function hugUser(msg) {
@@ -71,10 +83,8 @@ let generalCommands = function() {
                 description: "Random stream art",
                 image: streamArtLink[index]
             });
-            msg.channel.send('', image).then(function(result) {
-                console.log("Success", result)
-            }).catch(function(error) {
-                console.log("Image", error)
+            msg.channel.send('', image).catch(function(error) {
+                console.log("streamart error:\n${error}")
             })
         },
         fanart: function showFanArt(msg) {
