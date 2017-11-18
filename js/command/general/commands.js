@@ -11,7 +11,7 @@ let generalCommands = function() {
         data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
     }()
-    let helpText = readFileSync('help.txt', 'utf8')
+    let helpText = readFileSync('js/command/general/help.txt', 'utf8')
     return {
         sleep: function sleep(msg, command, args, instance) {
             instance.destroy()
