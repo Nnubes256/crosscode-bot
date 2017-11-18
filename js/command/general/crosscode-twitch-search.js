@@ -2,7 +2,6 @@ let rp = require('request-promise');
 
 class CrossCodeStream {
     constructor() {
-        let url = 'https://api.twitch.tv/kraken/search/streams?query=CrossCode'
         this.list = []
         this.list_string = ""
         this.updateList()

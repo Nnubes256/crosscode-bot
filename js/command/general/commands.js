@@ -16,6 +16,7 @@ let generalCommands = function() {
     let FanArt = require('./crosscode-fanart.js');
     let fanArt = new FanArt();
     let TwitchStreams = require('./crosscode-twitch-search.js');
+    console.log(TwitchStreams)
     let streams = new TwitchStreams();
     return {
         getstreams: function twitchStreams(msg) {
