@@ -5,7 +5,7 @@ class CrossCodeStream {
         this.list = []
         this.list_string = ""
         this.updateList()
-        setInterval(this.updateList, 120000)
+        setInterval(this.updateList.bind(this), 120000)
     }
     listToString() {
         this.list_string = "Streaming CrossCode\n" + (this.list.reduce(function(str, element) {
