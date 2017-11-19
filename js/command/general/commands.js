@@ -55,7 +55,7 @@ let generalCommands = function(instance) {
                 msg.reply('you are not in a voice channel.');
             }
         },
-        play: function playMusic(msg) {
+        play: function playMusic(msg, args) {
             if (msg.member.voiceChannel) {
                 let voiceChannel = instance.channels.find("id", msg.member.voiceChannel.id);
                 if (voiceChannel) {
@@ -124,7 +124,7 @@ let generalCommands = function(instance) {
         thinking: function think(msg) {
             msg.react('🤔')
         },
-        CHEATER: function exposeCheater(msg, command, args) {
+        CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
             if (cheater) {
                 let apolloPoint = getEmoji(msg, "apolloPoint").toString()
