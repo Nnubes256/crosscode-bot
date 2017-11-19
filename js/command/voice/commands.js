@@ -32,6 +32,7 @@ let joinVoiceChannel = function(instance) {
             let voiceConnection = instance.channels.findAll("type", "voice").find(function(channel) {
                 return channel.guild.id === msg.guild.id;
             })
+            console.log("Voice connection", voiceConnection)
             if (voiceConnection) {
                 voiceConnection.leave()
                 msg.reply("left the voice channel!");

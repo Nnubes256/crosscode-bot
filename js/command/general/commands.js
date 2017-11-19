@@ -26,13 +26,13 @@ let generalCommands = function(instance) {
                 msg.reply("not enough arguments supplied.")
                 return;
             }
-            let oldName = args[0]
+            let oldName = args.shift()
             let member = findMember(msg, oldName)
             if (!member) {
                 msg.reply(`could not find ${oldName}`)
                 return;
             }
-            member.setNickname(args[1]).catch(function(error) {
+            member.setNickname(args.join(" ")).catch(function(error) {
                 msg.reply(`${error}`)
             })
         },
@@ -40,9 +40,9 @@ let generalCommands = function(instance) {
             msg.author.send(streams.getList())
         },
         cloudlea: function showCloudLea(msg) {
-            let image = new(Discord.RichEmbed || Discord.MessageEmbed);
-            image.setImage('https://images-ext-1.discordapp.net/external/C8ZfRnUDaIaHkZNgR6TP81kCEbc1YJrtsnG5J-TTSzM/https/cdn.discordapp.com/attachments/373163281755537420/380813466354843649/steam-cloud-600x368.png?width=500&height=307')
-            msg.channel.send('', image);
+            msg.channel.send('', createRichEmbed({
+                image: 'https://images-ext-1.discordapp.net/external/C8ZfRnUDaIaHkZNgR6TP81kCEbc1YJrtsnG5J-TTSzM/https/cdn.discordapp.com/attachments/373163281755537420/380813466354843649/steam-cloud-600x368.png?width=500&height=307'
+            }));
         },
         sleep: function sleep() {
             instance.destroy();
