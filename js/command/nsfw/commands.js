@@ -50,5 +50,6 @@ let nsfwCommands = function(instance) {
             })
         }
     };
+    return _command
 }
 module.exports = nsfwCommands

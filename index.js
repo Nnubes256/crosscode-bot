@@ -29,8 +29,6 @@ function onMessage(msg) {
     }
     let command = args.shift()
     let func = commandType[command]
-    console.log("Args:", args, "command", command)
-    console.log("Function:", func)
     if (func) {
         func(msg, args, command, console)
     } else {
