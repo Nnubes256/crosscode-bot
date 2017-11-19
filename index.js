@@ -12,7 +12,7 @@ client.on('ready', () => {
 });
 
 function onMessage(msg) {
-    console.log(msg.client.user.username)
+    console.log(msg.author.username)
     if (msg.author.username != "ac2pic" || msg.author.username != "acalt")
         return;
     let args = msg.content.split(' ');
