@@ -27,9 +27,11 @@ function onMessage(msg) {
         commands[""].error(msg, args, type)
         return;
     }
-    console.log("Command function:", commandType, "Args:", args)
     let command = args.shift()
     let func = commandType[command]
+    console.clear()
+    console.log("Args:", args, "command", command)
+    console.log("Function:", func)
     if (!func) {
         func(msg, args, command, console)
     } else {
