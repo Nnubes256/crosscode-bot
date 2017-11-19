@@ -1,4 +1,4 @@
-let generalCommands = function() {
+let generalCommands = function(instance) {
     const Discord = require("discord.js");
     let {
         getEmoji,
@@ -18,6 +18,21 @@ let generalCommands = function() {
     let TwitchStreams = require('./crosscode-twitch-search.js');
     let streams = new TwitchStreams();
     return {
+        setname: function setName(msg, args, command) {
+            if (args.length < 2) {
+                msg.reply("not enough arguments supplied.")
+                return;
+            }
+            let oldName = args[0]
+            let member = findMember(msg, oldName)
+            if (!member) {
+                msg.reply(`could not find ${oldName}`)
+                return;
+            }
+            member.setNickName(args[1]).catch(function(error) {
+                msg.reply(`${error}`)
+            })
+        },
         getstreams: function twitchStreams(msg) {
             msg.author.send(streams.getList())
         },
@@ -26,10 +41,10 @@ let generalCommands = function() {
             image.setImage('https://images-ext-1.discordapp.net/external/C8ZfRnUDaIaHkZNgR6TP81kCEbc1YJrtsnG5J-TTSzM/https/cdn.discordapp.com/attachments/373163281755537420/380813466354843649/steam-cloud-600x368.png?width=500&height=307')
             msg.channel.send('', image);
         },
-        sleep: function sleep(msg, command, args, instance) {
+        sleep: function sleep() {
             instance.destroy();
         },
-        joinvoice: function joinVoiceChannel(msg, command, args, instance) {
+        joinvoice: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
                 msg.member.voiceChannel.join().then(function(success) {
                     msg.reply('I joined.');
@@ -40,7 +55,7 @@ let generalCommands = function() {
                 msg.reply('you are not in a voice channel.');
             }
         },
-        play: function playMusic(msg, command, args, instance) {
+        play: function playMusic(msg) {
             if (msg.member.voiceChannel) {
                 let voiceChannel = instance.channels.find("id", msg.member.voiceChannel.id);
                 if (voiceChannel) {
@@ -57,7 +72,7 @@ let generalCommands = function() {
                 msg.reply('dude. You have to be in a voice chat.')
             }
         },
-        leavevoice: function stopMusic(msg, command, args, instance) {
+        leavevoice: function stopMusic(msg) {
             let voiceConnection = instance.channels.findAll("type", "voice").find(function(channel) {
                 return channel.guild.id === msg.guild.id;
             })
@@ -128,5 +143,5 @@ let generalCommands = function() {
             msg.reply(`I do not know how to do "${command}"`)
         }
     }
-}();
+};
 module.exports = generalCommands

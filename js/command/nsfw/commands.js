@@ -1,4 +1,4 @@
-let nsfwCommands = function() {
+let nsfwCommands = function(instance) {
     const Discord = require("discord.js");
     let {
         findMember
@@ -50,5 +50,5 @@ let nsfwCommands = function() {
             })
         }
     };
-}()
+}
 module.exports = nsfwCommands
