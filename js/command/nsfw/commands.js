@@ -3,9 +3,9 @@ let nsfwCommands = function(instance) {
     let {
         findMember
     } = require('./../../discord-util.js')
-    return {
+    let _command = {
         lewd: function showLewdArt(msg, command) {
-            if (nsfwCommands.error(msg, command))
+            if (_command.error(msg, command))
                 return;
             let image = new(Discord.RichEmbed || Discord.MessageEmbed);
             image.setDescription("( ͡° ͜ʖ ͡°)")
@@ -16,7 +16,7 @@ let nsfwCommands = function(instance) {
             if (!msg.channel.nsfw) {
                 msg.reply("this channel is sfw. Please try again in a nsfw channel")
                 return true;
-            } else if (!nsfwCommands[command]) {
+            } else if (!_command[command]) {
                 msg.reply(`...? -> ${command}`)
                 return true;
             }
