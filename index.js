@@ -23,11 +23,11 @@ function onMessage(msg) {
         return;
     let type = _prefix.substring(1).trim()
     let commandType = commands[type]
-    console.log("Command type:", type, "Args:", args)
     if (!commandType) {
         commands[""].error(msg, args, type)
         return;
     }
+    console.log("Command function:", commandType, "Args:", args)
     let command = args.shift()
     let func = commandType[command]
     if (!func) {
