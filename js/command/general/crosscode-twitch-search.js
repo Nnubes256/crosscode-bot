@@ -5,16 +5,16 @@ class CrossCodeStream {
         this.list = []
         this.list_string = ""
         this.updateList()
+        setInterval(this.updateList, 120000)
     }
     listToString() {
-        this.list_string = "Streaming CrossCode\n";
-        this.list_string += this.list.reduce(function(str, element) {
+        this.list_string = "Streaming CrossCode\n" + (this.list.reduce(function(str, element) {
             str += '---------------------------------------------------------------\n' +
                 `${element.streamName} by ${element.displayName} (in ${element.language})\n` +
                 `${element.streamURL}\n` +
                 '---------------------------------------------------------------\n'
             return str
-        }, "") || "*Tumble weeds rolling*";
+        }, "") || "*Tumble weeds rolling*");
 
     }
     getList() {
@@ -39,7 +39,6 @@ class CrossCodeStream {
                 });
                 return obj;
             }, []) || [];
-            console.log(_instance.list)
             _instance.listToString()
         });
 

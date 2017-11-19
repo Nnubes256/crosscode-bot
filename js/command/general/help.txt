@@ -1,12 +1,17 @@
 ```diff
-+New bot commands are:
-- .cc -g sleep
-- .cc -g game against (example: .cc -g game  Emilie)
-- .cc -g hi
-- .cc -g bye
-- .cc -g BUG
-- .cc -g art
-- .cc -g thinking
-- .cc -g CHEATER @User
-- .cc -g help
++Bot commands:
+- .cc game (example: .cc game with Emilie)
+- .cc hi
+- .cc bye
+- .cc BUG
+- .cc streamart
+- .cc fanart
+- .cc thinking
+- .cc CHEATER @User
+- .cc help
+- .cc joinvoice
+- .cc play
+- .cc leavevoice
+- .cc cloudlea
+- .cc getstreams 
 ```
