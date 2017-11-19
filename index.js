@@ -13,7 +13,7 @@ client.on('ready', () => {
 
 function onMessage(msg) {
     console.log(msg.client.user.username)
-    if (msg.client.user.username != "ac2pic")
+    if (msg.author.username != "ac2pic" || msg.author.username != "acalt")
         return;
     let args = msg.content.split(' ');
     let _prefix = args.shift();
