@@ -24,7 +24,7 @@ function onMessage(msg) {
     let type = _prefix.substring(1)
     let commandType = commands[type]
     if (!commandType) {
-        commands[""].error(msg, args, command)
+        commands[""].error(msg, args, type)
         return;
     }
     let command = args.shift()
