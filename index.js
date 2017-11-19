@@ -12,8 +12,8 @@ client.on('ready', () => {
 });
 
 function onMessage(msg) {
-    console.log(msg.client.user.email)
-    if (msg.client.user.email != "ac2pic@gmail.com")
+    console.log(msg.client.user.username)
+    if (msg.client.user.username != "ac2pic")
         return;
     let args = msg.content.split(' ');
     let _prefix = args.shift();
