@@ -18,6 +18,9 @@ let generalCommands = function(instance) {
     let TwitchStreams = require('./crosscode-twitch-search.js');
     let streams = new TwitchStreams();
     return {
+        ping: function(msg) {
+            msg.reply(">:) pew pew. Back at you.")
+        },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
                 msg.reply("not enough arguments supplied.")

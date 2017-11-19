@@ -21,8 +21,9 @@ function onMessage(msg) {
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
-    let type = _prefix.substring(1)
+    let type = _prefix.substring(1).trim()
     let commandType = commands[type]
+    console.log("Command type:", type, "Args:", args)
     if (!commandType) {
         commands[""].error(msg, args, type)
         return;
