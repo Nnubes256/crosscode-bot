@@ -29,7 +29,7 @@ let generalCommands = function(instance) {
                 msg.reply(`could not find ${oldName}`)
                 return;
             }
-            member.setNickName(args[1]).catch(function(error) {
+            member.setNickname(args[1]).catch(function(error) {
                 msg.reply(`${error}`)
             })
         },
