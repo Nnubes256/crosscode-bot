@@ -12,7 +12,7 @@ client.on('ready', () => {
 });
 
 function onMessage(msg) {
-    if (msg.author.username != "ac2pic" && msg.author.username != "acalt")
+    if (msg.guild.ownerID !== msg.author.id)
         return;
     let args = msg.content.split(' ');
     let _prefix = args.shift();
