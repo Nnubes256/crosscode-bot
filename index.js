@@ -24,7 +24,7 @@ function onMessage(msg) {
     let type = _prefix.substring(1)
     let commandType = commands[type]
     if (!commandType) {
-        generalCommands.error(msg, args, command)
+        commands[""].error(msg, args, command)
         return;
     }
     let command = args.shift()
@@ -32,7 +32,7 @@ function onMessage(msg) {
     if (!func) {
         func(msg, args, command, console)
     } else {
-        generalCommands.error(msg, args, command)
+        commands[""].error(msg, args, command)
     }
 
 }
