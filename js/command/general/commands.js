@@ -56,7 +56,7 @@ let generalCommands = function(instance) {
             });
             msg.channel.send('', image)
         },
-        game: function setGame(msg, command, args, instance) {
+        game: function setGame(msg, args) {
             instance.user.setGame(args.join(" "))
         },
         hi: function greetUser(msg) {
