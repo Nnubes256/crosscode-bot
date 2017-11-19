@@ -29,7 +29,12 @@ function onMessage(msg) {
     }
     let command = args.shift()
     let func = commandType[command]
-    func(msg, args, command, console)
+    if (!func) {
+        func(msg, args, command, console)
+    } else {
+        generalCommands.error(msg, args, command)
+    }
+
 }
 client.on('message', onMessage);
 client.login(process.env.BOT_TOKEN);

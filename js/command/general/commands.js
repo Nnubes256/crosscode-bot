@@ -100,7 +100,7 @@ let generalCommands = function(instance) {
             //DM user help message
             msg.author.send(helpText)
         },
-        error: function(msg, command) {
+        error: function(msg, args, command) {
             msg.reply(`I do not know how to do "${command}"`)
         }
     }
