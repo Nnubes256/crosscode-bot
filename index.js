@@ -31,7 +31,7 @@ function onMessage(msg) {
     let func = commandType[command]
     console.log("Args:", args, "command", command)
     console.log("Function:", func)
-    if (!func) {
+    if (func) {
         func(msg, args, command, console)
     } else {
         commands[""].error(msg, args, command)
