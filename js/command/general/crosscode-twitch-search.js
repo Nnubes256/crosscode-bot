@@ -13,6 +13,7 @@ class CrossCodeStream {
                 `${element.streamName} by ${element.displayName} (in ${element.language})\n` +
                 `${element.streamURL}\n` +
                 '---------------------------------------------------------------\n'
+            return str
         }, "") || "*Tumble weeds rolling*";
 
     }
@@ -38,6 +39,7 @@ class CrossCodeStream {
                 });
                 return obj;
             }, []) || [];
+            console.log(_instance.list)
             _instance.listToString()
         });
 
