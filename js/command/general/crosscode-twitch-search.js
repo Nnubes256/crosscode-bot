@@ -9,7 +9,7 @@ class CrossCodeStream {
     listToString() {
         this.list_string = "Streaming CrossCode\n";
         this.list_string += this.list.reduce(function(str, element) {
-            str += '---------------------------------------------------------------' +
+            str += '---------------------------------------------------------------\n' +
                 `${element.streamName} by ${element.displayName} (in ${element.language})\n` +
                 `${element.streamURL}\n` +
                 '---------------------------------------------------------------\n'

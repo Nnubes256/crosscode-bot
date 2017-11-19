@@ -45,7 +45,7 @@ let generalCommands = function() {
                 let voiceChannel = instance.channels.find("id", msg.member.voiceChannel.id);
                 if (voiceChannel) {
                     try {
-                        voiceChannel.connection.playFile('http://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3');
+                        voiceChannel.connection.playFile('./music/Bossa_Antigua.mp3');
                     } catch (e) {
                         console.log(e)
                     }
