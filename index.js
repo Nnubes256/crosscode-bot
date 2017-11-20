@@ -48,12 +48,15 @@ function onMessage(msg) {
         return;
     let type = args.shift();
     let commandType = commands[type]
+    console.log("type", type)
     if (!commandType) {
         onError(msg)
         return;
     }
     let command = args.shift()
+
     let func = commandType[command]
+    console.log("type", type, "command", command)
     if (func) {
         func(msg, args, command, console)
     } else {
