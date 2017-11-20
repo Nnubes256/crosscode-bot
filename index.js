@@ -52,7 +52,7 @@ function onMessage(msg) {
     let type = _prefix.substring(1).trim()
     let commandType = commands[type]
     if (!commandType) {
-        commands[""].error(msg, args, type)
+        onError(msg)
         return;
     }
     let command = args.shift()
