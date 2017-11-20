@@ -99,9 +99,6 @@ let generalCommands = function(instance) {
         help: function(msg) {
             //DM user help message
             msg.author.send(helpText)
-        },
-        error: function(msg, args, command) {
-            msg.reply(`I do not know how to do "${command}"`)
         }
     }
 };

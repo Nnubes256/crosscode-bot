@@ -7,7 +7,9 @@ let prefix = process.env.BOT_PREFIX;
 let commands = {
     "": require('./js/command/general/commands.js')(client),
     "nsfw": require('./js/command/nsfw/commands.js')(client),
-    "voice": require('./js/command/voice/commands.js')(client)
+    "voice": require('./js/command/voice/commands.js')(client),
+    "meme": require('./js/command/meme/commands.js')(client),
+    "mods": require('./js/command/mods/commands.js')(client)
 }
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
@@ -36,6 +38,10 @@ client.on('ready', () => {
     setInterval(newGame, 120000)
 });
 
+function onError(msg) {
+    msg.reply("...how? RTFM.")
+}
+
 function onMessage(msg) {
     if (msg.guild.ownerID !== msg.author.id)
         return;
@@ -54,7 +60,7 @@ function onMessage(msg) {
     if (func) {
         func(msg, args, command, console)
     } else {
-        commandType.error(msg, args, command)
+        onError(msg)
     }
 
 }

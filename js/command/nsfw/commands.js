@@ -17,9 +17,6 @@ let nsfwCommands = function(instance) {
             if (!msg.channel.nsfw) {
                 msg.reply("this channel is sfw. Please try again in a nsfw channel")
                 return true;
-            } else if (!_command[command]) {
-                msg.reply(`nsfw does not have "${command}"`)
-                return true;
             }
         }
     };
