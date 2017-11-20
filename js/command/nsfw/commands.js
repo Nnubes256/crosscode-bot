@@ -20,10 +20,10 @@ module.exports = function(instance) {
                 return true;
             }
         },
-        help: function helpText(msg) {
+        help: function getHelp(msg) {
             msg.author.send(helpText)
         }
     };
-    let helpText = getHelpText(commands);
+    let helpText = getHelpText(commands, '-nsfw');
     return commands
 }

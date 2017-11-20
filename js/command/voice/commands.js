@@ -47,6 +47,6 @@ module.exports = function(instance) {
             msg.author.send(helpText)
         }
     };
-    let helpText = getHelpText(commands);
+    let helpText = getHelpText(commands, '-voice');
     return commands;
 }
