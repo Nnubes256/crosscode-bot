@@ -5,7 +5,7 @@ let {
 } = require('fs');
 let prefix = process.env.BOT_PREFIX;
 let commands = {
-    "g": require('./js/command/general/commands.js')(client),
+    "": require('./js/command/general/commands.js')(client),
     "nsfw": require('./js/command/nsfw/commands.js')(client),
     "voice": require('./js/command/voice/commands.js')(client),
     "mods": require('./js/command/mods/commands.js')(client)
@@ -46,17 +46,16 @@ function onMessage(msg) {
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
-    let type = args.shift();
-    let commandType = commands[type]
-    console.log("type", type)
-    if (!commandType) {
-        onError(msg)
-        return;
-    }
+    let commandType = undefined;
+    if (args[0].startsWith("-")) {
+        commandType = commands[args[0].substring(1)]
+        args.shift()
+    } else
+        commandType = commands[""]
+
     let command = args.shift()
 
     let func = commandType[command]
-    console.log("type", type, "command", command)
     if (func) {
         func(msg, args, command, console)
     } else {
