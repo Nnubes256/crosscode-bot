@@ -48,7 +48,12 @@ function onMessage(msg) {
         return;
     let commandType = undefined;
     if (args[0].startsWith("-")) {
-        commandType = commands[args[0].substring(1)]
+        let type = args[0].substring(1)
+        commandType = commands[type]
+        if (!commandType) {
+            onError(msg)
+            return;
+        }
         args.shift()
     } else
         commandType = commands[""]
