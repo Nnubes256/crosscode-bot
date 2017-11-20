@@ -42,8 +42,6 @@ function onError(msg) {
 }
 
 function onMessage(msg) {
-    if (msg.guild.ownerID !== msg.author.id)
-        return;
     let args = msg.content.split(' ');
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
