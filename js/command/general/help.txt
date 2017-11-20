@@ -1,17 +1,13 @@
 ```diff
 +Bot commands:
-- .cc game (example: .cc game with Emilie)
-- .cc hi
-- .cc bye
-- .cc BUG
-- .cc streamart
-- .cc fanart
-- .cc thinking
-- .cc CHEATER @User
-- .cc help
-- .cc joinvoice
-- .cc play
-- .cc leavevoice
-- .cc cloudlea
-- .cc getstreams 
+- $ hi
+- $ bye
+- $ BUG
+- $ streamart
+- $ fanart
+- $ thinking
+- $ CHEATER @User
+- $ help
+- $ cloudlea
+- $ getstreams 
 ```
