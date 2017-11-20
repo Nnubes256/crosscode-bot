@@ -5,7 +5,7 @@ let {
 } = require('fs');
 let prefix = process.env.BOT_PREFIX;
 let commands = {
-    "": require('./js/command/general/commands.js')(client),
+    "g": require('./js/command/general/commands.js')(client),
     "nsfw": require('./js/command/nsfw/commands.js')(client),
     "voice": require('./js/command/voice/commands.js')(client),
     "mods": require('./js/command/mods/commands.js')(client)
