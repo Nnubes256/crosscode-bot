@@ -41,7 +41,7 @@ let joinVoiceChannel = function(instance) {
             }
         },
         error: function error(msg, args, command) {
-            msg.reply("voice does not have ${command}")
+            msg.reply(`voice does not have "${command}"`)
         }
     };
 }
