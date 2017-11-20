@@ -54,7 +54,7 @@ function onMessage(msg) {
     if (func) {
         func(msg, args, command, console)
     } else {
-        commands[""].error(msg, args, command)
+        commandType.error(msg, args, command)
     }
 
 }

@@ -39,6 +39,9 @@ let joinVoiceChannel = function(instance) {
             } else {
                 msg.reply("but I'm not in a voice channel!");
             }
+        },
+        error: function error(msg, args, command) {
+            msg.reply("voice does not have ${command}")
         }
     };
 }
