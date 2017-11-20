@@ -36,7 +36,7 @@ exports.createRichEmbed = function(opts) {
     return richEmbed;
 }
 exports.getHelpText = function(obj, type) {
-    let commands = obj.keys()
+    let commands = Object.keys(obj)
     let helpText = commands.forEach(function(str, command) {
         if (key) {
             str += `- ${process.env.BOT_PREFIX}${type? ' -' + type : ''} ${command}` + '\n'
