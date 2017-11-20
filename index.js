@@ -30,11 +30,10 @@ client.on('ready', () => {
     ]
     let newGame = function() {
         let game = gameStats.random()
-        console.log(`The game should now be ${game}`)
         client.user.setGame(game)
     };
     newGame()
-    setInterval(newGame, 30000)
+    setInterval(newGame, 120000)
 });
 
 function onMessage(msg) {
