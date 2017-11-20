@@ -1,5 +1,8 @@
 module.exports = function(instance) {
-    return {
+    let {
+        getHelpText
+    } = require('./../../discord-util.js')
+    let commands = {
         join: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
                 msg.member.voiceChannel.join().then(function(success) {
@@ -39,6 +42,11 @@ module.exports = function(instance) {
             } else {
                 msg.reply("but I'm not in a voice channel!");
             }
+        },
+        help: function getHelp(msg) {
+            msg.author.send(helpText)
         }
     };
+    let helpText = getHelpText(commands);
+    return commands;
 }

@@ -2,11 +2,12 @@ module.exports = function(instance) {
     const Discord = require("discord.js");
     let {
         findMember,
-        createRichEmbed
+        createRichEmbed,
+        getHelpText
     } = require('./../../discord-util.js')
-    let _command = {
+    let commands = {
         lewd: function showLewdArt(msg, args, command) {
-            if (_command.error(msg, command))
+            if (commands.error(msg, command))
                 return;
             msg.channel.send('', createRichEmbed({
                 description: "( ͡° ͜ʖ ͡°)",
@@ -18,7 +19,11 @@ module.exports = function(instance) {
                 msg.reply("this channel is sfw. Please try again in a nsfw channel")
                 return true;
             }
+        },
+        help: function helpText(msg) {
+            msg.author.send(helpText)
         }
     };
-    return _command
+    let helpText = getHelpText(commands);
+    return commands
 }

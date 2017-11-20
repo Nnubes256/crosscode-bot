@@ -1,5 +1,10 @@
 module.exports = function(instance) {
-    return {
+    let {
+        getHelpText
+    } = require('./../../discord-util.js')
+    let commands = {
 
     };
+    let helpText = getHelpText(commands);
+    return commands;
 }
