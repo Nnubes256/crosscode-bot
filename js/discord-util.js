@@ -35,3 +35,13 @@ exports.createRichEmbed = function(opts) {
     opts.author && richEmbed.setAuthor(opts.author)
     return richEmbed;
 }
+exports.getHelpText = function(obj, type) {
+    let commands = obj.keys()
+    let helpText = commands.forEach(function(str, command) {
+        if (key) {
+            str += `- ${process.env.BOT_PREFIX}${type? ' -' + type : ''} ${command}` + '\n'
+        }
+        return str
+    }, "```diff\n") + '```'
+    return `${helpText}`
+}

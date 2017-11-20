@@ -3,7 +3,8 @@ module.exports = function(instance) {
     let {
         getEmoji,
         findMember,
-        createRichEmbed
+        createRichEmbed,
+        getHelpText
     } = require('./../../discord-util.js');
     let {
         readFileSync
@@ -12,12 +13,11 @@ module.exports = function(instance) {
         data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
     }();
-    let helpText = readFileSync('js/command/general/help.txt', 'utf8');
     let FanArt = require('./crosscode-fanart.js');
     let fanArt = new FanArt();
     let TwitchStreams = require('./crosscode-twitch-search.js');
     let streams = new TwitchStreams();
-    return {
+    let commands = {
         ping: function(msg) {
             msg.reply(">:) pew pew. Back at you.")
         },
@@ -111,4 +111,6 @@ module.exports = function(instance) {
             }))
         }
     }
+    let helpText = getHelpText(commands);
+    return commands
 };
