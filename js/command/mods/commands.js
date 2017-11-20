@@ -5,6 +5,6 @@ module.exports = function(instance) {
     let commands = {
 
     };
-    let helpText = getHelpText(commands, '-mods');
+    let helpText = getHelpText(commands, 'mods');
     return commands;
 }

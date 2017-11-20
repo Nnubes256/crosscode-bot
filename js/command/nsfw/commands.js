@@ -24,6 +24,6 @@ module.exports = function(instance) {
             msg.author.send(helpText)
         }
     };
-    let helpText = getHelpText(commands, '-nsfw');
+    let helpText = getHelpText(commands, 'nsfw');
     return commands
 }
