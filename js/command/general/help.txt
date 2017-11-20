@@ -1,6 +1,10 @@
 ```diff
 +Bot commands:
+- $ ping
+- $ language
 - $ hi
+- $ triggered
+- $ HI!
 - $ bye
 - $ BUG
 - $ streamart
@@ -9,5 +13,5 @@
 - $ CHEATER @User
 - $ help
 - $ cloudlea
-- $ getstreams 
+- $ getstreams
 ```

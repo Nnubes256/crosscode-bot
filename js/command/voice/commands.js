@@ -1,4 +1,4 @@
-let joinVoiceChannel = function(instance) {
+module.exports = function(instance) {
     return {
         join: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
@@ -42,4 +42,3 @@ let joinVoiceChannel = function(instance) {
         }
     };
 }
-module.exports = joinVoiceChannel
