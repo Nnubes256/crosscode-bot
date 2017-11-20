@@ -56,9 +56,6 @@ let generalCommands = function(instance) {
             });
             msg.channel.send('', image)
         },
-        game: function setGame(msg, args) {
-            instance.user.setGame(args.join(" "))
-        },
         hi: function greetUser(msg) {
             let emoji = getEmoji(msg, 'leaCheese')
             let message = 'hi!!! ' + emoji.toString()

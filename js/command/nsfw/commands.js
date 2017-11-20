@@ -1,16 +1,17 @@
 let nsfwCommands = function(instance) {
     const Discord = require("discord.js");
     let {
-        findMember
+        findMember,
+        createRichEmbed
     } = require('./../../discord-util.js')
     let _command = {
         lewd: function showLewdArt(msg, args, command) {
             if (_command.error(msg, command))
                 return;
-            let image = new(Discord.RichEmbed || Discord.MessageEmbed);
-            image.setDescription("( ͡° ͜ʖ ͡°)")
-            image.setImage('https://images-ext-1.discordapp.net/external/RNdA2IorjgoHeslQ9Rh8oos1nkK56Y6_w4sjUaFVBC4/https/image.ibb.co/jJLNiG/leadaki.png?width=185&height=250')
-            msg.channel.send('', image)
+            msg.channel.send('', createRichEmbed({
+                description: "( ͡° ͜ʖ ͡°)",
+                image: 'https://images-ext-1.discordapp.net/external/RNdA2IorjgoHeslQ9Rh8oos1nkK56Y6_w4sjUaFVBC4/https/image.ibb.co/jJLNiG/leadaki.png?width=185&height=250'
+            }))
         },
         error: function error(msg, command) {
             if (!msg.channel.nsfw) {
@@ -19,38 +20,6 @@ let nsfwCommands = function(instance) {
             } else if (!_command[command]) {
                 msg.reply(`...? -> ${command}`)
                 return true;
-            }
-        },
-        addme: function addMember(msg, args, command) {
-            let nsfwRole = msg.guild.roles.find("name", "NSFW")
-            msg.member.addRole(nsfwRole).then(function() {
-                msg.channel.send("You are now a NSFW member! Congrats!")
-            }).catch(function(e) {
-                msg.reply(`${e}`)
-            })
-
-        },
-        adduser: function addMember(msg, args, command, console) {
-            let nsfwRole = msg.guild.roles.find("name", "NSFW")
-            let target = findMember(msg, args[0])
-            if (target) {
-                target.addRole(nsfwRole).then(function(result) {
-                    msg.channel.send(`${target.user.username} is now a NSFW member!`)
-                }).catch(function(error) {
-                    msg.channel.send(`${error}`)
-                })
-            }
-
-        },
-        removeuser: function removeMember(msg, command, args) {
-            let nsfwRole = msg.guild.roles.find("name", "NSFW")
-            let target = findMember(msg, args[0])
-            if (target) {
-                target.removeRole(nsfwRole).then(function(result) {
-                    msg.channel.send(`${target.user.username} has been removed from NSFW role!`)
-                }).catch(function(error) {
-                    msg.channel.send(`${error}`)
-                })
             }
         }
     };

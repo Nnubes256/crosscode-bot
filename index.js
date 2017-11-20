@@ -9,9 +9,28 @@ let commands = {
     "nsfw": require('./js/command/nsfw/commands.js')(client),
     "voice": require('./js/command/voice/commands.js')(client)
 }
+Array.prototype.random = function() {
+    return this[parseInt(Math.random() * this.length)];
+}
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     //client.user.setAvatar('avatar/cloudlea.png')
+    //Playing...
+    let gameStats = [
+      "santiballs",
+      "...hi?",
+      "...bye!",
+      "Hi-5!!!",
+      "with mods",
+      "cc.ig",
+      "with CCLoader",
+      "in multiplayer :o",
+      "...Lea. -.-",
+      "CrossCode v1"
+    ]
+    setInterval(function() {
+        client.user.setGame(gameStats.random())
+    }, 300000)
 });
 
 function onMessage(msg) {
