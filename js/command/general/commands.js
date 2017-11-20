@@ -102,7 +102,8 @@ module.exports = function(instance) {
         },
         triggered: function getTriggered(msg) {
             msg.channel.send(createRichEmbed({
-                image: 'https://cdn.discordapp.com/attachments/376138665954377728/381565961582411777/Lea_triggered.png'
+                title: "...WHY?!?!",
+                image: 'https://cdn.discordapp.com/attachments/374851126627008514/382063690557685760/Lea_triggered.gif'
             }))
         },
         "HI!": function dealWithIt(msg, args, command) {
