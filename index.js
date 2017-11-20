@@ -28,9 +28,11 @@ client.on('ready', () => {
       "...Lea. -.-",
       "CrossCode v1"
     ]
-    setInterval(function() {
+    let newGame = function() {
         client.user.setGame(gameStats.random())
-    }, 300000)
+    };
+    newGame()
+    setInterval(newGame, 300000)
 });
 
 function onMessage(msg) {
