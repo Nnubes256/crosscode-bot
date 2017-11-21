@@ -46,6 +46,7 @@ module.exports = function(instance) {
         },
         sleep: function sleep() {
             instance.destroy();
+            process.exit(0);
         },
         hug: function hugUser(msg) {
             console.log('todo .cc -g hug')
