@@ -124,6 +124,9 @@ module.exports = function(instance) {
                 .then((msgReact) => msgReact.message.react("👊"))
                 .then((msgReact) => msgReact.message.react("👎"))
 
+        },
+        work: function plsWork(msg) {
+            msg.channel.send("...why?")
         }
     }
     let helpText = getHelpText(commands);
