@@ -49,7 +49,7 @@ module.exports = function(instance) {
         sleep: function sleep(msg) {
             if (isFromAdmin(msg)) {
                 instance.destroy();
-                process.exit(0);
+                shutdown('SIGTERM');
             } else {
                 msg.reply('You don\'t have the power to kill me!')
             }
