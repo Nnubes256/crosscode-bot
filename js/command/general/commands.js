@@ -1,10 +1,18 @@
 module.exports = function(instance) {
     const Discord = require("discord.js");
-    const { getEmoji, findMember, createRichEmbed, getHelpText, isFromAdmin } = require('./../../discord-util.js');
-    const { readFileSync } = require('fs');
+    const {
+        getEmoji,
+        findMember,
+        createRichEmbed,
+        getHelpText,
+        isFromAdmin
+    } = require('./../../discord-util.js');
+    const {
+        readFileSync
+    } = require('fs');
     const FanArt = require('./crosscode-fanart.js');
     const TwitchStreams = require('./crosscode-twitch-search.js');
-	
+
     let streamArtLink = function getStreamArt() {
         let data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
@@ -39,13 +47,13 @@ module.exports = function(instance) {
             }));
         },
         sleep: function sleep(msg) {
-			if(isFromAdmin(msg)){
-				instance.destroy();
-				process.exit(0);
-			} else {
-				msg.reply('You don\'t have the power to kill me!')
-			}
-			
+            if (isFromAdmin(msg)) {
+                instance.destroy();
+                process.exit(0);
+            } else {
+                msg.reply('You don\'t have the power to kill me!')
+            }
+
         },
         hug: function hugUser(msg) {
             console.log('todo .cc -g hug')
@@ -111,13 +119,12 @@ module.exports = function(instance) {
                 image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
             }))
         },
-		vote: function vote(msg){
-			msg.react("👍").then(() => {
-				msg.react("👊").then(() => {
-					msg.react("👎");
-				});
-			});
-		}
+        vote: function vote(msg) {
+            msg.react("👍")
+                .then((msgReact) => msgReact.message.react("👊"))
+                .then((msgReact) => msgReact.message.react("👎"))
+
+        }
     }
     let helpText = getHelpText(commands);
     return commands
