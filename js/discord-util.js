@@ -1,4 +1,14 @@
-const Discord = require('discord.js')
+const Discord = require('discord.js');
+
+
+function filterUserId(id) {
+    return id.replace(/[^0-9]/g, "")
+}
+
+function isId(id) {
+    return (id.startsWith("<@") || id.startsWith("<@!")) && id.endsWith(">")
+}
+
 exports.getEmoji = function(object, name) {
     let emojis = null
     //Weird error can not find emojis of undefined
@@ -13,14 +23,6 @@ exports.getEmoji = function(object, name) {
         }
     };
 }
-
-function filterUserId(id) {
-    return id.replace(/[^0-9]/g, "")
-}
-
-function isId(id) {
-    return (id.startsWith("<@") || id.startsWith("<@!")) && id.endsWith(">")
-}
 exports.findMember = function(object, string) {
     let member = null;
     if (object instanceof Discord.Message && object.channel.guild) {
@@ -33,7 +35,6 @@ exports.findMember = function(object, string) {
     }
     return member;
 }
-
 exports.createRichEmbed = function(opts) {
     let richEmbed = new(Discord.RichEmbed || Discord.MessageEmbed);
     opts.description && richEmbed.setDescription(opts.description)
@@ -51,4 +52,10 @@ exports.getHelpText = function(obj, type) {
         return str
     }, "```diff\n") + '```'
     return `${helpText}`
+}
+exports.isFromAdmin = function(msg){
+	if(!msg.member)
+		return true;
+	
+	return msg.member.hasPermission("administrator");
 }

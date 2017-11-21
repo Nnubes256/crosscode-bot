@@ -1,6 +1,6 @@
 module.exports = function(instance) {
     const Discord = require("discord.js");
-    const { getEmoji, findMember, createRichEmbed, getHelpText } = require('./../../discord-util.js');
+    const { getEmoji, findMember, createRichEmbed, getHelpText, isFromAdmin } = require('./../../discord-util.js');
     const { readFileSync } = require('fs');
     const FanArt = require('./crosscode-fanart.js');
     const TwitchStreams = require('./crosscode-twitch-search.js');
@@ -38,9 +38,14 @@ module.exports = function(instance) {
                 image: 'https://images-ext-1.discordapp.net/external/C8ZfRnUDaIaHkZNgR6TP81kCEbc1YJrtsnG5J-TTSzM/https/cdn.discordapp.com/attachments/373163281755537420/380813466354843649/steam-cloud-600x368.png?width=500&height=307'
             }));
         },
-        sleep: function sleep() {
-            instance.destroy();
-            process.exit(0);
+        sleep: function sleep(msg) {
+			if(isFromAdmin(msg)){
+				instance.destroy();
+				process.exit(0);
+			} else {
+				msg.reply('You don\'t have the power to kill me!')
+			}
+			
         },
         hug: function hugUser(msg) {
             console.log('todo .cc -g hug')
