@@ -21,9 +21,8 @@ module.exports = function(instance) {
     let streams = new TwitchStreams();
     let commands = {
         ping: function(msg) {
-            let currentTime = ;
             let duration = msg.createdTimestamp - Date.now();
-            msg.reply(`>:) pew pew. Back at you in ${duration}`)
+            msg.reply(`>:) pew pew. Back at you in ${duration}ms`)
         },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
