@@ -8,7 +8,7 @@ exports.getEmoji = function(object, name) {
             return emojis.find("name", name)
     }
     return {
-        toString(): function() {
+        toString: function() {
             return "*could not find emoji*";
         }
     };
