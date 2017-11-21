@@ -1,11 +1,15 @@
 const Discord = require('discord.js')
 exports.getEmoji = function(object, name) {
     let emojis = null
-    //Weird error can not find emojis of undefined 
+    //Weird error can not find emojis of undefined
     if (object instanceof Discord.Message && object.channel && object.channel.guild) {
         emojis = object.channel.guild.emojis
     }
-    return emojis ? emojis.find("name", name) : `:${name}:`
+    return emojis ? emojis.find("name", name) : {
+        toString: function() {
+            return '*emojiNotFound*'
+        }
+    }
 }
 
 function filterUserId(id) {
