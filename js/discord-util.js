@@ -4,7 +4,11 @@ exports.getEmoji = function(object, name) {
     if (object instanceof Discord.Message) {
         emojis = object.channel.guild.emojis
     }
-    return emojis.find("name", name) || `:${name}:`
+    return emojis.find("name", name) || ({
+        toString: function() {
+            return `*emojiNotFound*`
+        }
+    });
 }
 
 function filterUserId(id) {
