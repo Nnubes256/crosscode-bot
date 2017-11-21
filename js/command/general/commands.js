@@ -110,7 +110,14 @@ module.exports = function(instance) {
             msg.channel.send(createRichEmbed({
                 image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
             }))
-        }
+        },
+		vote: function vote(msg){
+			msg.react("👍").then(() => {
+				msg.react("👊").then(() => {
+					msg.react("👎");
+				});
+			});
+		}
     }
     let helpText = getHelpText(commands);
     return commands
