@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 exports.getEmoji = function(object, name) {
     let emojis = null
     //Weird error can not find emojis of undefined
-    if (object instanceof Discord.Message) {
+    if (object instanceof Discord.Message && object.channel.guild) {
         emojis = object.channel.guild.emojis.find("name", name)
         if (emojis)
             return emojis
@@ -23,7 +23,7 @@ function isId(id) {
 }
 exports.findMember = function(object, string) {
     let member = null;
-    if (object instanceof Discord.Message) {
+    if (object instanceof Discord.Message && object.channel.guild) {
         if (isId(string)) {
             string = filterUserId(string)
         }
