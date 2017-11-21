@@ -3,9 +3,9 @@ exports.getEmoji = function(object, name) {
     let emojis = null
     //Weird error can not find emojis of undefined
     if (object instanceof Discord.Message) {
-        emojis = object.channel.guild.emojis
+        emojis = object.channel.guild.emojis.find("name", name)
         if (emojis)
-            return emojis.find("name", name)
+            return emojis
     }
     return {
         toString: function() {
