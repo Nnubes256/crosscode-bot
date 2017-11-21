@@ -1,21 +1,15 @@
 module.exports = function(instance) {
     const Discord = require("discord.js");
-    let {
-        getEmoji,
-        findMember,
-        createRichEmbed,
-        getHelpText
-    } = require('./../../discord-util.js');
-    let {
-        readFileSync
-    } = require('fs');
+    const { getEmoji, findMember, createRichEmbed, getHelpText } = require('./../../discord-util.js');
+    const { readFileSync } = require('fs');
+    const FanArt = require('./crosscode-fanart.js');
+    const TwitchStreams = require('./crosscode-twitch-search.js');
+	
     let streamArtLink = function getStreamArt() {
-        data = readFileSync('stream.txt', 'utf8')
+        let data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
     }();
-    let FanArt = require('./crosscode-fanart.js');
     let fanArt = new FanArt();
-    let TwitchStreams = require('./crosscode-twitch-search.js');
     let streams = new TwitchStreams();
     let commands = {
         ping: function(msg) {

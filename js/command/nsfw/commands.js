@@ -1,10 +1,7 @@
 module.exports = function(instance) {
     const Discord = require("discord.js");
-    let {
-        findMember,
-        createRichEmbed,
-        getHelpText
-    } = require('./../../discord-util.js')
+	const { findMember, createRichEmbed, getHelpText } = require('./../../discord-util.js');
+	
     let commands = {
         lewd: function showLewdArt(msg, args, command) {
             if (commands.error(msg, command))

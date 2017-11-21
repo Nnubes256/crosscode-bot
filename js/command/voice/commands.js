@@ -1,7 +1,6 @@
 module.exports = function(instance) {
-    let {
-        getHelpText
-    } = require('./../../discord-util.js')
+    const { getHelpText } = require('./../../discord-util.js');
+	
     let commands = {
         join: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
