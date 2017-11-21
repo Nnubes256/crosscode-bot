@@ -126,7 +126,9 @@ module.exports = function(instance) {
 
         },
         work: function plsWork(msg) {
-            msg.channel.send("...why?")
+            msg.channel.send("...why?", createRichEmbed({
+                image: "https://cdn.discordapp.com/emojis/337987528625881090.png"
+            }))
         }
     }
     let helpText = getHelpText(commands);
