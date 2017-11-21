@@ -5,11 +5,11 @@ exports.getEmoji = function(object, name) {
     if (object instanceof Discord.Message && object.channel && object.channel.guild) {
         emojis = object.channel.guild.emojis
     }
-    return emojis ? emojis.find("name", name) : {
+    return emojis ? emojis.find("name", name) : ({
         toString: function() {
-            return '*emojiNotFound*'
+            return '*emojiNotFound*';
         }
-    }
+    });
 }
 
 function filterUserId(id) {
