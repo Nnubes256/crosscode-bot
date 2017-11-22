@@ -29,6 +29,16 @@ module.exports = function(instance) {
                 msg.channel.send(`sent back in ${newDuration} ms`)
             })
         },
+        box: function(msg, args) {
+            let phrase = args[0]
+            if (phrase) {
+                let message = ""
+                for (var i = 0; i < phrase.length; i++) {
+                    message += phrase.substring(i) + "\n"
+                }
+                msg.channel.send('```js\n' + message + '```')
+            }
+        },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
                 msg.reply("not enough arguments supplied.")
