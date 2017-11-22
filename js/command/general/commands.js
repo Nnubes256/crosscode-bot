@@ -125,7 +125,7 @@ module.exports = function(instance) {
                 title: "何？",
                 image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
             }))
-        }
+        },
         "HI!": function dealWithIt(msg, args, command) {
             msg.channel.send(createRichEmbed({
                 image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
