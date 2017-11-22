@@ -22,6 +22,7 @@ module.exports = function(instance) {
     let commands = {
         ping: function(msg) {
             let duration = msg.createdTimestamp;
+            let _this = this
             msg.reply(`>:) pew pew. Got here in ${duration} ms, and...`).then(function(msg) {
                 msg.channel.send(`sent back in ${msg.createdTimestamp - duration}`)
             })
@@ -52,7 +53,7 @@ module.exports = function(instance) {
         sleep: function sleep(msg) {
             if (isFromAdmin(msg)) {
                 instance.destroy();
-                shutdown('SIGTERM');
+                process.exit(0);
             } else {
                 msg.reply('You don\'t have the power to kill me!')
             }
