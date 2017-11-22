@@ -22,10 +22,9 @@ module.exports = function(instance) {
     let commands = {
         ping: function(msg) {
             let duration = Date.now() - msg.createdTimestamp;
-            let _this = this
             msg.reply(`>:) pew pew. Got here in ${duration} ms, and...`).then(function(msg) {
                 let newDuration = Date.now() - msg.createdTimestamp;
-                msg.channel.send(`sent back in ${newDuration - duration}`)
+                msg.channel.send(`sent back in ${newDuration + duration} ms`)
             })
         },
         setname: function setName(msg, args, command) {
