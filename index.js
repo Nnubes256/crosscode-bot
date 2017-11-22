@@ -43,7 +43,7 @@ function onError(msg) {
 
 function onMessage(msg) {
     //lel
-    if (msg.content.toLowerCase().startsWith("Failed to load")) {
+    if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof")
         return;
     }
