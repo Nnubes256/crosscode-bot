@@ -21,10 +21,12 @@ module.exports = function(instance) {
     let streams = new TwitchStreams();
     let commands = {
         ping: function(msg) {
+            //this measures the time it took to get here
             let duration = Date.now() - msg.createdTimestamp;
             msg.reply(`>:) pew pew. Got here in ${duration} ms, and...`).then(function(msg) {
+                //this measures the return trip time
                 let newDuration = Date.now() - msg.createdTimestamp;
-                msg.channel.send(`sent back in ${newDuration + duration} ms`)
+                msg.channel.send(`sent back in ${newDuration} ms`)
             })
         },
         setname: function setName(msg, args, command) {
