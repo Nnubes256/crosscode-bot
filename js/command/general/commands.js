@@ -21,7 +21,28 @@ module.exports = function(instance) {
     let streams = new TwitchStreams();
     let commands = {
         ping: function(msg) {
-            msg.reply(">:) pew pew. Back at you.")
+            //this measures the time it took to get here
+            let duration = Date.now() - msg.createdTimestamp;
+            msg.reply(`>:) pew pew. Got here in ${duration} ms, and...`).then(function(msg) {
+                //this measures the return trip time
+                let newDuration = Date.now() - msg.createdTimestamp;
+                msg.channel.send(`sent back in ${newDuration} ms`)
+            })
+        },
+        box: function(msg, args) {
+			let characterThreshold = 1960;
+			let phrase = args.join(' ')
+			let boxMessage = ""
+			let length = 0
+			for (var i = 0; i < phrase.length; i++) {
+				cutMessage = phrase.substring(i)
+				boxMessage += cutMessage + "\n"
+				length = cutMessage.length - 1
+				if(boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
+					msg.channel.send('```js\n' + boxMessage + '```')
+					boxMessage = ""
+				}
+			}
         },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
@@ -114,6 +135,12 @@ module.exports = function(instance) {
                 image: 'https://cdn.discordapp.com/attachments/374851126627008514/382063690557685760/Lea_triggered.gif'
             }))
         },
+        verytriggered: function getMoreTriggered(msg) {
+            msg.channel.send(createRichEmbed({
+                title: "何？",
+                image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
+            }))
+        },
         "HI!": function dealWithIt(msg, args, command) {
             msg.channel.send(createRichEmbed({
                 image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
@@ -124,6 +151,16 @@ module.exports = function(instance) {
                 .then((msgReact) => msgReact.message.react("👊"))
                 .then((msgReact) => msgReact.message.react("👎"))
 
+        },
+        work: function plsWork(msg) {
+            msg.channel.send("...why?", createRichEmbed({
+                image: "https://cdn.discordapp.com/emojis/337987528625881090.png"
+            }))
+        },
+        balls: function blueBalls(msg) {
+            msg.channel.send("BALLS", createRichEmbed({
+                image: "https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png"
+            }))
         }
     }
     let helpText = getHelpText(commands);

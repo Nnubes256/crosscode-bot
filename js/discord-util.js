@@ -25,7 +25,7 @@ exports.getEmoji = function(object, name) {
 }
 exports.findMember = function(object, string) {
     let member = null;
-    if (object instanceof Discord.Message && object.channel.guild) {
+    if (string && object instanceof Discord.Message && object.channel.guild) {
         if (isId(string)) {
             string = filterUserId(string)
         }
@@ -53,9 +53,9 @@ exports.getHelpText = function(obj, type) {
     }, "```diff\n") + '```'
     return `${helpText}`
 }
-exports.isFromAdmin = function(msg){
-	if(!msg.member)
-		return true;
-	
-	return msg.member.hasPermission("administrator");
+exports.isFromAdmin = function(msg) {
+    if (!msg.member)
+        return true;
+
+    return msg.member.hasPermission("administrator");
 }

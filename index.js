@@ -45,6 +45,11 @@ function onError(msg) {
 }
 
 function onMessage(msg) {
+    //lel
+    if (msg.content.toLowerCase().startsWith("failed to load")) {
+        msg.channel.send("oof")
+        return;
+    }
     let args = msg.content.split(' ');
     if (args.length < 2) return;
     let _prefix = args.shift();
