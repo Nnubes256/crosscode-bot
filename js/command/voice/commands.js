@@ -1,6 +1,8 @@
 module.exports = function(instance) {
-    const { getHelpText } = require('./../../discord-util.js');
-	
+    const {
+        getHelpText
+    } = require('./../../discord-util.js');
+
     let commands = {
         join: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
@@ -34,7 +36,6 @@ module.exports = function(instance) {
             let voiceConnection = instance.channels.findAll("type", "voice").find(function(channel) {
                 return channel.guild.id === msg.guild.id;
             })
-            console.log("Voice connection", voiceConnection)
             if (voiceConnection) {
                 voiceConnection.leave()
                 msg.reply("left the voice channel!");
