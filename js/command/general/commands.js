@@ -30,14 +30,18 @@ module.exports = function(instance) {
             })
         },
         box: function(msg, args) {
-            let phrase = args.join(' ')
-            if (phrase) {
-                let message = ""
-                for (var i = 0; i < phrase.length; i++) {
-                    message += phrase.substring(i) + "\n"
-                }
-                msg.channel.send('```js\n' + message + '```')
-            }
+			let characterThreshold = 1960;
+			let boxMessage = ""
+			let length = 0
+			for (var i = 0; i < phrase.length; i++) {
+				cutMessage = phrase.substring(i)
+				boxMessage += cutMessage + "\n"
+				length = cutMessage.length - 1
+				if(boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
+					msg.channel.send('```js\n' + boxMessage + '```')
+					boxMessage = ""
+				}
+			}
         },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
