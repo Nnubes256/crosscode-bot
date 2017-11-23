@@ -31,6 +31,7 @@ module.exports = function(instance) {
         },
         box: function(msg, args) {
 			let characterThreshold = 1960;
+			let phrase = args.join(' ')
 			let boxMessage = ""
 			let length = 0
 			for (var i = 0; i < phrase.length; i++) {
