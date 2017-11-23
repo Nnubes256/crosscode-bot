@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+require("./botrac4r/botrac4r.js");
 let {
     readFileSync
 } = require('fs');
@@ -27,7 +28,8 @@ client.on('ready', () => {
       "with CCLoader",
       "in multiplayer :o",
       "...Lea. -.-",
-      "CrossCode v1"
+      "CrossCode v1",
+      "Star Wars™ Battlefront™ 2"
     ]
     let newGame = function() {
         let game = gameStats.random()
@@ -38,16 +40,18 @@ client.on('ready', () => {
 });
 
 function onError(msg) {
-    msg.reply("...how? RTFM.")
+    // Doesn't work when combined with botrac4r: no awareness of if a command is controlled by botrac4r.
+    //msg.reply("...how? RTFM.")
 }
 
 function onMessage(msg) {
     let args = msg.content.split(' ');
+    if (args.length < 2) return;
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
     let commandType = undefined;
-    if (args[0] && args[0].startsWith("-")) {
+    if (args[0].startsWith("-")) {
         let type = args[0].substring(1)
         commandType = commands[type]
         if (!commandType) {
