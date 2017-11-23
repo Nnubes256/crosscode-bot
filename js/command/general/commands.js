@@ -151,6 +151,11 @@ module.exports = function(instance) {
             msg.channel.send("...why?", createRichEmbed({
                 image: "https://cdn.discordapp.com/emojis/337987528625881090.png"
             }))
+        },
+        balls: function blueBalls(msg) {
+            msg.channel.send("BALLS", createRichEmbed({
+                image: "https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png"
+            }))
         }
     }
     let helpText = getHelpText(commands);
