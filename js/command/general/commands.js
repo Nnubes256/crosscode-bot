@@ -30,7 +30,7 @@ module.exports = function(instance) {
             })
         },
         box: function(msg, args) {
-            let phrase = args[0]
+            let phrase = args.join(' ')
             if (phrase) {
                 let message = ""
                 for (var i = 0; i < phrase.length; i++) {
