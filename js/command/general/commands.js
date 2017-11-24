@@ -133,7 +133,7 @@ module.exports = function(instance) {
             msg.channel.send('', createRichEmbed({
                 image: 'https://cdn.discordapp.com/attachments/380588134712475665/383705658731659266/tumblr_mtud5kX2T71r7fahjo1_250.gif'
             }))
-        }
+        },
         BUG: function scareEmilie(msg) {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
