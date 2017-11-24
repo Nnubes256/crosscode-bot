@@ -6,7 +6,7 @@ let {
 let prefix = process.env.BOT_PREFIX;
 let cmdTypes = ["general", "nsfw", "voice", "mods"];
 let commands = {}
-for(let type in cmdTypes) {
+for (let type of cmdTypes) {
     commands[type] = require(`./js/command/${type}/commands.js`)(client);
 }
 Array.prototype.random = function() {
@@ -47,7 +47,7 @@ function onMessage(msg) {
         return;
     }
     let args = msg.content.replace(/^\s+|\s+$/g, '').split(/\s+/);
-    
+
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
