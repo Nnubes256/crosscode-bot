@@ -24,7 +24,7 @@ module.exports = function(instance) {
             let options = {
                 limit: 100
             }
-            if (args && !isNaN(args[0])) {
+            if (!isNaN(args[0])) {
                 options['after'] = args[0]
             }
             msg.channel.fetchMessages(options)
@@ -36,8 +36,9 @@ module.exports = function(instance) {
                         resolve(botMessages)
                     })
                 }).then(function(messages) {
+                    msg.author.send(`${options} \n ${messages.size}`)
                     msg.channel.bulkDelete(messages).catch(function(error) {
-                        return msg.reply('Could not bulk delete');
+                        msg.author.send('${error}');
                     })
                 })
         },
