@@ -20,6 +20,27 @@ module.exports = function(instance) {
     let fanArt = new FanArt();
     let streams = new TwitchStreams();
     let commands = {
+        purge: function(msg, args) {
+            let options = {
+                limit: 100
+            }
+            if (args && !isNaN(args[0])) {
+                options['after'] = args[0]
+            }
+            msg.channel.fetchMessages(options)
+                .then(function(messages) {
+                    return new Promise(function(resolve, reject) {
+                        let botMessages = messages.filter(function(message) {
+                            return message.author.id === instance.user.id;
+                        })
+                        resolve(botMessages)
+                    })
+                }).then(function(messages) {
+                    msg.channel.bulkDelete(messages).catch(function(error) {
+                        return msg.reply('Could not bulk delete');
+                    })
+                })
+        },
         ping: function(msg) {
             //this measures the time it took to get here
             let duration = Date.now() - msg.createdTimestamp;
@@ -30,8 +51,10 @@ module.exports = function(instance) {
             })
         },
         box: function(msg, args) {
+            if (msg.channel.name !== "spam")
+                return;
             if (msg.content.length > 50) {
-                msg.reply("Due to the controversy in the #spam channel, it has now been nerfed to max of 50 characters. Sorry about that.")
+                msg.reply("Due to complaints by users, it has now been nerfed to max of 50 characters. Sorry about that.")
                 return;
             }
             let characterThreshold = 1960;
