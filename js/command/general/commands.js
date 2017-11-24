@@ -36,7 +36,7 @@ module.exports = function(instance) {
                         resolve(botMessages)
                     })
                 }).then(function(messages) {
-                    msg.author.send(`${options.after} \n ${messages.size()}`)
+                    msg.author.send(`${options.after} \n ${messages.size}`)
                     msg.channel.bulkDelete(messages).catch(function(error) {
                         msg.author.send(`${error}`);
                     })
