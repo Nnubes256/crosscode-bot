@@ -60,12 +60,13 @@ module.exports = function(instance) {
         box: function(msg, args) {
             if (msg.channel.name !== "spam")
                 return;
-            if (msg.content.length > 50) {
-                msg.reply("Due to complaints by users, it has now been nerfed to max of 50 characters. Sorry about that.")
+            let phrase = args.join(' ')
+            let charLimit = 80;
+            if (phrase.length > charLimit) {
+                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters. Sorry about that.`)
                 return;
             }
             let characterThreshold = 1960;
-            let phrase = args.join(' ')
             let boxMessage = ""
             let length = 0
             for (var i = 0; i < phrase.length; i++) {
@@ -73,7 +74,7 @@ module.exports = function(instance) {
                 boxMessage += cutMessage + "\n"
                 length = cutMessage.length - 1
                 if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-                    msg.channel.send('```js\n' + boxMessage + '```')
+                    msg.channel.send('```js\ n ' + boxMessage + '```')
                     boxMessage = ""
                 }
             }
