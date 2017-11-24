@@ -152,7 +152,7 @@ module.exports = function(instance) {
             msg.channel.send('', fanArt.getRandomArt())
         },
         thinking: function think(msg) {
-            msg.react('??')
+            msg.react('🤔')
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
