@@ -36,9 +36,15 @@ module.exports = function(instance) {
                         resolve(botMessages)
                     })
                 }).then(function(messages) {
-                    msg.author.send(`${options.after} \n ${messages.size}`)
+                    let lastKey = messages.lastKey();
                     for (var message of messages) {
-                        message[1].delete(50)
+                        if (message[0] === lastKey) {
+                            message[1].delete().then(function() {
+                                msg.reply('Deleted the last message')
+                            })
+                        } else {
+                            message[1].delete()
+                        }
                     }
                 })
         },
