@@ -37,9 +37,9 @@ module.exports = function(instance) {
                     })
                 }).then(function(messages) {
                     msg.author.send(`${options.after} \n ${messages.size}`)
-                    msg.channel.bulkDelete(messages).catch(function(error) {
-                        msg.author.send(`${error}`);
-                    })
+                    for (var message of messages) {
+                        message[1].delete(50)
+                    }
                 })
         },
         ping: function(msg) {
