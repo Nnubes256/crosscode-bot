@@ -31,7 +31,7 @@ module.exports = function(instance) {
         },
         box: function(msg, args) {
             if (msg.content.length > 50) {
-                msg.reply("Due to the controversy in the #spam channel, it has now been nerfed to max of 50 characters.")
+                msg.reply("Due to the controversy in the #spam channel, it has now been nerfed to max of 50 characters. Sorry about that.")
                 return;
             }
             let characterThreshold = 1960;
