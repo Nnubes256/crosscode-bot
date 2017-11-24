@@ -30,19 +30,23 @@ module.exports = function(instance) {
             })
         },
         box: function(msg, args) {
-			let characterThreshold = 1960;
-			let phrase = args.join(' ')
-			let boxMessage = ""
-			let length = 0
-			for (var i = 0; i < phrase.length; i++) {
-				cutMessage = phrase.substring(i)
-				boxMessage += cutMessage + "\n"
-				length = cutMessage.length - 1
-				if(boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-					msg.channel.send('```js\n' + boxMessage + '```')
-					boxMessage = ""
-				}
-			}
+            if (msg.content.length > 50) {
+                msg.reply("Due to the controversy in the #spam channel, it has now been nerfed to max of 50 characters.")
+                return;
+            }
+            let characterThreshold = 1960;
+            let phrase = args.join(' ')
+            let boxMessage = ""
+            let length = 0
+            for (var i = 0; i < phrase.length; i++) {
+                cutMessage = phrase.substring(i)
+                boxMessage += cutMessage + "\n"
+                length = cutMessage.length - 1
+                if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
+                    msg.channel.send('```js\n' + boxMessage + '```')
+                    boxMessage = ""
+                }
+            }
         },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
@@ -112,7 +116,7 @@ module.exports = function(instance) {
             msg.channel.send('', fanArt.getRandomArt())
         },
         thinking: function think(msg) {
-            msg.react('🤔')
+            msg.react('??')
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
@@ -137,7 +141,7 @@ module.exports = function(instance) {
         },
         verytriggered: function getMoreTriggered(msg) {
             msg.channel.send(createRichEmbed({
-                title: "何？",
+                title: "??",
                 image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
             }))
         },
@@ -147,9 +151,9 @@ module.exports = function(instance) {
             }))
         },
         vote: function vote(msg) {
-            msg.react("👍")
-                .then((msgReact) => msgReact.message.react("👊"))
-                .then((msgReact) => msgReact.message.react("👎"))
+            msg.react("??")
+                .then((msgReact) => msgReact.message.react("??"))
+                .then((msgReact) => msgReact.message.react("??"))
 
         },
         work: function plsWork(msg) {
