@@ -74,7 +74,7 @@ module.exports = function(instance) {
                 boxMessage += cutMessage + "\n"
                 length = cutMessage.length - 1
                 if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-                    msg.channel.send('```js\ n ' + boxMessage + '```')
+                    msg.channel.send('```js\n' + boxMessage + '```')
                     boxMessage = ""
                 }
             }
