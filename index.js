@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-require("./botrac4r/botrac4r.js");
+//require("./botrac4r/botrac4r.js");
 let {
     readFileSync
 } = require('fs');
