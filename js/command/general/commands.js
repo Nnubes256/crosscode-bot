@@ -76,7 +76,6 @@ module.exports = function(instance) {
             let length = 0
             for (let i = 0; i < phrase.length; i++) {
                 cutMessage = phrase.substring(i)
-		if(phrase[0].match(
                 boxMessage += cutMessage + "\n"
                 length = cutMessage.length - 1
                 if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
