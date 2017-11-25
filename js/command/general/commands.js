@@ -61,11 +61,7 @@ module.exports = function(instance) {
         box: function(msg, args) {
             if (msg.channel.name !== "spam")
                 return;
-            let markdownConstructs = ['`', '*', '__', '~~']
-            let phrase = args.join(' ');
-            for(let c in markdownConstructs) {
-                phrase = phrase.replace(c, '\\' + c);
-            }
+            let phrase = args.join(' ').replace('`', '');
             let charLimit = 80;
             if (phrase.length > charLimit) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters. Sorry about that.`)
