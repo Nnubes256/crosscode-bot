@@ -14,7 +14,8 @@ class Character {
     }
     static getClass(className) {
         var names = ["Spheromancer", "Triblader", "Quadroguard", "Pentafist", "Hexacast"];
-        var index = names.indexOf(className.toLowerCase().toTitleCase());
+        let lowerClassName = className.toLowerCase();
+        var index = names.indexOf(lowerClassName[0].toUpperCase() + lowerClassName.substring(1));
         if (index > -1)
             return names[index];
         return null;
