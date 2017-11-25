@@ -14,7 +14,7 @@ module.exports = function(instance) {
                     return;
                 }
                 var className = Character.getClass(args[2]);
-                if (className) {
+                if (!className) {
                     msg.reply("not a valid class.");
                     return;
                 }
