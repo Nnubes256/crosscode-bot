@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 require("./botrac4r/botrac4r.js");
-let { 
+let {
     readFileSync
 } = require('fs');
 let prefix = process.env.BOT_PREFIX;
