@@ -20,7 +20,7 @@ class Character {
         return null;
     }
     getStats() {
-        return `name: ${this.name}\nclass:${this.className}\nlevel:${this.level}\nhp:${this.hp}`
+        return `name: ${this.name}\nclass: ${this.className}\nlevel: ${this.level}\nhp: ${this.hp}`
     }
     addLeveL(level, showMessage) {
         this.level += level;
