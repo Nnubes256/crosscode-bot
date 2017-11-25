@@ -12,8 +12,12 @@ class Character {
         if (name.length > 10 || !name.length)
             return false;
     }
-    static isValidClass(className) {
-
+    static getClass(className) {
+        var names = ["Spheromancer", "Triblader", "Quadroguard", "Pentafist", "Hexacast"];
+        var index = names.indexOf(className.toLowerCase().toTitleCase());
+        if (index > -1)
+            return names[index];
+        return null;
     }
     getStats() {
         return `name: ${this.name}\nclass:${this.className}\nlevel:${this.level}\nhp:${this.hp}`
