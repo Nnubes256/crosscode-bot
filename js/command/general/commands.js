@@ -7,6 +7,7 @@ module.exports = function(instance) {
         getHelpText,
         isFromAdmin
     } = require('./../../discord-util.js');
+    const database = require('sqlite3');
     const {
         readFileSync
     } = require('fs');

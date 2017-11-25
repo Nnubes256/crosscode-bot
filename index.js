@@ -4,7 +4,7 @@ let {
     readFileSync
 } = require('fs');
 let prefix = process.env.BOT_PREFIX;
-let cmdTypes = ["general", "nsfw", "voice", "mods"];
+let cmdTypes = ["general", "nsfw", "voice", "mods", "anime"];
 let commands = {}
 for (let type of cmdTypes) {
     commands[type] = require(`./js/command/${type}/commands.js`)(client);
