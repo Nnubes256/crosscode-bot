@@ -1,5 +1,9 @@
 let parser = new(require('xmldom').DOMParser);
 let rp = require('request-promise');
+let sqlite = require("sqlite3");
+let fandb = new sqlite.Database(__dirname+"/extra-fanart.db", undefined, function() {
+    fandb.configure("busyTimeout", 3000);
+});
 //name, link, image url
 let {
     createRichEmbed
@@ -27,11 +31,20 @@ class CrossCodeFanArt {
                 let postLink = fan_item.getElementsByTagName("link")[0].textContent
                 let link = fan_item.getElementsByTagName("media:content")[0].getAttribute("url")
                 _instance.images.push(createRichEmbed({
-                    title: `${title} - by ${author}`,
+                    title: `${title} — by ${author}`, // Come on, em dash is sexy AF. How could you not use it? Shame on you, ${git blame crosscode-fanart.js}!
                     description: postLink,
                     image: link
                 }));
             }
+        });
+        fandb.all("SELECT * FROM FANART", (err, dbr) => {
+            dbr.forEach(row => {
+                this.images.push(createRichEmbed({
+                    title: `${row.TITLE} — by ${row.AUTHOR}`,
+                    description: row.POST_LINK,
+                    image: row.LINK
+                }));
+            });
         });
     }
     getRandomArt() {
