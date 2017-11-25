@@ -49,13 +49,7 @@ function onMessage(msg) {
         msg.channel.send("oof")
         return;
     }
-<<<<<<< HEAD
-    let args = msg.content.split(' ');
-    if (args.length < 2) return;
-=======
     let args = msg.content.replace(/^\s+|\s+$/g, '').split(/\s+/);
-
->>>>>>> c6cee21f3a49a314124bd4f71d9ae8650f35d893
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
