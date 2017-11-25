@@ -5,11 +5,10 @@ let {
     readFileSync
 } = require('fs');
 let prefix = process.env.BOT_PREFIX;
-let commands = {
-    "": require('./js/command/general/commands.js')(client),
-    "nsfw": require('./js/command/nsfw/commands.js')(client),
-    "voice": require('./js/command/voice/commands.js')(client),
-    "mods": require('./js/command/mods/commands.js')(client)
+let cmdTypes = ["general", "nsfw", "voice", "mods", "anime"];
+let commands = {}
+for (let type of cmdTypes) {
+    commands[type] = require(`./js/command/${type}/commands.js`)(client);
 }
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
@@ -50,8 +49,13 @@ function onMessage(msg) {
         msg.channel.send("oof")
         return;
     }
+<<<<<<< HEAD
     let args = msg.content.split(' ');
     if (args.length < 2) return;
+=======
+    let args = msg.content.replace(/^\s+|\s+$/g, '').split(/\s+/);
+
+>>>>>>> c6cee21f3a49a314124bd4f71d9ae8650f35d893
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
@@ -65,7 +69,7 @@ function onMessage(msg) {
         }
         args.shift()
     } else
-        commandType = commands[""]
+        commandType = commands["general"]
 
     let command = args.shift()
 

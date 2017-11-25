@@ -7,6 +7,7 @@ module.exports = function(instance) {
         getHelpText,
         isFromAdmin
     } = require('./../../discord-util.js');
+    const database = require('sqlite3');
     const {
         readFileSync
     } = require('fs');
@@ -20,6 +21,34 @@ module.exports = function(instance) {
     let fanArt = new FanArt();
     let streams = new TwitchStreams();
     let commands = {
+        purge: function(msg, args) {
+            let options = {
+                limit: 100
+            }
+            if (!isNaN(args[0])) {
+                options['after'] = args[0]
+            }
+            msg.channel.fetchMessages(options)
+                .then(function(messages) {
+                    return new Promise(function(resolve, reject) {
+                        let botMessages = messages.filter(function(message) {
+                            return message.author.id === instance.user.id;
+                        })
+                        resolve(botMessages)
+                    })
+                }).then(function(messages) {
+                    let lastKey = messages.lastKey();
+                    for (var message of messages) {
+                        if (message[0] === lastKey) {
+                            message[1].delete().then(function() {
+                                msg.reply('Deleted the last message')
+                            })
+                        } else {
+                            message[1].delete()
+                        }
+                    }
+                })
+        },
         ping: function(msg) {
             //this measures the time it took to get here
             let duration = Date.now() - msg.createdTimestamp;
@@ -30,19 +59,26 @@ module.exports = function(instance) {
             })
         },
         box: function(msg, args) {
-			let characterThreshold = 1960;
-			let phrase = args.join(' ')
-			let boxMessage = ""
-			let length = 0
-			for (var i = 0; i < phrase.length; i++) {
-				cutMessage = phrase.substring(i)
-				boxMessage += cutMessage + "\n"
-				length = cutMessage.length - 1
-				if(boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-					msg.channel.send('```js\n' + boxMessage + '```')
-					boxMessage = ""
-				}
-			}
+            if (msg.channel.name !== "spam")
+                return;
+            let phrase = args.join(' ')
+            let charLimit = 80;
+            if (phrase.length > charLimit) {
+                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters. Sorry about that.`)
+                return;
+            }
+            let characterThreshold = 1960;
+            let boxMessage = ""
+            let length = 0
+            for (var i = 0; i < phrase.length; i++) {
+                cutMessage = phrase.substring(i)
+                boxMessage += cutMessage + "\n"
+                length = cutMessage.length - 1
+                if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
+                    msg.channel.send('```js\n' + boxMessage + '```')
+                    boxMessage = ""
+                }
+            }
         },
         setname: function setName(msg, args, command) {
             if (args.length < 2) {
@@ -94,6 +130,11 @@ module.exports = function(instance) {
             let message = 'bye!!! ' + getEmoji(msg, 'leaCheese').toString()
             msg.channel.send(message)
         },
+        bugs: function(msg) {
+            msg.channel.send('', createRichEmbed({
+                image: 'https://cdn.discordapp.com/attachments/380588134712475665/383705658731659266/tumblr_mtud5kX2T71r7fahjo1_250.gif'
+            }))
+        },
         BUG: function scareEmilie(msg) {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
@@ -137,7 +178,7 @@ module.exports = function(instance) {
         },
         verytriggered: function getMoreTriggered(msg) {
             msg.channel.send(createRichEmbed({
-                title: "何？",
+                title: "??",
                 image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
             }))
         },
@@ -147,9 +188,9 @@ module.exports = function(instance) {
             }))
         },
         vote: function vote(msg) {
-            msg.react("👍")
-                .then((msgReact) => msgReact.message.react("👊"))
-                .then((msgReact) => msgReact.message.react("👎"))
+            msg.react("??")
+                .then((msgReact) => msgReact.message.react("??"))
+                .then((msgReact) => msgReact.message.react("??"))
 
         },
         work: function plsWork(msg) {
