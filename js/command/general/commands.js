@@ -14,6 +14,22 @@ module.exports = function(instance) {
     const FanArt = require('./crosscode-fanart.js');
     const TwitchStreams = require('./crosscode-twitch-search.js');
 
+    function boxGenerate(phrase) {
+        let characterThreshold = 1960;
+        let boxMessage = "";
+        let length = 0;
+        let phrases = [];
+        for (var i = 0; i < phrase.length; i++) {
+            cutMessage = phrase.substring(i);
+            boxMessage += cutMessage + "\n";
+            length = cutMessage.length - 1;
+            if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
+                phrases.push(boxMessage);
+                boxMessage = "";
+            }
+        }
+        return phrases;
+    }
     let streamArtLink = function getStreamArt() {
         let data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
@@ -67,24 +83,20 @@ module.exports = function(instance) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters. Sorry about that.`)
                 return;
             }
-            let characterThreshold = 1960;
-            let boxMessage = ""
-            let length = 0
-            for (var i = 0; i < phrase.length; i++) {
-                cutMessage = phrase.substring(i)
-                boxMessage += cutMessage + "\n"
-                length = cutMessage.length - 1
-                if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-                    msg.channel.send('```js\n' + boxMessage + '```')
-                    boxMessage = ""
-                }
+            boxGenerate(phrase).forEach(function(message) {
+                msg.channel.send('```js\n' + message + '```');
+            });
+        },
+        rbox: function randomBox(msg, args) {
+            if (args[0]) {
+                //todo:
             }
         },
         setname: function setName(msg, args, command) {
             if (!isFromAdmin(msg))
                 return;
             if (args.length < 2) {
-                msg.reply("not enough arguments supplied.")
+                msg.reply("not enough arguments supplied.");
                 return;
             }
             let oldName = args.shift()
@@ -204,6 +216,24 @@ module.exports = function(instance) {
             msg.channel.send("BALLS", createRichEmbed({
                 image: "https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png"
             }))
+        },
+        get: function getGame(msg, args) {
+            if (args[0] === "it") {
+                msg.channel.send("", createRichEmbed({
+                    title: "Steam link",
+                    url: "http://store.steampowered.com/app/368340/"
+                }));
+            } else if (args[0] === "out") {
+
+            }
+        },
+        thanks: function doThank(msg) {
+            //make this a class :p
+            let thankYouMessage = [
+                "Keep up the good work!",
+                "You guys are awesome."];
+            //Ew too long... please refractor
+            msg.channel.send(`From ${message.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`);
         }
     }
     let helpText = getHelpText(commands);

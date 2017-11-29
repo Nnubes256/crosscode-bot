@@ -1,7 +1,11 @@
 module.exports = function(instance) {
     const Discord = require("discord.js");
-	const { findMember, createRichEmbed, getHelpText } = require('./../../discord-util.js');
-	
+    const {
+        findMember,
+        createRichEmbed,
+        getHelpText
+    } = require('./../../discord-util.js');
+
     let commands = {
         lewd: function showLewdArt(msg, args, command) {
             if (commands.error(msg, command))
@@ -13,7 +17,7 @@ module.exports = function(instance) {
         },
         error: function error(msg, command) {
             if (!msg.channel.nsfw) {
-                msg.reply("this channel is sfw. Please try again in a nsfw channel")
+                msg.reply("this channel is sfw. Please try again in a nsfw channel");
                 return true;
             }
         },
@@ -22,5 +26,5 @@ module.exports = function(instance) {
         }
     };
     let helpText = getHelpText(commands, 'nsfw');
-    return commands
+    return commands;
 }

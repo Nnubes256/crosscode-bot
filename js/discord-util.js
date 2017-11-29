@@ -41,6 +41,7 @@ exports.createRichEmbed = function(opts) {
     opts.image && richEmbed.setImage(opts.image)
     opts.title && richEmbed.setTitle(opts.title)
     opts.author && richEmbed.setAuthor(opts.author)
+    opts.url && richEmbed.setURL(opts.url)
     return richEmbed;
 }
 exports.getHelpText = function(obj, type) {

@@ -44,6 +44,9 @@ module.exports = function(instance) {
                 msg.reply('they do not have a character.');
                 return;
             }
+            if (target.isInPvp()) {
+                return;
+            }
             //this is just in case one or the other deals a finishing blow
             let newMatch = new Match(challenger, target, msg.channel);
             matches.set(msg.channel.id, newMatch);
