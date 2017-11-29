@@ -233,7 +233,9 @@ module.exports = function(instance) {
                 "Keep up the good work!",
                 "You guys are awesome."];
             //Ew too long... please refractor
-            msg.channel.send(`From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`);
+            msg.channel.send('', createRichEmbed({
+                description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
+            }));
         }
     }
     let helpText = getHelpText(commands);
