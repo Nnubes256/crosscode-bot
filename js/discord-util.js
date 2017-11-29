@@ -54,8 +54,6 @@ exports.getHelpText = function(obj, type) {
     return `${helpText}`
 }
 exports.isFromAdmin = function(msg) {
-    if (!msg.member)
-        return true;
-
-    return msg.member.hasPermission("administrator");
+    let adminPosition = msg.member.guild.roles.size - 1;
+    return msg.member.highestRole.position === adminPosition;
 }
