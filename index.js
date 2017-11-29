@@ -54,7 +54,8 @@ function onMessage(msg) {
     if (!_prefix.startsWith(prefix))
         return;
     let commandType = undefined;
-    if (args[0].startsWith("-")) {
+    //2767mr fix
+    if (args[0] && args[0].startsWith("-")) {
         let type = args[0].substring(1)
         commandType = commands[type]
         if (!commandType) {

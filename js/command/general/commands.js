@@ -81,6 +81,8 @@ module.exports = function(instance) {
             }
         },
         setname: function setName(msg, args, command) {
+            if (!isFromAdmin(msg))
+                return;
             if (args.length < 2) {
                 msg.reply("not enough arguments supplied.")
                 return;
@@ -108,7 +110,7 @@ module.exports = function(instance) {
                 instance.destroy();
                 process.exit(0);
             } else {
-                msg.reply('You don\'t have the power to kill me!')
+                msg.reply("You don't have the power to kill me!");
             }
 
         },
@@ -178,7 +180,7 @@ module.exports = function(instance) {
         },
         verytriggered: function getMoreTriggered(msg) {
             msg.channel.send(createRichEmbed({
-                title: "??",
+                title: "何？",
                 image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
             }))
         },
@@ -188,9 +190,9 @@ module.exports = function(instance) {
             }))
         },
         vote: function vote(msg) {
-            msg.react("??")
-                .then((msgReact) => msgReact.message.react("??"))
-                .then((msgReact) => msgReact.message.react("??"))
+            msg.react("👍")
+                .then((msgReact) => msgReact.message.react("👊"))
+                .then((msgReact) => msgReact.message.react("👎"))
 
         },
         work: function plsWork(msg) {
