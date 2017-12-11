@@ -14,6 +14,22 @@ module.exports = function(instance) {
     const FanArt = require('./crosscode-fanart.js');
     const TwitchStreams = require('./crosscode-twitch-search.js');
 
+    function boxGenerate(phrase) {
+        let characterThreshold = 1960;
+        let boxMessage = "";
+        let length = 0;
+        let phrases = [];
+        for (var i = 0; i < phrase.length; i++) {
+            cutMessage = phrase.substring(i);
+            boxMessage += cutMessage + "\n";
+            length = cutMessage.length - 1;
+            if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
+                phrases.push(boxMessage);
+                boxMessage = "";
+            }
+        }
+        return phrases;
+    }
     let streamArtLink = function getStreamArt() {
         let data = readFileSync('stream.txt', 'utf8')
         return data.split("\n");
@@ -81,8 +97,10 @@ module.exports = function(instance) {
             }
         },
         setname: function setName(msg, args, command) {
+            if (!isFromAdmin(msg))
+                return;
             if (args.length < 2) {
-                msg.reply("not enough arguments supplied.")
+                msg.reply("not enough arguments supplied.");
                 return;
             }
             let oldName = args.shift()
@@ -108,7 +126,7 @@ module.exports = function(instance) {
                 instance.destroy();
                 process.exit(0);
             } else {
-                msg.reply('You don\'t have the power to kill me!')
+                msg.reply("You don't have the power to kill me!");
             }
 
         },
@@ -178,7 +196,7 @@ module.exports = function(instance) {
         },
         verytriggered: function getMoreTriggered(msg) {
             msg.channel.send(createRichEmbed({
-                title: "??",
+                title: "何？",
                 image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
             }))
         },
@@ -188,9 +206,9 @@ module.exports = function(instance) {
             }))
         },
         vote: function vote(msg) {
-            msg.react("??")
-                .then((msgReact) => msgReact.message.react("??"))
-                .then((msgReact) => msgReact.message.react("??"))
+            msg.react("👍")
+                .then((msgReact) => msgReact.message.react("👊"))
+                .then((msgReact) => msgReact.message.react("👎"))
 
         },
         work: function plsWork(msg) {
@@ -202,6 +220,26 @@ module.exports = function(instance) {
             msg.channel.send("BALLS", createRichEmbed({
                 image: "https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png"
             }))
+        },
+        get: function getGame(msg, args) {
+            if (args[0] === "it") {
+                msg.channel.send("", createRichEmbed({
+                    title: "Steam link",
+                    url: "http://store.steampowered.com/app/368340/"
+                }));
+            } else if (args[0] === "out") {
+
+            }
+        },
+        thanks: function doThank(msg) {
+            //make this a class :p
+            let thankYouMessage = [
+                "Keep up the good work!",
+                "You guys are awesome."];
+            //Ew too long... please refractor
+            msg.channel.send('', createRichEmbed({
+                description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
+            }));
         }
     }
     let helpText = getHelpText(commands);

@@ -10,7 +10,6 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "discord.io": "github:Woor/discord.io#gateway_v6",
     "discord.js": "^11.2.1",
     "ffmpeg-binaries": "^3.2.2-3",
     "node-opus": "^0.2.7",
@@ -20,6 +19,6 @@
     "xmldom": "^0.1.27"
   },
   "engines": {
-    "node": "6.11.2"
+    "node": "8.4.0"
   }
 }

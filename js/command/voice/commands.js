@@ -17,14 +17,17 @@ module.exports = function(instance) {
         },
         play: function playMusic(msg, args) {
             if (msg.member.voiceChannel) {
-                let voiceChannel = instance.channels.find("id", msg.member.voiceChannel.id);
+                let voiceChannel = msg.member.voiceChannel.members.find(function(member) {
+                    return member.user.id === instance.user.id;
+                });
                 if (voiceChannel) {
                     try {
-                        voiceChannel.connection.playFile('./music/' + args.join(" ") + '.mp3');
+                        msg.member.voiceChannel.connection.playFile('./music/' + args.join(" ") + '.mp3');
+                        msg.reply('am I playing music?');
                     } catch (e) {
                         console.log(e)
                     }
-                    msg.reply('am I playing music?')
+
                 } else {
                     msg.reply("not in your voice channel.")
                 }

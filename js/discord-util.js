@@ -41,6 +41,7 @@ exports.createRichEmbed = function(opts) {
     opts.image && richEmbed.setImage(opts.image)
     opts.title && richEmbed.setTitle(opts.title)
     opts.author && richEmbed.setAuthor(opts.author)
+    opts.url && richEmbed.setURL(opts.url)
     return richEmbed;
 }
 exports.getHelpText = function(obj, type) {
@@ -54,8 +55,6 @@ exports.getHelpText = function(obj, type) {
     return `${helpText}`
 }
 exports.isFromAdmin = function(msg) {
-    if (!msg.member)
-        return true;
-
-    return msg.member.hasPermission("administrator");
+    let adminPosition = msg.member.guild.roles.size - 1;
+    return msg.member.highestRole.position === adminPosition;
 }
