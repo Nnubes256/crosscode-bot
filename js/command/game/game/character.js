@@ -32,7 +32,7 @@ class Character {
     getStats() {
         stats = "";
         for(var key in this) {
-            if(this.hasOwnProperty(key) {
+            if(this.hasOwnProperty(key)) {
                  stats += (key + ": " + this[key] + "\n");
             }
         }
