@@ -77,23 +77,19 @@ module.exports = function(instance) {
         box: function(msg, args) {
             if (msg.channel.name !== "spam")
                 return;
-            let phrase = args.join(' ').replace('`', '');
+            let phrase = args.join(' ')
             let charLimit = 80;
             if (phrase.length > charLimit) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters. Sorry about that.`)
                 return;
             }
-            let characterThreshold = 1960;
-            let boxMessage = ""
-            let length = 0
-            for (let i = 0; i < phrase.length; i++) {
-                cutMessage = phrase.substring(i)
-                boxMessage += cutMessage + "\n"
-                length = cutMessage.length - 1
-                if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-                    msg.channel.send('```js\n' + boxMessage + '```')
-                    boxMessage = ""
-                }
+            boxGenerate(phrase).forEach(function(message) {
+                msg.channel.send('```js\n' + message + '```');
+            });
+        },
+        rbox: function randomBox(msg, args) {
+            if (args[0]) {
+                //todo:
             }
         },
         setname: function setName(msg, args, command) {

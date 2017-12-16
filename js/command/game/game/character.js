@@ -30,7 +30,13 @@ class Character {
         return this.inPvP;
     }
     getStats() {
-        return `name: ${this.name}\nclass: ${this.className}\nlevel: ${this.level}\nhp: ${this.hp}\nwins:${this.wins}\nLoses:${this.loses}\nMoney:${this.money}`
+        stats = "";
+        for(var key in this) {
+            if(this.hasOwnProperty(key) {
+                 stats += (key + ": " + this[key] + "\n");
+            }
+        }
+        return stats;
     }
     addLeveL(level, showMessage) {
         this.level += level;
