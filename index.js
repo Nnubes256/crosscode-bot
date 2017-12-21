@@ -17,47 +17,53 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     //client.user.setAvatar('avatar/cloudlea.png')
     //Playing...
+    let activityTypes = {
+        GAMING: 0,
+        STREAMING: 1,
+        LISTENING: 2,
+        WATCHING: 3
+    }
     let gameStats = [{
         name: "santiballs",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "...hi?",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "...bye!",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "Hi-5!!!",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "the devs code :)",
-        type: 3
+        type: activityTypes.WATCHING
     }, {
         name: "with mods",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "cc.ig",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "with CCLoader",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "in multiplayer :o",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "...Lea. -.-",
-        type: 3
+        type: activityTypes.WATCHING
     }, {
         name: "CrossCode v1",
-        type: 3
+        type: activityTypes.GAMING
     }, {
         name: "to Intero's Music :o",
-        type: 2
+        type: activityTypes.LISTENING
     }]
     let newGame = function() {
-        let game = gameStats.random();
+        let activity = gameStats.random();
         client.user.setPresence({
-            game: game
+            activity: activity
         });
     };
     newGame()
