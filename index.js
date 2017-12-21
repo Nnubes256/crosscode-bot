@@ -15,8 +15,7 @@ Array.prototype.random = function() {
 }
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    //client.user.setAvatar('avatar/cloudlea.png')
-    //Playing...
+    client.user.setAvatar('avatar/snowlea.png');
     let activityTypes = {
         GAMING: 0,
         STREAMING: 1,
@@ -57,7 +56,7 @@ client.on('ready', () => {
         name: "CrossCode v1",
         type: activityTypes.GAMING
     }, {
-        name: "to Intero's Music :o",
+        name: "Intero's Music :o",
         type: activityTypes.LISTENING
     }]
     let newGame = function() {

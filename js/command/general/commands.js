@@ -13,6 +13,7 @@ module.exports = function(instance) {
     } = require('fs');
     const FanArt = require('./crosscode-fanart.js');
     const TwitchStreams = require('./crosscode-twitch-search.js');
+    const StrawPoll = require('./poll/strawpoll');
 
     function boxGenerate(phrase) {
         let characterThreshold = 1960;
@@ -37,6 +38,20 @@ module.exports = function(instance) {
     let fanArt = new FanArt();
     let streams = new TwitchStreams();
     let commands = {
+        poll: function createPoll(msg, args) {
+            console.log('Creating poll!');
+            console.log(args);
+
+            //let title = args.shift();
+            /*let poll = new StrawPoll(title, args);
+            poll.makeRequest()
+                .then(function(response) {
+                    console.log(response);
+                }).catch(function(err) {
+                    console.log(err);
+                });*/
+
+        },
         purge: function(msg, args) {
             let options = {
                 limit: 100
