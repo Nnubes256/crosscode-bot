@@ -19,37 +19,37 @@ client.on('ready', () => {
     //Playing...
     let gameStats = [{
         name: "santiballs",
-        type: 0
+        type: 3
     }, {
         name: "...hi?",
-        type: 0
+        type: 3
     }, {
         name: "...bye!",
-        type: 0
+        type: 3
     }, {
         name: "Hi-5!!!",
-        type: 0
+        type: 3
     }, {
         name: "the devs code :)",
         type: 3
     }, {
         name: "with mods",
-        type: 0
+        type: 3
     }, {
         name: "cc.ig",
-        type: 2
+        type: 3
     }, {
         name: "with CCLoader",
-        type: 0
+        type: 3
     }, {
         name: "in multiplayer :o",
-        type: 0
+        type: 3
     }, {
         name: "...Lea. -.-",
         type: 3
     }, {
         name: "CrossCode v1",
-        type: 0
+        type: 3
     }, {
         name: "to Intero's Music :o",
         type: 2
