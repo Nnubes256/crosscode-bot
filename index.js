@@ -17,22 +17,49 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     //client.user.setAvatar('avatar/cloudlea.png')
     //Playing...
-    let gameStats = [
-      "santiballs",
-      "...hi?",
-      "...bye!",
-      "Hi-5!!!",
-      "with mods",
-      "cc.ig",
-      "with CCLoader",
-      "in multiplayer :o",
-      "...Lea. -.-",
-      "CrossCode v1",
-      "Star Wars™ Battlefront™ 2"
-    ]
+    let gameStats = [{
+            name: "santiballs",
+            type: 0
+    }, {
+            name: "...hi?",
+            type: 0
+    }, {
+            name: "...bye!",
+            type: 0
+    }, {
+            name: "Hi-5!!!",
+            type: 0
+    }, {
+            name: "the devs code :)"
+            type: 3
+    }, {
+            name: "with mods",
+            type: 0
+    },
+        {
+            name: "cc.ig",
+            type: 2
+    }, {
+            name: "with CCLoader",
+            type: 0
+    }, {
+            name: "in multiplayer :o",
+            type: 0
+    }, {
+            name: "...Lea. -.-",
+            type: 3
+    }, {
+            name: "CrossCode v1",
+            type: 0
+    }, {
+            name: "to Intero's Music :o",
+            type: 2
+    }]
     let newGame = function() {
-        let game = gameStats.random()
-        client.user.setGame(game)
+        let game = gameStats.random();
+        client.user.setPresence({
+            game: game
+        });
     };
     newGame()
     setInterval(newGame, 120000)
@@ -43,12 +70,15 @@ function onError(msg) {
     //msg.reply("...how? RTFM.")
 }
 
+function processArgs(args) {}
+
 function onMessage(msg) {
     //lel
     if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof")
         return;
     }
+    //Allow for new line parsing
     let args = msg.content.replace(/^\s+|\s+$/g, '').split(/\s+/);
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
@@ -67,7 +97,6 @@ function onMessage(msg) {
         commandType = commands["general"]
 
     let command = args.shift()
-
     let func = commandType[command]
     if (func) {
         func(msg, args, command, console)
