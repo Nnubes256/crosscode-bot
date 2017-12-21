@@ -18,42 +18,41 @@ client.on('ready', () => {
     //client.user.setAvatar('avatar/cloudlea.png')
     //Playing...
     let gameStats = [{
-            name: "santiballs",
-            type: 0
+        name: "santiballs",
+        type: 0
     }, {
-            name: "...hi?",
-            type: 0
+        name: "...hi?",
+        type: 0
     }, {
-            name: "...bye!",
-            type: 0
+        name: "...bye!",
+        type: 0
     }, {
-            name: "Hi-5!!!",
-            type: 0
+        name: "Hi-5!!!",
+        type: 0
     }, {
-            name: "the devs code :)"
-            type: 3
+        name: "the devs code :)",
+        type: 3
     }, {
-            name: "with mods",
-            type: 0
-    },
-        {
-            name: "cc.ig",
-            type: 2
+        name: "with mods",
+        type: 0
     }, {
-            name: "with CCLoader",
-            type: 0
+        name: "cc.ig",
+        type: 2
     }, {
-            name: "in multiplayer :o",
-            type: 0
+        name: "with CCLoader",
+        type: 0
     }, {
-            name: "...Lea. -.-",
-            type: 3
+        name: "in multiplayer :o",
+        type: 0
     }, {
-            name: "CrossCode v1",
-            type: 0
+        name: "...Lea. -.-",
+        type: 3
     }, {
-            name: "to Intero's Music :o",
-            type: 2
+        name: "CrossCode v1",
+        type: 0
+    }, {
+        name: "to Intero's Music :o",
+        type: 2
     }]
     let newGame = function() {
         let game = gameStats.random();
