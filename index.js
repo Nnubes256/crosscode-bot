@@ -22,7 +22,7 @@ client.on('ready', () => {
         STREAMING: 1,
         LISTENING: 2,
         WATCHING: 3
-    }
+    };
     let gameStats = [{
         name: "santiballs",
         type: activityTypes.GAMING
