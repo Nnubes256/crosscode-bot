@@ -36,12 +36,12 @@ module.exports = class Mods {
                     _embed.description = `Showing 25 out of ${_embed.fields.length} mods.`;
                 else
                     _embed.description = `Showing all mods.`;
-
-                _embed.description += '\nData supplied by CCModDB';
+                let CCLoaderLink = 'https://github.com/CCDirectLink/CCLoader';
+                _embed.description += `Note: All mods require [CCLoader](${CCLoaderLink}) to work.`;
                 _embed.timestamp = new Date();
                 let CCModDB = 'https://github.com/CCDirectLink/CCModDB';
                 _embed.footer = {
-                    text: `Last updated `
+                    text: `From CCModDB`
                 };
                 _this.embed = createRichEmbed(_embed);
             });
