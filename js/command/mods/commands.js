@@ -1,6 +1,7 @@
 module.exports = function(instance) {
     const {
-        getHelpText
+        getHelpText,
+        createRichEmbed
     } = require('./../../discord-util.js');
     const ModsInfo = new(require('./mods.js'));
     let commands = {
@@ -9,7 +10,7 @@ module.exports = function(instance) {
                 title: 'Mods not Available'
             }));
         },
-        installation: function getInstallationGuid(msg) {
+        installation: function getInstallationGuide(msg) {
             msg.channel.send('', createRichEmbed({
                 title: 'Installation guide',
                 url: 'https://github.com/CCDirectLink/CCLoader/wiki/Install-mods'
