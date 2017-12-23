@@ -37,7 +37,7 @@ module.exports = class Mods {
                 else
                     _embed.description = `Showing all mods.`;
                 let CCLoaderLink = 'https://github.com/CCDirectLink/CCLoader';
-                _embed.description += `Note: All mods require [CCLoader](${CCLoaderLink}) to work.`;
+                _embed.description += `\nNote: All mods require [CCLoader](${CCLoaderLink}) to work.`;
                 _embed.timestamp = new Date();
                 let CCModDB = 'https://github.com/CCDirectLink/CCModDB';
                 _embed.footer = {

@@ -6,9 +6,12 @@ let {
 } = require('fs');
 let prefix = process.env.BOT_PREFIX;
 let cmdTypes = ["general", "nsfw", "voice", "mods", "anime", "game"];
-let commands = {}
+let commands = {};
+let helpText = {};
 for (let type of cmdTypes) {
     commands[type] = require(`./js/command/${type}/commands.js`)(client);
+    //TODO: Add help text for each function 
+    //helpText[type] = commands[type].helpText;
 }
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];

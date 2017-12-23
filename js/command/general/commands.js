@@ -14,7 +14,6 @@ module.exports = function(instance) {
     const FanArt = require('./crosscode-fanart.js');
     const TwitchStreams = require('./crosscode-twitch-search.js');
     const StrawPoll = require('./poll/strawpoll');
-    const ModsInfo = new(require('./mods.js'));
 
     function boxGenerate(phrase) {
         let characterThreshold = 1960;
@@ -39,11 +38,6 @@ module.exports = function(instance) {
     let fanArt = new FanArt();
     let streams = new TwitchStreams();
     let commands = {
-        mods: function getMods(msg) {
-            msg.channel.send('', ModsInfo.getMods() || createRichEmbed({
-                title: 'Mods not Available'
-            }));
-        },
         poll: function createPoll(msg, args) {
             //let title = args.shift();
             /*let poll = new StrawPoll(title, args);
