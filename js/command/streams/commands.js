@@ -21,7 +21,7 @@ module.exports = function(instance) {
             if (channel)
                 channel.chan_handle.send('', streamEmbed);
         }
-    }, (1 * 1 * 15 * 60 * 1000));
+    }, (1 * 1 * 10 * 60 * 1000));
     let commands = {
         set: function(msg) {
             if (msg.author.id !== "208763015657553921")

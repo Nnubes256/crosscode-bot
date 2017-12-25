@@ -86,13 +86,18 @@ class CrossCodeStream {
             uri: `https://api.twitch.tv/helix/streams?type=live&game_id=${this.id}`
         }).then(function(res) {
             streamData = res.data;
+            //TODO: Handle when no streamers
             let streamerIds = res.data.map(function(streamer) {
                 return streamer.user_id;
             });
             let ids_list = _this.createIdStream(streamerIds);
-            return _this.makeRequest({
-                uri: `https://api.twitch.tv/helix/users?${ids_list}`
-            });
+            if (ids_list.length) {
+                return _this.makeRequest({
+                    uri: `https://api.twitch.tv/helix/users?${ids_list}`
+                });
+            }
+            _this.list = null;
+
         }).then(function(res) {
             //we will assume the result is in the order that they came in...
             var users = res.data;
