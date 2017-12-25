@@ -12,7 +12,6 @@ module.exports = function(instance) {
         readFileSync
     } = require('fs');
     const FanArt = require('./crosscode-fanart.js');
-    const TwitchStreams = require('./crosscode-twitch-search.js');
     const StrawPoll = require('./poll/strawpoll');
 
     function boxGenerate(phrase) {
@@ -36,7 +35,6 @@ module.exports = function(instance) {
         return data.split("\n");
     }();
     let fanArt = new FanArt();
-    let streams = new TwitchStreams();
     let commands = {
         poll: function createPoll(msg, args) {
             //let title = args.shift();
@@ -120,9 +118,6 @@ module.exports = function(instance) {
             member.setNickname(args.join(" ")).catch(function(error) {
                 msg.reply(`${error}`)
             })
-        },
-        getstreams: function twitchStreams(msg) {
-            msg.channel.send(streams.getList())
         },
         cloudlea: function showCloudLea(msg) {
             msg.channel.send('', createRichEmbed({
