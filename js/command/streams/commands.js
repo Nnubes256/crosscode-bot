@@ -24,7 +24,7 @@ module.exports = function(instance) {
     }, (1 * 1 * 15 * 60 * 1000));
     let commands = {
         set: function(msg) {
-            if (msg.author.email !== "ac2pic@gmail.com")
+            if (msg.author.id !== "208763015657553921")
                 return;
             var chan_id = msg.channel.id;
             let notif_chan = notify_channels[chan_id + "|" + msg.guild.id] = notify_channels[chan_id] || {};
@@ -32,7 +32,7 @@ module.exports = function(instance) {
             msg.channel.send('This channel has been set to be notified of CrossCode streams periodically.');
         },
         remove: function(msg) {
-            if (msg.author.email !== "ac2pic@gmail.com")
+            if (msg.author.id !== "208763015657553921")
                 return;
             var chan_id = msg.channel.id;
             delete notify_channels[chan_id + "|" + msg.guild.id];
