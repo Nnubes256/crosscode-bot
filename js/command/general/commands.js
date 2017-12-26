@@ -105,7 +105,7 @@ module.exports = function(instance) {
                 return;
             }
             let arr = splitter.splitGraphemes(phrase).reverse();
-            boxGenerate(phrase, arr).forEach(function(message) {
+            boxGenerate(arr.join(' '), arr).forEach(function(message) {
                 msg.channel.send('```js\n' + message + '```');
             });
         },
