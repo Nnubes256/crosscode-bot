@@ -10,10 +10,11 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "prism-media" : "github:hydrabolt/prism-media",
     "discord.js": "github:hydrabolt/discord.js",
     "ffmpeg-binaries": "^3.2.2-3",
+    "grapheme-splitter": "^1.0.2",
     "node-opus": "^0.2.7",
+    "prism-media": "github:hydrabolt/prism-media",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "sqlite3": "^3.1.13",
