@@ -1,0 +1,23 @@
+{
+  "discord": [{
+    "type": "twitter",
+    "user_link": "https://twitter.com/sea_of_eden",
+    "link": "https://twitter.com/sea_of_eden/status/943051664302444544",
+    "image_url": "https://cdn.discordapp.com/attachments/381549138942230531/381550592474087424/mjjj.png"
+  }, {
+    "type": "discord",
+    "username": "Vel",
+    "description": "WIP By [@bookskirt](https://twitter.com/sea_of_eden)",
+    "image_url": "https://cdn.discordapp.com/attachments/381549138942230531/381550772481163266/lea.png"
+  }, {
+    "type": "twitter",
+    "twitter_link": "https://twitter.com/sea_of_eden",
+    "status_link": "https://twitter.com/bogus_witch/status/820382995735605252",
+    "image_url": "https://pbs.twimg.com/media/C2KUfiRWIAE0rzV.jpg"
+  }, {
+    "type": "deviant",
+    "user_link" : "https://nil-moa.deviantart.com/",
+    "description" : "Fan art by [Nilmon](https://nil-moa.deviantart.com/)",
+    "image_url": "https://cdn.discordapp.com/attachments/143364538958348288/394587807907053580/lea2_copy.jpg"
+  }]
+}
