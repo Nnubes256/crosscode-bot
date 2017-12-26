@@ -23,13 +23,14 @@ module.exports = function(instance) {
         for (var i = 0, currCharLength = 0; i < characterArray.length; i++) {
             let substr = phrase.substring(currCharLength) + '\n';
             // currentLength + nextSubstring + newline char
-            if (currentMessage.length + (maxPhraseLength - currCharLength) + 1 <= maxMessageLength) {
+            if (currentMessage.length + maxPhraseLength + 1 <= maxMessageLength) {
                 currentMessage += substr;
             } else {
                 messagePayloads.push(currentMessage);
                 currentMessage = substr;
             }
             currCharLength += characterArray[i].length;
+            maxPhraseLength -= characterArray[i].length;
         }
         messagePayloads.push(currentMessage);
         return messagePayloads;
@@ -105,7 +106,7 @@ module.exports = function(instance) {
                 return;
             }
             let arr = splitter.splitGraphemes(phrase).reverse();
-            boxGenerate(arr.join(' '), arr).forEach(function(message) {
+            boxGenerate(arr.join(''), arr).forEach(function(message) {
                 msg.channel.send('```js\n' + message + '```');
             });
         },
