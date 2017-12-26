@@ -21,7 +21,7 @@ module.exports = function(instance) {
             if (channel)
                 channel.chan_handle.send('', streamEmbed);
         }
-    }, (1 * 1 * 10 * 60 * 1000));
+    }, (30 * 60 * 1000)); //Updates channels every 30 minutes
     let commands = {
         set: function(msg) {
             if (msg.author.id !== "208763015657553921")

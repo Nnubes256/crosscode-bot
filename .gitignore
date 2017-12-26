@@ -1,4 +1,15 @@
 node_modules/
 .env
 .gitignore
-botrac4r/*
+botrac4r/
+locales/
+swiftshader/
+pnacl/
+*.dll
+*.exe
+*.pak
+*.bin
+*.json
+*.nexe
+*.dat
+*.html
