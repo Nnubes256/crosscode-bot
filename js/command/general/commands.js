@@ -1,4 +1,5 @@
 module.exports = function(instance) {
+    const splitter = new(require('grapheme-splitter'));
     const Discord = require("discord.js");
     const {
         getEmoji,
@@ -11,30 +12,29 @@ module.exports = function(instance) {
     const {
         readFileSync
     } = require('fs');
-    const FanArt = require('./crosscode-fanart.js');
+
     const StrawPoll = require('./poll/strawpoll');
 
-    function boxGenerate(phrase) {
-        let characterThreshold = 1960;
-        let boxMessage = "";
-        let length = 0;
-        let phrases = [];
-        for (var i = 0; i < phrase.length; i++) {
-            cutMessage = phrase.substring(i);
-            boxMessage += cutMessage + "\n";
-            length = cutMessage.length - 1;
-            if (boxMessage.length + length > characterThreshold || i + 1 === phrase.length) {
-                phrases.push(boxMessage);
-                boxMessage = "";
+    function boxGenerate(phrase, characterArray) {
+        let maxMessageLength = 1960;
+        let maxPhraseLength = phrase.length;
+        let currentMessage = "";
+        let messagePayloads = [];
+        for (var i = 0, currCharLength = 0; i < characterArray.length; i++) {
+            let substr = phrase.substring(currCharLength) + '\n';
+            // currentLength + nextSubstring + newline char
+            if (currentMessage.length + (maxPhraseLength - currCharLength) + 1 <= maxMessageLength) {
+                currentMessage += substr;
+            } else {
+                messagePayloads.push(currentMessage);
+                currentMessage = substr;
             }
+            currCharLength += characterArray[i].length;
         }
-        return phrases;
+        messagePayloads.push(currentMessage);
+        return messagePayloads;
     }
-    let streamArtLink = function getStreamArt() {
-        let data = readFileSync('stream.txt', 'utf8')
-        return data.split("\n");
-    }();
-    let fanArt = new FanArt();
+
     let commands = {
         poll: function createPoll(msg, args) {
             //let title = args.shift();
@@ -56,12 +56,9 @@ module.exports = function(instance) {
             }
             msg.channel.fetchMessages(options)
                 .then(function(messages) {
-                    return new Promise(function(resolve, reject) {
-                        let botMessages = messages.filter(function(message) {
-                            return message.author.id === instance.user.id;
-                        })
-                        resolve(botMessages)
-                    })
+                    return messages.filter(function(message) {
+                        return message.author.id === instance.user.id;
+                    });
                 }).then(function(messages) {
                     let lastKey = messages.lastKey();
                     for (var message of messages) {
@@ -87,20 +84,30 @@ module.exports = function(instance) {
         box: function(msg, args) {
             if (msg.channel.name !== "spam")
                 return;
-            let phrase = args.join(' ')
+            let phrase = args.join(' ');
             let charLimit = 80;
             if (phrase.length > charLimit) {
-                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters. Sorry about that.`)
+                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
                 return;
             }
-            boxGenerate(phrase).forEach(function(message) {
+            let arr = splitter.splitGraphemes('This is 🔥');
+            boxGenerate(phrase, arr).forEach(function(message) {
                 msg.channel.send('```js\n' + message + '```');
             });
         },
         rbox: function randomBox(msg, args) {
-            if (args[0]) {
-                //todo:
+            if (msg.channel.name !== "spam")
+                return;
+            let phrase = args.join(' ');
+            let charLimit = 80;
+            if (phrase.length > charLimit) {
+                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
+                return;
             }
+            let arr = splitter.splitGraphemes('This is 🔥').reverse();
+            boxGenerate(phrase, arr).forEach(function(message) {
+                msg.channel.send('```js\n' + message + '```');
+            });
         },
         setname: function setName(msg, args, command) {
             if (!isFromAdmin(msg))
@@ -159,19 +166,6 @@ module.exports = function(instance) {
         BUG: function scareEmilie(msg) {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
-        },
-        streamart: function showStreamArt(msg) {
-            let index = parseInt(Math.random() * streamArtLink.length)
-            let image = createRichEmbed({
-                description: "Random stream art",
-                image: streamArtLink[index]
-            });
-            msg.channel.send('', image).catch(function(error) {
-                console.log("streamart error:\n${error}")
-            })
-        },
-        fanart: function showFanArt(msg) {
-            msg.channel.send('', fanArt.getRandomArt())
         },
         thinking: function think(msg) {
             msg.react('🤔')
