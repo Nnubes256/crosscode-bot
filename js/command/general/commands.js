@@ -90,7 +90,7 @@ module.exports = function(instance) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
                 return;
             }
-            let arr = splitter.splitGraphemes('This is 🔥');
+            let arr = splitter.splitGraphemes(phrase);
             boxGenerate(phrase, arr).forEach(function(message) {
                 msg.channel.send('```js\n' + message + '```');
             });
@@ -104,7 +104,7 @@ module.exports = function(instance) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
                 return;
             }
-            let arr = splitter.splitGraphemes('This is 🔥').reverse();
+            let arr = splitter.splitGraphemes(phrase).reverse();
             boxGenerate(phrase, arr).forEach(function(message) {
                 msg.channel.send('```js\n' + message + '```');
             });
