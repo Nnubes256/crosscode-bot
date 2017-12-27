@@ -36,7 +36,7 @@ module.exports = function(instance) {
                 return;
             var chan_id = msg.channel.id;
             delete notify_channels[chan_id + "|" + msg.guild.id];
-            message.channel.send('This channel will no longer be notified of streams');
+            msg.channel.send('This channel will no longer be notified of streams');
         }
     };
     return commands;
