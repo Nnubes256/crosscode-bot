@@ -219,7 +219,7 @@ module.exports = function(instance) {
                 image: "https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png"
             }))
         },
-        vrps: function blueVrps() {
+        vrps: function blueVrps(msg) {
            msg.channel.send("VRPS", createRichEmbed({
                image : "https://cdn.discordapp.com/attachments/143364538958348288/409861255046889472/CC_SergayVRPs_062.gif"
            }))
