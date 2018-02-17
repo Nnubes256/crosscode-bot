@@ -1,5 +1,11 @@
 const Discord = require('discord.js');
 
+let knownEmotes = {
+	"leaCheese": 257888171772215296,
+	"emilieWhy": 337989242674479105,
+	"apolloPoint": 337987749011259392,
+	"apolloShout": 337987748675715076
+};
 
 function filterUserId(id) {
     return id.replace(/[^0-9]/g, "")
@@ -17,6 +23,13 @@ exports.getEmoji = function(object, name) {
         if (emojis)
             return emojis
     }
+    let emoteId = knownEmotes[name];
+    if (emoteId !== undefined)
+        return {
+            toString: function() {
+                return `<:${name}:${emoteId}>`;
+            }
+        };
     return {
         toString: function() {
             return "*could not find emoji*";
