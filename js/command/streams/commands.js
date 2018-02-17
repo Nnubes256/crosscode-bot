@@ -31,6 +31,9 @@ module.exports = function(instance) {
             notif_chan.chan_handle = msg.channel;
             msg.channel.send('This channel has been set to be notified of CrossCode streams periodically.');
         },
+        get: function(msg) {
+            msg.channel.send("Streaming CrossCode right now:\n" + (streams.get() || "*Tumbleweeds rolling*"));
+        },
         remove: function(msg) {
             if (msg.author.id !== "208763015657553921")
                 return;
