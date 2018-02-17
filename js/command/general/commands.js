@@ -168,6 +168,13 @@ module.exports = function(instance) {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
         },
+        emote: function leaReact(msg, args) {
+            for(let i=0;i<args.length;i++) {
+                let thonk = getEmoji(msg, args[i]);
+                if(thonk.id !== '')
+                    msg.react(thonk.id);
+            }
+        },
         thinking: function think(msg) {
             let thonk = getEmoji(msg, 'mia_thinking');
 //            console.log(thonk);
@@ -210,6 +217,11 @@ module.exports = function(instance) {
                 .then((msgReact) => msgReact.message.react("👊"))
                 .then((msgReact) => msgReact.message.react("👎"))
 
+        },
+        ohno: function ohNo(msg) {
+            msg.channel.send(":(", createRichEmbed({
+                image: "https://cdn.discordapp.com/emojis/400836365295812619.png"
+            }))
         },
         work: function plsWork(msg) {
             msg.channel.send("...why?", createRichEmbed({
