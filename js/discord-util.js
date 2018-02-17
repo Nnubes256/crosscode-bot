@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 
 let knownEmotes = {
-	"leaCheese": 257888171772215296,
-	"emilieWhy": 337989242674479105,
-	"apolloPoint": 337987749011259392,
-	"apolloShout": 337987748675715076
+        "leaCheese": "257888171772215296",
+        "ohno": "400836365295812619",
+	"leamao": "399775661750878209",
+        "emilieWhy": "337989242674479105",
+        "apolloPoint": "337987749011259392",
+        "apolloShout": "337987748675715076"
 };
 
 function filterUserId(id) {
