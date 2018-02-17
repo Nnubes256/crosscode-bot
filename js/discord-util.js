@@ -1,12 +1,14 @@
 const Discord = require('discord.js');
 
 let knownEmotes = {
-        "leaCheese": "257888171772215296",
-        "ohno": "400836365295812619",
-	"leamao": "399775661750878209",
-        "emilieWhy": "337989242674479105",
-        "apolloPoint": "337987749011259392",
-        "apolloShout": "337987748675715076"
+    "apolloPoint": "337987749011259392",
+    "apolloShout": "337987748675715076",
+    "emilieWhy": "337989242674479105",
+    "leaCheese": "257888171772215296",
+    "leaTired": "337987528625881090",
+    "leamao": "399775661750878209",
+    "mia_thinking": "397961863805140992",
+    "ohno": "400836365295812619"
 };
 
 function filterUserId(id) {
@@ -28,11 +30,14 @@ exports.getEmoji = function(object, name) {
     let emoteId = knownEmotes[name];
     if (emoteId !== undefined)
         return {
+            id: emoteId,
             toString: function() {
                 return `<:${name}:${emoteId}>`;
             }
         };
+    console.log(`Warning: unknown emoji ${name}`);
     return {
+        id: "",
         toString: function() {
             return "*could not find emoji*";
         }

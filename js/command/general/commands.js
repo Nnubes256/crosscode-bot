@@ -169,7 +169,9 @@ module.exports = function(instance) {
             msg.channel.send(message)
         },
         thinking: function think(msg) {
-            msg.react('🤔')
+            let thonk = getEmoji(msg, 'mia_thinking');
+//            console.log(thonk);
+            msg.react(thonk.id)
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
