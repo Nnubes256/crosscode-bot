@@ -168,7 +168,17 @@ module.exports = function(instance) {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
         },
-        emote: function leaReact(msg, args) {
+        emote: function leaEmote(msg, args) {
+            let reply = '';
+            for(let i=0;i<args.length;i++) {
+                let thonk = getEmoji(msg, args[i]);
+                if(thonk.id !== '')
+                    reply += thonk.toString() + ' ';
+            }
+            if(reply !== '')
+                msg.channel.send(reply);
+        },
+        react: function leaReact(msg, args) {
             for(let i=0;i<args.length;i++) {
                 let thonk = getEmoji(msg, args[i]);
                 if(thonk.id !== '')

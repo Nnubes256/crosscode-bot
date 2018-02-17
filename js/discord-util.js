@@ -5,6 +5,7 @@ let knownEmotes = {
     "apolloShout": "337987748675715076",
     "emilieWhy": "337989242674479105",
     "leaCheese": "257888171772215296",
+    "leaCheeseAngry": "402519272892530690",
     "leaTired": "337987528625881090",
     "leamao": "399775661750878209",
     "mia_thinking": "397961863805140992",
