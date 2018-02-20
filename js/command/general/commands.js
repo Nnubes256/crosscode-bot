@@ -168,6 +168,16 @@ module.exports = function(instance) {
             let message = getEmoji(msg, 'emilieWhy').toString()
             msg.channel.send(message)
         },
+        pmn: function poorMansNitro(msg, args) {
+            let delim = '/';
+            let pieces = args.join(' ').split(delim);
+            for(let i=1;i<pieces.length-1;i++) {
+                let thonk = getEmoji(msg, pieces[i]);
+                if(thonk.id !== '')
+                    pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
+            }
+            msg.channel.send(`*${msg.author} says:*\n${pieces.join(delim)}`);
+        },
         emote: function leaEmote(msg, args) {
             let reply = '';
             for(let i=0;i<args.length;i++) {
