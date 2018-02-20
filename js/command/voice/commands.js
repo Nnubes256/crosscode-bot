@@ -22,7 +22,7 @@ module.exports = function(instance) {
                 });
                 if (voiceChannel) {
                     try {
-                        msg.member.voiceChannel.connection.playFile('./music/' + args.join(" ") + '.mp3');
+                        msg.member.voiceChannel.connection.play('./music/' + args.join(" ") + '.mp3');
                         msg.reply('am I playing music?');
                     } catch (e) {
                         console.log(e)
