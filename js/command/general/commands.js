@@ -180,7 +180,7 @@ module.exports = function(instance) {
         },
         lewd: function noLewdLea(msg, args) {
             msg.react(getEmoji(null, "ohno").id);
-        }
+        },
         emote: function leaEmote(msg, args) {
             let reply = '';
             for(let i=0;i<args.length;i++) {
