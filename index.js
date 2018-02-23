@@ -23,7 +23,7 @@ var watchTower;
 function findServer() {
     ccModServ = client.guilds.find('name', 'CrossCode Modding');
     if (ccModServ) {
-        console.log("ID is:", ccModServ.id);
+        console.log("Found your server.");
         pendingRole = ccModServ.roles.find('name', 'pending');
         watchTower = ccModServ.channels.find('name', 'admin-watchtower');
     } else {
