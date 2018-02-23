@@ -16,7 +16,20 @@ for (let type of cmdTypes) {
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
 }
+var ccModServ;
+var pendingRole;
+
+function findServer() {
+    ccModServ = client.guilds.find('name', 'CrossCode Modding');
+    if (ccModServ) {
+        console.log("ID is:", ccModServ.id);
+        pendingRole = ccModServ.roles.find('name', 'pending');
+    } else {
+        console.log("Modding Server does not exist");
+    }
+}
 client.on('ready', () => {
+    findServer();
     console.log(`Logged in as ${client.user.tag}!`);
     //client.user.setAvatar('avatar/snowlea.png');
     let activityTypes = {
@@ -68,18 +81,12 @@ client.on('ready', () => {
             activity: activity
         });
     };
-    newGame()
-    setInterval(newGame, 120000)
+    newGame();
+    setInterval(newGame, 120000);
 });
-var ccModServ = client.guilds.find('name', 'CrossCode Modding');
-if (ccModServ) {
-    consle.log("ID is:", ccModServ.id);
-} else {
-    console.log("Modding Server does not exist");
-}
 client.on('guildMemberAdd', function(newMember) {
-    if (newMember.guild.id === ccModServ.id) {
-        newMember.addRole();
+    if (newMember.guild.id === ccModServ.id && pendingRole) {
+        newMember.addRole(pendingRole);
     }
 
 });
