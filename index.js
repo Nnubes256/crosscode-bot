@@ -18,7 +18,7 @@ Array.prototype.random = function() {
 }
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    //client.user.setAvatar('avatar/snowlea.png');
+    client.user.setAvatar('avatar/cloudlea.png');
     let activityTypes = {
         GAMING: 0,
         STREAMING: 1,
