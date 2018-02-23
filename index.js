@@ -71,6 +71,18 @@ client.on('ready', () => {
     newGame()
     setInterval(newGame, 120000)
 });
+var ccModServ = client.guilds.find('name', 'CrossCode Modding');
+if (ccModServ) {
+    consle.log("ID is:", ccModServ.id);
+} else {
+    console.log("Modding Server does not exist");
+}
+client.on('guildMemberAdd', function(newMember) {
+    if (newMember.guild.id === ccModServ.id) {
+        newMember.addRole();
+    }
+
+});
 
 function onError(msg) {
     // Doesn't work when combined with botrac4r: no awareness of if a command is controlled by botrac4r.
