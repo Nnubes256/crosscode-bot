@@ -9,7 +9,6 @@ pnacl/
 *.exe
 *.pak
 *.bin
-*.json
 *.nexe
 *.dat
 *.html

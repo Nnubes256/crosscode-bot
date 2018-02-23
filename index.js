@@ -16,7 +16,22 @@ for (let type of cmdTypes) {
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
 }
+var ccModServ;
+var pendingRole;
+var watchTower;
+
+function findServer() {
+    ccModServ = client.guilds.find('name', 'CrossCode Modding');
+    if (ccModServ) {
+        console.log("Found your server.");
+        pendingRole = ccModServ.roles.find('name', 'pending');
+        watchTower = ccModServ.channels.find('name', 'admin-watchtower');
+    } else {
+        console.log("Modding Server does not exist");
+    }
+}
 client.on('ready', () => {
+    findServer();
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setAvatar('avatar/cloudlea.png');
     let activityTypes = {
@@ -68,8 +83,19 @@ client.on('ready', () => {
             activity: activity
         });
     };
-    newGame()
-    setInterval(newGame, 120000)
+    newGame();
+    setInterval(newGame, 120000);
+});
+client.on('guildMemberAdd', function(newMember) {
+    if (newMember.guild.id === ccModServ.id && pendingRole) {
+        console.log(newMember);
+        console.log("");
+        console.log("");
+        console.log(newMember.addRole);
+        newMember.addRoles([pendingRole]);
+        watchTower.send(`Added pending role to ${newMember.toString()}`);
+    }
+
 });
 
 function onError(msg) {
@@ -82,7 +108,7 @@ function processArgs(args) {}
 function onMessage(msg) {
     //lel
     if (msg.content.toLowerCase().startsWith("failed to load")) {
-        msg.channel.send("oof")
+        msg.channel.send("oof");
         return;
     }
     //Allow for new line parsing
