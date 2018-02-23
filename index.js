@@ -88,6 +88,10 @@ client.on('ready', () => {
 });
 client.on('guildMemberAdd', function(newMember) {
     if (newMember.guild.id === ccModServ.id && pendingRole) {
+        console.log(newMember);
+        console.log("");
+        console.log("");
+        console.log(newMember.addRole);
         newMember.addRole(pendingRole);
         watchTower.send(`Added pending role to ${newMember.toString()}`);
     }
@@ -104,7 +108,7 @@ function processArgs(args) {}
 function onMessage(msg) {
     //lel
     if (msg.content.toLowerCase().startsWith("failed to load")) {
-        msg.channel.send("oof")
+        msg.channel.send("oof");
         return;
     }
     //Allow for new line parsing
