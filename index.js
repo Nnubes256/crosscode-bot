@@ -18,12 +18,14 @@ Array.prototype.random = function() {
 }
 var ccModServ;
 var pendingRole;
+var watchTower;
 
 function findServer() {
     ccModServ = client.guilds.find('name', 'CrossCode Modding');
     if (ccModServ) {
         console.log("ID is:", ccModServ.id);
         pendingRole = ccModServ.roles.find('name', 'pending');
+        watchTower = ccModServ.channels.find('name', 'admin-watchtower');
     } else {
         console.log("Modding Server does not exist");
     }
@@ -87,6 +89,7 @@ client.on('ready', () => {
 client.on('guildMemberAdd', function(newMember) {
     if (newMember.guild.id === ccModServ.id && pendingRole) {
         newMember.addRole(pendingRole);
+        watchTower.send(`Added pending role to ${newMember.toString()}`);
     }
 
 });
