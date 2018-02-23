@@ -92,7 +92,7 @@ client.on('guildMemberAdd', function(newMember) {
         console.log("");
         console.log("");
         console.log(newMember.addRole);
-        newMember.addRole(pendingRole);
+        newMember.addRoles([pendingRole]);
         watchTower.send(`Added pending role to ${newMember.toString()}`);
     }
 
