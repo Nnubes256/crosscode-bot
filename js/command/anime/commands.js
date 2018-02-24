@@ -1,7 +1,7 @@
-module.exports = function(instance) {
+module.exports = function(instance, util) {
     let {
         createRichEmbed
-    } = require('./../../discord-util.js');
+    } = util;
     return {
         "EXPLOSION!": function(msg) {
             msg.channel.send('💥', createRichEmbed({

@@ -1,11 +1,11 @@
-module.exports = function(instance) {
+module.exports = function(instance, util) {
     let Character = require('./game/character.js');
     let Match = require('./game/match.js');
     let characters = new Map();
     let matches = new Map();
     let {
         findMember
-    } = require('./../../discord-util.js');
+    } = util;
     return {
         add: function(msg, args) {
             if (args[0] === "character") {

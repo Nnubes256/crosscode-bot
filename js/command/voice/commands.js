@@ -1,7 +1,7 @@
-module.exports = function(instance) {
+module.exports = function(instance, util) {
     const {
         getHelpText
-    } = require('./../../discord-util.js');
+    } = util;
 
     let commands = {
         join: function joinVoiceChannel(msg) {

@@ -1,4 +1,4 @@
-module.exports = function(instance) {
+module.exports = function(instance, util) {
     const splitter = new(require('grapheme-splitter'));
     const Discord = require("discord.js");
     const {
@@ -7,7 +7,7 @@ module.exports = function(instance) {
         createRichEmbed,
         getHelpText,
         isFromAdmin
-    } = require('./../../discord-util.js');
+    } = util;
     const database = require('sqlite3');
     const {
         readFileSync

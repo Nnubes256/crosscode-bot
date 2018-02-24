@@ -1,10 +1,10 @@
-module.exports = function(instance) {
+module.exports = function(instance, util) {
     const Discord = require("discord.js");
     const {
         findMember,
         createRichEmbed,
         getHelpText
-    } = require('./../../discord-util.js');
+    } = util;
 
     let commands = {
         lewd: function showLewdArt(msg, args, command) {
