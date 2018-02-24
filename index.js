@@ -4,15 +4,13 @@ const client = new Discord.Client();
 let {
     readFileSync
 } = require('fs');
-let {
-    getAllEmojis
-} = require('./js/discord-util.js');
+let util = require('./js/discord-util.js');
 let prefix = process.env.BOT_PREFIX;
 let cmdTypes = ["general", "nsfw", "streams", "art", "voice", "mods", "anime", "game"];
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./js/command/${type}/commands.js`)(client);
+    commands[type] = require(`./js/command/${type}/commands.js`)(client, util);
     //TODO: Add help text for each function
     //helpText[type] = commands[type].helpText;
 }
@@ -35,7 +33,7 @@ function findModServer() {
 }
 client.on('ready', () => {
     findModServer();
-    getAllEmojis(client);
+    util.getAllEmojis(client);
     console.log(`Logged in as ${client.user.tag}!`);
     //client.user.setAvatar('avatar/snowlea.png');
     let activityTypes = {
