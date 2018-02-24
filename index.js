@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-//require("./botrac4r/botrac4r.js");
+
 let {
     readFileSync
 } = require('fs');
@@ -76,15 +76,15 @@ let gameStats = [{
 }]
 
 function newGame() {
+    //doesn't work anymore
     var ran = gameStats.random();
-    console.log('Here is the random', ran);
     client.user.setPresence({
         activity: ran
     });
 };
 client.on('ready', () => {
     findModServer();
-    util.getAllEmojis(client);
+    util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     newGame();
     setInterval(newGame, 120000);
@@ -95,8 +95,6 @@ client.on('guildMemberAdd', function(newMember) {
         watchTower.send(`Added pending role to ${newMember.toString()}`);
     }
 });
-
-function onError(msg) {}
 
 function onMessage(msg) {
     //lel
@@ -122,8 +120,7 @@ function onMessage(msg) {
     }
 
     let command = args.shift()
-    if(command === "help")
-    {
+    if (command === "help") {
         msg.author.send(util.formatHelpText(invoc, helpText[type]));
         return;
     }

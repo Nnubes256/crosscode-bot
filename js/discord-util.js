@@ -2,15 +2,22 @@ const Discord = require('discord.js');
 
 let knownEmotes = {};
 
-exports.getAllEmojis = function(client) {
-    client.emojis.array().forEach(function(emoji) {
-        var name = emoji.name;
+exports.getAllEmotes = function(client) {
+    client.emojis.array().forEach(function(emote) {
+        var name = emote.name;
         for (var i = 1; knownEmotes[name]; i++) {
-            name = emoji.name + i;
+            name = emote.name + i;
         }
-        knownEmotes[name] = emoji.id;
+        knownEmotes[name] = {
+            id: emote.id,
+            name: emote.name
+        };
     });
-}
+};
+
+exports.getCacheEmotesIds = function() {
+    return Object.keys(knownEmotes);
+};
 
 function filterUserId(id) {
     return id.replace(/[^0-9]/g, "");
@@ -20,22 +27,16 @@ function isId(id) {
     return (id.startsWith("<@") || id.startsWith("<@!")) && id.endsWith(">")
 }
 
-exports.getEmoji = function(object, name) {
-    let emojis = null
-    //Weird error can not find emojis of undefined
-    if (object instanceof Discord.Message && object.channel.guild) {
-        emojis = object.channel.guild.emojis.find("name", name)
-        if (emojis)
-            return emojis
-    }
-    let emoteId = knownEmotes[name];
-    if (emoteId !== undefined)
+exports.getEmote = function(name) {
+    let emote = knownEmotes[name];
+    if (emote.id !== undefined) {
         return {
-            id: emoteId,
+            id: emote.id,
             toString: function() {
-                return `<:${name}:${emoteId}>`;
+                return `<:${emote.name}:${emote.id}>`;
             }
         };
+    }
     console.log(`Warning: unknown emoji ${name}`);
     return {
         id: "",
@@ -43,7 +44,8 @@ exports.getEmoji = function(object, name) {
             return "*could not find emoji*";
         }
     };
-}
+};
+
 exports.findMember = function(object, string) {
     let member = null;
     if (string && object instanceof Discord.Message && object.channel.guild) {
@@ -55,7 +57,8 @@ exports.findMember = function(object, string) {
         })
     }
     return member;
-}
+};
+
 exports.createRichEmbed = function(opts) {
     let richEmbed = new(Discord.RichEmbed || Discord.MessageEmbed);
     if (opts.fields) {
@@ -74,13 +77,14 @@ exports.createRichEmbed = function(opts) {
     opts.url && richEmbed.setURL(opts.url);
     opts.footer && opts.footer.text && richEmbed.setFooter(opts.footer.text);
     return richEmbed;
-}
+};
+
 exports.formatHelpText = function(invoc, helpText) {
     let prefix = invoc.replace(/\s[^\s]+$/, '');
     return `\`\`\`md\n${helpText.replace(/^#.*\n/mg, '').replace(/INVOC/g, prefix)}\n\`\`\``;
-}
+};
 
 exports.isFromAdmin = function(msg) {
     let adminPosition = msg.member.guild.roles.size - 1;
     return msg.member.highestRole.position === adminPosition;
-}
+};

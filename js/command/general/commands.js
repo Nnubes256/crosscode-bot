@@ -2,10 +2,11 @@ module.exports = function(instance, util) {
     const splitter = new(require('grapheme-splitter'));
     const Discord = require("discord.js");
     const {
-        getEmoji,
+        getEmote,
         findMember,
         createRichEmbed,
-        isFromAdmin
+        isFromAdmin,
+        getCacheEmotesIds
     } = util;
     const database = require('sqlite3');
     const {
@@ -150,13 +151,13 @@ module.exports = function(instance, util) {
             msg.channel.send('', image)
         },
         hi: function greetUser(msg) {
-            let emoji = getEmoji(msg, 'leaCheese')
-            let message = 'hi!!! ' + emoji.toString()
-            msg.channel.send(message)
+            let emoji = getEmote('leaCheese');
+            let message = 'hi!!! ' + emoji;
+            msg.channel.send(message);
         },
         bye: function farewellUser(msg) {
-            let message = 'bye!!! ' + getEmoji(msg, 'leaCheese').toString()
-            msg.channel.send(message)
+            let message = 'bye!!! ' + getEmote('leaCheese');
+            msg.channel.send(message);
         },
         bugs: function(msg) {
             msg.channel.send('', createRichEmbed({
@@ -164,15 +165,15 @@ module.exports = function(instance, util) {
             }))
         },
         BUG: function scareEmilie(msg) {
-            let message = getEmoji(msg, 'emilieWhy').toString()
-            msg.channel.send(message)
+            let message = getEmote('emilieWhy').toString();
+            msg.channel.send(message);
         },
         pmn: function poorMansNitro(msg, args) {
             let delim = '/';
             let pieces = args.join(' ').split(delim);
-            for(let i=1;i<pieces.length-1;i++) {
-                let thonk = getEmoji(msg, pieces[i]);
-                if(thonk.id !== '')
+            for (let i = 1; i < pieces.length - 1; i++) {
+                let thonk = getEmote(pieces[i]);
+                if (thonk.id !== '')
                     pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
             }
             msg.channel.send(`*${msg.author} says:*\n${pieces.join(delim)}`);
@@ -182,31 +183,42 @@ module.exports = function(instance, util) {
         },
         emote: function leaEmote(msg, args) {
             let reply = '';
-            for(let i=0;i<args.length;i++) {
-                let thonk = getEmoji(msg, args[i]);
-                if(thonk.id !== '')
-                    reply += thonk.toString() + ' ';
+            for (let i = 0; i < args.length; i++) {
+                let thonk = getEmote(args[i]);
+                if (thonk.id !== '')
+                    reply += thonk + ' ';
             }
-            if(reply !== '')
+            if (reply !== '')
                 msg.channel.send(reply);
         },
+        lemotes: function listEmotes(msg, args) {
+            let em = getCacheEmotesIds();
+            var message = "\n";
+            var count = 0;
+            for (var i = 0; i < 20; i++) {
+                var thonk = getEmote(em[i]);
+                message += em[i] + ',';
+            }
+            msg.channel.send(message);
+            console.log(message);
+        },
         react: function leaReact(msg, args) {
-            for(let i=0;i<args.length;i++) {
-                let thonk = getEmoji(msg, args[i]);
-                if(thonk.id !== '')
+            for (let i = 0; i < args.length; i++) {
+                let thonk = getEmote(msg, args[i]);
+                if (thonk.id !== '')
                     msg.react(thonk.id);
             }
         },
         thinking: function think(msg) {
-            let thonk = getEmoji(msg, 'mia_thinking');
-//            console.log(thonk);
+            let thonk = getEmote('mia_thinking');
+            //            console.log(thonk);
             msg.react(thonk.id)
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
             if (cheater) {
-                let apolloPoint = getEmoji(msg, "apolloPoint").toString()
-                let apolloShout = getEmoji(msg, "apolloShout").toString()
+                let apolloPoint = getEmote("apolloPoint").toString();
+                let apolloShout = getEmote("apolloShout").toString();
                 let message = `${cheater.toString()} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
                 msg.channel.send(message)
             } else {
@@ -252,9 +264,9 @@ module.exports = function(instance, util) {
             }))
         },
         vrps: function blueVrps(msg) {
-           msg.channel.send("VRPS", createRichEmbed({
-               image : "https://cdn.discordapp.com/attachments/143364538958348288/409861255046889472/CC_SergayVRPs_062.gif"
-           }))
+            msg.channel.send("VRPS", createRichEmbed({
+                image: "https://cdn.discordapp.com/attachments/143364538958348288/409861255046889472/CC_SergayVRPs_062.gif"
+            }))
         },
         get: function getGame(msg, args) {
             if (args[0] === "it") {
