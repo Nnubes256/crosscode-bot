@@ -1,16 +1,18 @@
 const Discord = require("discord.js");
-const util = require("./js/discord-util.js");
 const client = new Discord.Client();
 //require("./botrac4r/botrac4r.js");
 let {
     readFileSync
 } = require('fs');
+let {
+    getAllEmojis
+} = require('./js/discord-util.js');
 let prefix = process.env.BOT_PREFIX;
 let cmdTypes = ["general", "nsfw", "streams", "art", "voice", "mods", "anime", "game"];
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./js/command/${type}/commands.js`)(client, util);
+    commands[type] = require(`./js/command/${type}/commands.js`)(client);
     //TODO: Add help text for each function
     //helpText[type] = commands[type].helpText;
 }
@@ -21,7 +23,7 @@ var ccModServ;
 var pendingRole;
 var watchTower;
 
-function findServer() {
+function findModServer() {
     ccModServ = client.guilds.find('name', 'CrossCode Modding');
     if (ccModServ) {
         console.log("Found your server.");
@@ -32,9 +34,10 @@ function findServer() {
     }
 }
 client.on('ready', () => {
-    findServer();
+    findModServer();
+    getAllEmojis(client);
     console.log(`Logged in as ${client.user.tag}!`);
-    client.user.setAvatar('avatar/cloudlea.png');
+    //client.user.setAvatar('avatar/snowlea.png');
     let activityTypes = {
         GAMING: 0,
         STREAMING: 1,
@@ -89,10 +92,6 @@ client.on('ready', () => {
 });
 client.on('guildMemberAdd', function(newMember) {
     if (newMember.guild.id === ccModServ.id && pendingRole) {
-        console.log(newMember);
-        console.log("");
-        console.log("");
-        console.log(newMember.addRole);
         newMember.addRoles([pendingRole]);
         watchTower.send(`Added pending role to ${newMember.toString()}`);
     }

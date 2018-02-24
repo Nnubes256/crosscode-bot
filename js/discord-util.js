@@ -1,19 +1,19 @@
 const Discord = require('discord.js');
 
-let knownEmotes = {
-    "apolloPoint": "337987749011259392",
-    "apolloShout": "337987748675715076",
-    "emilieWhy": "337989242674479105",
-    "leaCheese": "257888171772215296",
-    "leaCheeseAngry": "402519272892530690",
-    "leaTired": "337987528625881090",
-    "leamao": "399775661750878209",
-    "mia_thinking": "397961863805140992",
-    "ohno": "400836365295812619"
-};
+let knownEmotes = {};
+
+exports.getAllEmojis = function(client) {
+    client.emojis.array().forEach(function(emoji) {
+        var name = emoji.name;
+        for (var i = 1; newArr[name]; i++) {
+            name = emoji.name + i;
+        }
+        knownEmotes[name] = emoji.id;
+    });
+}
 
 function filterUserId(id) {
-    return id.replace(/[^0-9]/g, "")
+    return id.replace(/[^0-9]/g, "");
 }
 
 function isId(id) {
