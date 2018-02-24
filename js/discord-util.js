@@ -77,8 +77,7 @@ exports.createRichEmbed = function(opts) {
 }
 exports.formatHelpText = function(invoc, helpText) {
     let prefix = invoc.replace(/\s[^\s]+$/, '');
-    return `\`\`\`md\n${helpText.replace(/#.*\n/g, '').replace(/INVOC/g, prefix)}\n\`\`\``;
->>>>>>> b7c22a21ea9c34321579d104eeca4f29db095bff
+    return `\`\`\`md\n${helpText.replace(/^#.*\n/mg, '').replace(/INVOC/g, prefix)}\n\`\`\``;
 }
 
 exports.isFromAdmin = function(msg) {
