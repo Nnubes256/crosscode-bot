@@ -5,7 +5,7 @@ let knownEmotes = {};
 exports.getAllEmojis = function(client) {
     client.emojis.array().forEach(function(emoji) {
         var name = emoji.name;
-        for (var i = 1; newArr[name]; i++) {
+        for (var i = 1; knownEmotes[name]; i++) {
             name = emoji.name + i;
         }
         knownEmotes[name] = emoji.id;
