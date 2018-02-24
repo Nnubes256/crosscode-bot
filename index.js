@@ -103,7 +103,7 @@ function onMessage(msg) {
         return;
     }
     //Allow for new line parsing
-    let args = msg.content.replace(/^\s+|\s+$/g, '').split(/\s+/);
+    let args = msg.content.replace(/^\s+|\s+$/g, '').split(/[ \t]+/);
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;

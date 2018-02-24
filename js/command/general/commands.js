@@ -178,8 +178,6 @@ module.exports = function(instance, util) {
                   if(i > 0) {
                     pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
                     i--;
-                  } else {
-                    pieces.splice(0,2, [thonk, pieces[i + 1]].join(''));
                   }
                 }
 
