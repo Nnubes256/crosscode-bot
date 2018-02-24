@@ -151,12 +151,12 @@ module.exports = function(instance, util) {
             msg.channel.send('', image)
         },
         hi: function greetUser(msg) {
-            let emoji = getEmote('leaCheese');
+            let emoji = getEmote(msg, 'leaCheese');
             let message = 'hi!!! ' + emoji;
             msg.channel.send(message);
         },
         bye: function farewellUser(msg) {
-            let message = 'bye!!! ' + getEmote('leaCheese');
+            let message = 'bye!!! ' + getEmote(msg, 'leaCheese');
             msg.channel.send(message);
         },
         bugs: function(msg) {
@@ -165,26 +165,30 @@ module.exports = function(instance, util) {
             }))
         },
         BUG: function scareEmilie(msg) {
-            let message = getEmote('emilieWhy').toString();
+            let message = getEmote(msg, 'emilieWhy').toString();
             msg.channel.send(message);
         },
         pmn: function poorMansNitro(msg, args) {
             let delim = '/';
             let pieces = args.join(' ').split(delim);
             for (let i = 1; i < pieces.length - 1; i++) {
-                let thonk = getEmote(pieces[i]);
-                if (thonk.id !== '')
-                    pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
+
+                let thonk = getEmote(msg, pieces[i]);
+                if (thonk.id !== '') {
+                  pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
+                  i--;
+                }
+
             }
             msg.channel.send(`*${msg.author} says:*\n${pieces.join(delim)}`);
         },
         lewd: function noLewdLea(msg, args) {
-            msg.react(getEmoji(null, "ohno").id);
+            msg.react(getEmoji(msg, "ohno").id);
         },
         emote: function leaEmote(msg, args) {
             let reply = '';
             for (let i = 0; i < args.length; i++) {
-                let thonk = getEmote(args[i]);
+                let thonk = getEmote(msg, args[i]);
                 if (thonk.id !== '')
                     reply += thonk + ' ';
             }
@@ -196,7 +200,7 @@ module.exports = function(instance, util) {
             var message = "\n";
             var count = 0;
             for (var i = 0; i < em.length; i++) {
-                var thonk = getEmote(em[i]);
+                var thonk = getEmote(null, em[i]);
                 message += em[i].toString() + ' ';
             }
             msg.channel.send(message);
@@ -209,15 +213,15 @@ module.exports = function(instance, util) {
             }
         },
         thinking: function think(msg) {
-            let thonk = getEmote('mia_thinking');
+            let thonk = getEmote(msg, 'mia_thinking');
             //            console.log(thonk);
             msg.react(thonk.id)
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
             if (cheater) {
-                let apolloPoint = getEmote("apolloPoint").toString();
-                let apolloShout = getEmote("apolloShout").toString();
+                let apolloPoint = getEmote(msg, "apolloPoint").toString();
+                let apolloShout = getEmote(msg, "apolloShout").toString();
                 let message = `${cheater.toString()} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
                 msg.channel.send(message)
             } else {

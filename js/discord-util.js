@@ -4,6 +4,8 @@ let knownEmotes = {};
 
 exports.getAllEmotes = function(client) {
     client.emojis.array().forEach(function(emote) {
+        if(emote.animated)
+            return;
         var name = emote.name;
         for (var i = 1; knownEmotes[name]; i++) {
             name = emote.name + i;
@@ -36,7 +38,7 @@ function isId(id) {
     return (id.startsWith("<@") || id.startsWith("<@!")) && id.endsWith(">")
 }
 
-exports.getEmote = function(name) {
+exports.getEmote = function(object, name) {
     let emote = knownEmotes[name];
     if (emote && emote.id !== undefined) {
         return {
@@ -45,6 +47,13 @@ exports.getEmote = function(name) {
                 return `<:${emote.name}:${emote.id}>`;
             }
         };
+    }
+    //Weird error can not find emojis of undefined
+    let emojis = null;
+    if (object instanceof Discord.Message && object.channel.guild) {
+        emojis = object.channel.guild.emojis.find("name", name);
+        if (emojis)
+            return emojis;
     }
     console.log(`Warning: unknown emoji ${name}`);
     return {
