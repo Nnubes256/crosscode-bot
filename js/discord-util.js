@@ -39,6 +39,8 @@ function isId(id) {
 }
 
 exports.getEmote = function(object, name) {
+    //just in case for unintentional whitespace
+    name = name.trim();
     let emote = knownEmotes[name];
     if (emote && emote.id !== undefined) {
         return {
@@ -50,12 +52,12 @@ exports.getEmote = function(object, name) {
     }
     //Weird error can not find emojis of undefined
     let emojis = null;
-    if (object instanceof Discord.Message && object.channel.guild) {
-        emojis = object.channel.guild.emojis.find("name", name);
+    if (object instanceof Discord.Message && object.guild !== undefined) {
+        emojis = object.guild.emojis.find("name", name);
         if (emojis)
             return emojis;
     }
-    console.log(`Warning: unknown emoji ${name}`);
+    //console.debug(`Warning: unknown emoji "${name}"`);
     return {
         id: "",
         toString: function() {

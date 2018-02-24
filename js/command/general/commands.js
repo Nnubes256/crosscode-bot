@@ -171,12 +171,16 @@ module.exports = function(instance, util) {
         pmn: function poorMansNitro(msg, args) {
             let delim = '/';
             let pieces = args.join(' ').split(delim);
-            for (let i = 1; i < pieces.length - 1; i++) {
+            for (let i = 0; i < pieces.length - 1; i++) {
 
                 let thonk = getEmote(msg, pieces[i]);
                 if (thonk.id !== '') {
-                  pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
-                  i--;
+                  if(i > 0) {
+                    pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
+                    i--;
+                  } else {
+                    pieces.splice(0,2, [thonk, pieces[i + 1]].join(''));
+                  }
                 }
 
             }
