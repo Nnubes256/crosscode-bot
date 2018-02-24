@@ -96,6 +96,8 @@ client.on('guildMemberAdd', function(newMember) {
     }
 });
 
+function onError(msg) {}
+
 function onMessage(msg) {
     //lel
     if (msg.content.toLowerCase().startsWith("failed to load")) {
@@ -122,7 +124,7 @@ function onMessage(msg) {
     let command = args.shift()
     if(command === "help")
     {
-        msg.channel.send(util.formatHelpText(invoc, helpText[type]));
+        msg.author.send(util.formatHelpText(invoc, helpText[type]));
         return;
     }
     let func = commands[type][command]
