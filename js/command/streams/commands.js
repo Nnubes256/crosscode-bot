@@ -32,8 +32,8 @@ module.exports = function(instance) {
             msg.channel.send('This channel has been set to be notified of CrossCode streams periodically.');
         },
         get: function(msg) {
-            msg.channel.send("Streaming CrossCode right now:");
-            msg.channel.send(streams.get() || "*Tumbleweeds rolling*");
+            let sEmbed = streams.get();
+            msg.channel.send("Streaming CrossCode right now:" + (sEmbed ? '' : "\n*Tumbleweeds rolling*"), sEmbed);
         },
         remove: function(msg) {
             if (msg.author.id !== "208763015657553921")
