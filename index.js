@@ -31,60 +31,61 @@ function findModServer() {
         console.log("Modding Server does not exist");
     }
 }
+let activityTypes = {
+    GAMING: 0,
+    STREAMING: 1,
+    LISTENING: 2,
+    WATCHING: 3
+};
+let gameStats = [{
+    name: "santiballs",
+    type: activityTypes.GAMING
+}, {
+    name: "...hi?",
+    type: activityTypes.GAMING
+}, {
+    name: "...bye!",
+    type: activityTypes.GAMING
+}, {
+    name: "Hi-5!!!",
+    type: activityTypes.GAMING
+}, {
+    name: "the devs code :)",
+    type: activityTypes.WATCHING
+}, {
+    name: "with mods",
+    type: activityTypes.GAMING
+}, {
+    name: "cc.ig",
+    type: activityTypes.GAMING
+}, {
+    name: "with CCLoader",
+    type: activityTypes.GAMING
+}, {
+    name: "in multiplayer :o",
+    type: activityTypes.GAMING
+}, {
+    name: "...Lea. -.-",
+    type: activityTypes.WATCHING
+}, {
+    name: "CrossCode v1",
+    type: activityTypes.GAMING
+}, {
+    name: "Intero's Music :o",
+    type: activityTypes.LISTENING
+}]
+
+function newGame() {
+    var ran = gameStats.random();
+    console.log('Here is the random', ran);
+    client.user.setPresence({
+        activity: ran
+    });
+};
 client.on('ready', () => {
     findModServer();
     util.getAllEmojis(client);
     console.log(`Logged in as ${client.user.tag}!`);
-    //client.user.setAvatar('avatar/snowlea.png');
-    let activityTypes = {
-        GAMING: 0,
-        STREAMING: 1,
-        LISTENING: 2,
-        WATCHING: 3
-    };
-    let gameStats = [{
-        name: "santiballs",
-        type: activityTypes.GAMING
-    }, {
-        name: "...hi?",
-        type: activityTypes.GAMING
-    }, {
-        name: "...bye!",
-        type: activityTypes.GAMING
-    }, {
-        name: "Hi-5!!!",
-        type: activityTypes.GAMING
-    }, {
-        name: "the devs code :)",
-        type: activityTypes.WATCHING
-    }, {
-        name: "with mods",
-        type: activityTypes.GAMING
-    }, {
-        name: "cc.ig",
-        type: activityTypes.GAMING
-    }, {
-        name: "with CCLoader",
-        type: activityTypes.GAMING
-    }, {
-        name: "in multiplayer :o",
-        type: activityTypes.GAMING
-    }, {
-        name: "...Lea. -.-",
-        type: activityTypes.WATCHING
-    }, {
-        name: "CrossCode v1",
-        type: activityTypes.GAMING
-    }, {
-        name: "Intero's Music :o",
-        type: activityTypes.LISTENING
-    }]
-    let newGame = function() {
-        let activity = gameStats.random();
-        client.user.setPresence({
-            activity: activity
-        });
-    };
     newGame();
     setInterval(newGame, 120000);
 });
@@ -93,15 +94,7 @@ client.on('guildMemberAdd', function(newMember) {
         newMember.addRoles([pendingRole]);
         watchTower.send(`Added pending role to ${newMember.toString()}`);
     }
-
 });
-
-function onError(msg) {
-    // Doesn't work when combined with botrac4r: no awareness of if a command is controlled by botrac4r.
-    //msg.reply("...how? RTFM.")
-}
-
-function processArgs(args) {}
 
 function onMessage(msg) {
     //lel
