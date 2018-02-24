@@ -1,8 +1,4 @@
-module.exports = function(instance, util) {
-    const {
-        getHelpText
-    } = util;
-
+module.exports = function(instance) {
     let commands = {
         join: function joinVoiceChannel(msg) {
             if (msg.member.voiceChannel) {
@@ -46,10 +42,6 @@ module.exports = function(instance, util) {
                 msg.reply("but I'm not in a voice channel!");
             }
         },
-        help: function getHelp(msg) {
-            msg.author.send(helpText)
-        }
     };
-    let helpText = getHelpText(commands, 'voice');
     return commands;
 }

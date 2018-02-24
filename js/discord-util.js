@@ -75,16 +75,11 @@ exports.createRichEmbed = function(opts) {
     opts.footer && opts.footer.text && richEmbed.setFooter(opts.footer.text);
     return richEmbed;
 }
-exports.getHelpText = function(obj, type) {
-    let commands = Object.keys(obj)
-    let helpText = commands.reduce(function(str, command) {
-        if (command) {
-            str += `- ${process.env.BOT_PREFIX}${type? ' -' + type : ''} ${command}` + '\n'
-        }
-        return str
-    }, "```diff\n") + '```'
-    return `${helpText}`
+exports.formatHelpText = function(invoc, helpText) {
+    let prefix = invoc.replace(/\s[^\s]+$/, '');
+    return `\`\`\`\n${helpText.replace(/#.*\n/g, '').replace("INVOC", prefix)}\n\`\`\``;
 }
+
 exports.isFromAdmin = function(msg) {
     let adminPosition = msg.member.guild.roles.size - 1;
     return msg.member.highestRole.position === adminPosition;

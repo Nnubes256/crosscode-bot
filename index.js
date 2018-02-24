@@ -12,7 +12,8 @@ let helpText = {};
 for (let type of cmdTypes) {
     commands[type] = require(`./js/command/${type}/commands.js`)(client, util);
     //TODO: Add help text for each function
-    //helpText[type] = commands[type].helpText;
+    helpText[type] = readFileSync(`./js/command/${type}/help.txt`).toString();
+    console.log(helpText[type]);
 }
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
@@ -99,6 +100,7 @@ client.on('guildMemberAdd', function(newMember) {
 function onError(msg) {
     // Doesn't work when combined with botrac4r: no awareness of if a command is controlled by botrac4r.
     //msg.reply("...how? RTFM.")
+    console.log(`command ${msg.content} not found`);
 }
 
 function processArgs(args) {}
@@ -114,21 +116,25 @@ function onMessage(msg) {
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
-    let commandType = undefined;
-    //2767mr fix
+    let invoc = _prefix;
+    let type = "general";
     if (args[0] && args[0].startsWith("-")) {
-        let type = args[0].substring(1)
-        commandType = commands[type]
-        if (!commandType) {
-            onError(msg)
+        type = args[0].substring(1)
+        if (!commands[type]) {
+            onError(msg);
             return;
         }
-        args.shift()
-    } else
-        commandType = commands["general"]
+        invoc += ` ${args[0]}`;
+        args.shift();
+    }
 
     let command = args.shift()
-    let func = commandType[command]
+    if(command === "help")
+    {
+        msg.channel.send(util.formatHelpText(invoc, helpText[type]));
+        return;
+    }
+    let func = commands[type][command]
     if (func) {
         func(msg, args, command, console)
     } else {

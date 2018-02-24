@@ -1,6 +1,5 @@
 module.exports = function(instance, util) {
     const {
-        getHelpText,
         createRichEmbed
     } = util;
     const ModsInfo = new(require('./mods.js'));
@@ -17,6 +16,5 @@ module.exports = function(instance, util) {
             }));
         }
     };
-    let helpText = getHelpText(commands, 'mods');
     return commands;
 }

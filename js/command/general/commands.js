@@ -5,7 +5,6 @@ module.exports = function(instance, util) {
         getEmoji,
         findMember,
         createRichEmbed,
-        getHelpText,
         isFromAdmin
     } = util;
     const database = require('sqlite3');
@@ -214,10 +213,6 @@ module.exports = function(instance, util) {
                 msg.reply('could not find the cheater.')
             }
         },
-        help: function getHelp(msg) {
-            //DM user help message
-            msg.author.send(helpText)
-        },
         triggered: function getTriggered(msg) {
             msg.channel.send(createRichEmbed({
                 title: "...WHY?!?!",
@@ -282,6 +277,5 @@ module.exports = function(instance, util) {
             }));
         }
     }
-    let helpText = getHelpText(commands);
-    return commands
+    return commands;
 };

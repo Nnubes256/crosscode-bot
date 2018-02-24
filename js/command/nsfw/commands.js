@@ -3,7 +3,6 @@ module.exports = function(instance, util) {
     const {
         findMember,
         createRichEmbed,
-        getHelpText
     } = util;
 
     let commands = {
@@ -21,10 +20,6 @@ module.exports = function(instance, util) {
                 return true;
             }
         },
-        help: function getHelp(msg) {
-            msg.author.send(helpText)
-        }
     };
-    let helpText = getHelpText(commands, 'nsfw');
     return commands;
 }
