@@ -10,13 +10,22 @@ exports.getAllEmotes = function(client) {
         }
         knownEmotes[name] = {
             id: emote.id,
+            guildId: emote.guild.id,
             name: emote.name
         };
     });
 };
 
-exports.getCacheEmotesIds = function() {
-    return Object.keys(knownEmotes);
+exports.getCacheEmotesIds = function(guildId) {
+    var ids = [];
+    for (var i in knownEmotes) {
+        var emote = knownEmotes[i];
+        //since o
+        if (!emote.animated || (guildId !== undefined && emote.animated && emote.guidId === guidID)) {
+            ids.push(i);
+        }
+    }
+    return ids;
 };
 
 function filterUserId(id) {
@@ -29,7 +38,7 @@ function isId(id) {
 
 exports.getEmote = function(name) {
     let emote = knownEmotes[name];
-    if (emote.id !== undefined) {
+    if (emote && emote.id !== undefined) {
         return {
             id: emote.id,
             toString: function() {

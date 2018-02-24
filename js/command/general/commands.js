@@ -192,7 +192,7 @@ module.exports = function(instance, util) {
                 msg.channel.send(reply);
         },
         lemotes: function listEmotes(msg, args) {
-            let em = getCacheEmotesIds();
+            let em = getCacheEmotesIds(msg.guild.id);
             var message = "\n";
             var count = 0;
             for (var i = 0; i < em.length; i++) {
