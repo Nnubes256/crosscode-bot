@@ -195,9 +195,9 @@ module.exports = function(instance, util) {
             let em = getCacheEmotesIds();
             var message = "\n";
             var count = 0;
-            for (var i = 0; i < 20; i++) {
+            for (var i = 0; i < em.length; i++) {
                 var thonk = getEmote(em[i]);
-                message += em[i] + ',';
+                message += em[i].toString() + ' ';
             }
             msg.channel.send(message);
             console.log(message);
