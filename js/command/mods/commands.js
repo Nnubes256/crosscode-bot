@@ -1,8 +1,8 @@
-module.exports = function(instance) {
+module.exports = function(instance, util) {
     const {
         getHelpText,
         createRichEmbed
-    } = require('./../../discord-util.js');
+    } = util;
     const ModsInfo = new(require('./mods.js'));
     let commands = {
         get: function getMods(msg) {

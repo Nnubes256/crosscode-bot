@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const util = require("./js/discord-util.js");
 const client = new Discord.Client();
 //require("./botrac4r/botrac4r.js");
 let {
@@ -9,7 +10,7 @@ let cmdTypes = ["general", "nsfw", "streams", "art", "voice", "mods", "anime", "
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./js/command/${type}/commands.js`)(client);
+    commands[type] = require(`./js/command/${type}/commands.js`)(client, util);
     //TODO: Add help text for each function
     //helpText[type] = commands[type].helpText;
 }
@@ -33,7 +34,7 @@ function findServer() {
 client.on('ready', () => {
     findServer();
     console.log(`Logged in as ${client.user.tag}!`);
-    //client.user.setAvatar('avatar/snowlea.png');
+    client.user.setAvatar('avatar/cloudlea.png');
     let activityTypes = {
         GAMING: 0,
         STREAMING: 1,
