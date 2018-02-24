@@ -197,11 +197,20 @@ module.exports = function(instance, util) {
         },
         lemotes: function listEmotes(msg, args) {
             let em = getCacheEmotesIds(msg.guild.id);
+            //lets add animated emotes
+            em = em.concat(msg.guild.emojis.findAll('animated', true).map(function(emoji) {
+                 return emoji.name;
+            }));
             var message = "\n";
             var count = 0;
             for (var i = 0; i < em.length; i++) {
-                var thonk = getEmote(null, em[i]);
-                message += em[i].toString() + ' ';
+                var thonk = getEmote(msg, em[i]);
+                var emojiLine = em[i] + ' ' + thonk + '\n';
+                if(message.length + emojiLine.length > 2000) {
+                    msg.channel.send(message);
+                    message = "\n";
+                }
+                message += emojiLine;
             }
             msg.channel.send(message);
         },
