@@ -126,9 +126,7 @@ function onMessage(msg) {
     }
     let func = commands[type][command]
     if (func) {
-        func(msg, args, command, console)
-    } else {
-        onError(msg)
+        func(msg, args, command, console);
     }
 
 }
