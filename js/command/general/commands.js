@@ -200,7 +200,6 @@ module.exports = function(instance, util) {
                 message += em[i].toString() + ' ';
             }
             msg.channel.send(message);
-            console.log(message);
         },
         react: function leaReact(msg, args) {
             for (let i = 0; i < args.length; i++) {
