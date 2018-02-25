@@ -185,7 +185,7 @@ module.exports = function(instance, util) {
             msg.channel.send(`*${msg.author} says:*\n${pieces.join(delim)}`);
         },
         lewd: function noLewdLea(msg, args) {
-            msg.react(getEmoji(msg, "ohno").id);
+            msg.react(getEmote(msg, "ohno").id);
         },
         emote: function leaEmote(msg, args) {
             let reply = '';
