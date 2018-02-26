@@ -5,7 +5,7 @@ let streamArtLink = function getStreamArt() {
     let data = readFileSync('stream.txt', 'utf8')
     return data.split("\n");
 }();
-const FanArt = require('./crosscode-fanart.js');
+const FanArt = require('./art.d/crosscode-fanart.js');
 let fanArt = new FanArt();
 module.exports = function(instance) {
     let commands = {

@@ -4,15 +4,15 @@ const client = new Discord.Client();
 let {
     readFileSync
 } = require('fs');
-let util = require('./js/discord-util.js');
+let util = require('./discord-util.js');
 let prefix = process.env.BOT_PREFIX;
 let cmdTypes = ["general", "nsfw", "streams", "art", "voice", "mods", "anime", "game"];
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./js/command/${type}/commands.js`)(client, util);
+    commands[type] = require(`./modules/${type}.js`)(client, util);
     //TODO: Add help text for each function
-    helpText[type] = readFileSync(`./js/command/${type}/help.txt`).toString();
+    helpText[type] = readFileSync(`./help/${type}.txt`).toString();
 }
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];

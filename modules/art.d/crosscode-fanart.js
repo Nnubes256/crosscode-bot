@@ -13,7 +13,7 @@ class CrossCodeFanArt {
             title: "No art found"
         });
         let _instance = this;
-        let otherFanArt = JSON.parse(fs.readFileSync('./js/command/art/other-fanart.json', 'utf8'));
+        let otherFanArt = JSON.parse(fs.readFileSync('./modules/art.d/other-fanart.json', 'utf8'));
         for (var src in otherFanArt) {
             otherFanArt[src].forEach(function(element) {
                 _instance.addFanArt(element);

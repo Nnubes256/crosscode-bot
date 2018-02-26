@@ -13,7 +13,7 @@ module.exports = function(instance, util) {
         readFileSync
     } = require('fs');
 
-    const StrawPoll = require('./poll/strawpoll');
+    const StrawPoll = require('./general.d/strawpoll.js');
 
     function boxGenerate(phrase, characterArray) {
         let maxMessageLength = 1960;

@@ -1,4 +1,4 @@
-const TwitchStreams = require('./crosscode-twitch-search.js');
+const TwitchStreams = require('./streams.d/crosscode-twitch-search.js');
 let streams = new TwitchStreams();
 module.exports = function(instance) {
     let notify_channels = {};

@@ -2,7 +2,7 @@ module.exports = function(instance, util) {
     const {
         createRichEmbed
     } = util;
-    const ModsInfo = new(require('./mods.js'));
+    const ModsInfo = new(require('./mods.d/mods.js'));
     let commands = {
         get: function getMods(msg) {
             msg.channel.send('', ModsInfo.getMods() || createRichEmbed({

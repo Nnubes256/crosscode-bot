@@ -1,6 +1,6 @@
 module.exports = function(instance, util) {
-    let Character = require('./game/character.js');
-    let Match = require('./game/match.js');
+    let Character = require('./game.d/character.js');
+    let Match = require('./game.d/match.js');
     let characters = new Map();
     let matches = new Map();
     let {
