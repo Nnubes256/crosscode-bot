@@ -1,2 +1,2 @@
-INVOC get - gives you a list of known mods
-INVOC installation - refers you to the installation guide for CrossCode mods
+{%get%} - gives you a list of known mods
+{%installation%} - refers you to the installation guide for CrossCode mods

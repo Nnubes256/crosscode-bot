@@ -51,12 +51,15 @@ exports.getEmote = function(object, name) {
         };
     }
     //Weird error can not find emojis of undefined
+    // don't think we need this anymore -alwinfy
+/*
     let emojis = null;
     if (object instanceof Discord.Message && object.guild !== undefined) {
         emojis = object.guild.emojis.find("name", name);
         if (emojis)
             return emojis;
     }
+*/
     //console.debug(`Warning: unknown emoji "${name}"`);
     return {
         id: "",
@@ -99,9 +102,8 @@ exports.createRichEmbed = function(opts) {
     return richEmbed;
 };
 
-exports.formatHelpText = function(invoc, helpText) {
-    let prefix = invoc.replace(/\s[^\s]+$/, '');
-    return `\`\`\`md\n${helpText.replace(/^#.*\n/mg, '').replace(/INVOC/g, prefix)}\n\`\`\``;
+exports.formatHelpText = function(prefix, suffix, helpText) {
+    return `\`\`\`md\n${helpText.replace(/^#.*\n/mg, '').replace(/\{%/g, prefix + ' ').replace(/%}/g, suffix)}\n\`\`\``;
 };
 
 exports.isFromAdmin = function(msg) {

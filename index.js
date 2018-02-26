@@ -7,12 +7,18 @@ let {
 let util = require('./discord-util.js');
 let prefix = process.env.BOT_PREFIX;
 let cmdTypes = ["general", "nsfw", "streams", "art", "voice", "mods", "anime", "game"];
+let defCmd = cmdTypes[0]
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./modules/${type}.js`)(client, util);
-    //TODO: Add help text for each function
-    helpText[type] = readFileSync(`./help/${type}.txt`).toString();
+    let req = require(`./modules/${type}.js`)(client, util);
+    let ht = readFileSync(`./help/${type}.txt`);
+    if(type === defCmd)
+        type = "";
+    for(let name in req)
+        if(typeof req[name] === "function")
+            commands[name + type] = req[name];
+    helpText[type] = ht.toString();
 }
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
@@ -96,6 +102,20 @@ client.on('guildMemberAdd', function(newMember) {
     }
 });
 
+function promisify(func, ...args) {
+    (new Promise((resolve, reject) => {
+        let result;
+        try {
+            result = func(...args);
+        } catch(err) {
+            reject(err);
+        }
+        resolve(result);
+    })).then(function(res) {}, function (err) {
+        console.log(err);
+    });
+}
+
 function onMessage(msg) {
     //lel
     if (msg.content.toLowerCase().startsWith("failed to load")) {
@@ -103,40 +123,19 @@ function onMessage(msg) {
         return;
     }
     //Allow for new line parsing
-    let args = msg.content.replace(/^\s+|\s+$/g, '').split(/[ \t]+/);
-    let _prefix = args.shift();
-    if (!_prefix.startsWith(prefix))
+    let [invoc, cmd, ...args] = msg.content.replace(/^\s+|\s+$/g, '').split(/[ \t]+/);
+    if (!invoc.startsWith(prefix) || !cmd)
         return;
-    let invoc = _prefix;
-    let type = "general";
-    if (args[0] && args[0].startsWith("-")) {
-        type = args[0].substring(1)
-        if (!commands[type]) {
-            onError(msg);
-            return;
-        }
-        invoc += ` ${args[0]}`;
-        args.shift();
-    }
 
-    let command = args.shift()
-    if (command === "help") {
-        msg.author.send(util.formatHelpText(invoc, helpText[type]));
+    if (cmd.startsWith("help")) {
+        let type = cmd.substr(4);
+        if(helpText[type] !== undefined)
+            msg.author.send(util.formatHelpText(invoc, type, helpText[type]));
         return;
     }
-    let func = commands[type][command]
+    let func = commands[cmd];
     if (func) {
-        (new Promise((resolve, reject) => {
-            let result;
-            try {
-                result = func(msg, args, command, console);
-            } catch(err) {
-                reject(err);
-            }
-            resolve(result);
-        })).then(function(res) {}, function (err) {
-            console.log(err);
-        });
+        promisify(func, msg, args, cmd, console);
     }
 
 }

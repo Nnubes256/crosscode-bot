@@ -1,2 +1,2 @@
-INVOC fromstream - displays a random official streamart
-INVOC fromfan - displays a random fannart
+{%fromstream%} - displays a random official streamart
+{%fromfan%} - displays a random fannart

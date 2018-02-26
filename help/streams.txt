@@ -1,3 +1,3 @@
-INVOC set - turn on periodic stream notifications (admin only)
-INVOC get - invoke `INVOC set` once
-INVOC remove - disable a prior `INVOC set`
+{%set%} - turn on periodic stream notifications (admin only)
+{%get%} - invoke `{%set%}` once
+{%remove%} - disable a prior `{%set%}`

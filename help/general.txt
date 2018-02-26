@@ -1,34 +1,34 @@
-INVOC purge - *should* purge bot replies, but seems to be broken atm
-INVOC ping - tests bot response time
-INVOC box - creates a triangle from the given characters, may only be used in channels named #spam
-INVOC rbox - `INVOC box`, but reverses the message beforehand
+{%purge%} - *should* purge bot replies, but seems to be broken atm
+{%ping%} - tests bot response time
+{%box%} - creates a triangle from the given characters, may only be used in channels named #spam
+{%rbox%} - `{%box%}`, but reverses the message beforehand
 # setname - changes the bot's nickname
-INVOC cloudlea - displays an image of Lea on a cloud
+{%cloudlea%} - displays an image of Lea on a cloud
 # sleep - kills Lea :ohno:
-INVOC hug - TODO
-INVOC language - displays that gif of Lea and the JS sign
-INVOC hi - Lea greets you
-INVOC bye - Lea says goodbye to you
-INVOC bugs - HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?
-INVOC BUG - :emilieWhy: alias
-INVOC thinking - reacts with the standard thonk
-INVOC CHEATER - INVOCuses someone of being a C H E A T E R
-INVOC help - this text
-INVOC triggered - mildly angery Lea
-INVOC verytriggered - *severely* angery Lea
-INVOC HI! - Deal With It Lea™.
-INVOC vote - reacts with the proper vote emotes for ease of vote
-INVOC work - Why?
-INVOC balls - displays that one image that Lachsen is oh-so "proud" of
-INVOC vrps - TheRusty22's oh-so-strange and beautiful mashup of Sergey, `INVOC balls`, and `INVOC language`
-INVOC "get it" - gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
-INVOC thanks - writes a template thank-you message to the devs :)
+{%hug%} - TODO
+{%language%} - displays that gif of Lea and the JS sign
+{%hi%} - Lea greets you
+{%bye%} - Lea says goodbye to you
+{%bugs%} - HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?
+{%BUG%} - :emilieWhy: alias
+{%thinking%} - reacts with the standard thonk
+{%CHEATER%} - accuses someone of being a C H E A T E R
+{%help%} - this text
+{%triggered%} - mildly angery Lea
+{%verytriggered%} - *severely* angery Lea
+{%HI%}! - Deal With It Lea™.
+{%vote%} - reacts with the proper vote emotes for ease of vote
+{%work%} - Why?
+{%balls%} - displays that one image that Lachsen is oh-so "proud" of
+{%vrps%} - TheRusty22's oh-so-strange and beautiful mashup of Sergey, `{%balls%}`, and `{%language%}`
+{%get it%} - gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
+{%thanks%} - writes a template thank-you message to the devs :)
 
 See also: 
-    INVOC -anime
-    INVOC -art
-    INVOC -game
-    INVOC -mods
-    INVOC -nsfw
-    INVOC -streams
-    INVOC -voice
+    {%animehelp%}
+    {%arthelp%}
+    {%gamehelp%}
+    {%modshelp%}
+    {%nsfwhelp%}
+    {%streamshelp%}
+    {%voicehelp%}
