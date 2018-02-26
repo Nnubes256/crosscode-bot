@@ -126,7 +126,17 @@ function onMessage(msg) {
     }
     let func = commands[type][command]
     if (func) {
-        func(msg, args, command, console);
+        (new Promise((resolve, reject) => {
+            let result;
+            try {
+                result = func(msg, args, command, console);
+            } catch(err) {
+                reject(err);
+            }
+            resolve(result);
+        })).then(function(res) {}, function (err) {
+            console.log(err);
+        });
     }
 
 }
