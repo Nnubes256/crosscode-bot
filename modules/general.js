@@ -175,10 +175,10 @@ module.exports = function(instance, util) {
 
                 let thonk = getEmote(msg, pieces[i]);
                 if (thonk.id !== '') {
-                  if(i > 0) {
-                    pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
-                    i--;
-                  }
+                    if (i > 0) {
+                        pieces.splice(i - 1, 3, [pieces[i - 1], thonk, pieces[i + 1]].join(''));
+                        i--;
+                    }
                 }
 
             }
@@ -201,14 +201,14 @@ module.exports = function(instance, util) {
             let em = getCacheEmotesIds(msg.guild.id);
             //lets add animated emotes
             em = em.concat(msg.guild.emojis.findAll('animated', true).map(function(emoji) {
-                 return emoji.name;
+                return emoji.name;
             }));
             var message = "\n";
             var count = 0;
             for (var i = 0; i < em.length; i++) {
                 var thonk = getEmote(msg, em[i]);
                 var emojiLine = em[i] + ' ' + thonk + '\n';
-                if(message.length + emojiLine.length > 2000) {
+                if (message.length + emojiLine.length > 2000) {
                     msg.channel.send(message);
                     message = "\n";
                 }
@@ -296,7 +296,8 @@ module.exports = function(instance, util) {
             //make this a class :p
             let thankYouMessage = [
                 "Keep up the good work!",
-                "You guys are awesome."];
+                "You guys are awesome."
+            ];
             //Ew too long... please refractor
             msg.channel.send('', createRichEmbed({
                 description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`

@@ -130,11 +130,11 @@ function onMessage(msg) {
             let result;
             try {
                 result = func(msg, args, command, console);
-            } catch(err) {
+            } catch (err) {
                 reject(err);
             }
             resolve(result);
-        })).then(function(res) {}, function (err) {
+        })).then(function(res) {}, function(err) {
             console.log(err);
         });
     }
