@@ -183,6 +183,8 @@ module.exports = function(instance, util) {
 
             }
             msg.channel.send(`*${msg.author} says:*\n${pieces.join(delim)}`);
+            if(msg.deletable)
+                msg.delete();
         },
         lewd: function noLewdLea(msg, args) {
             msg.react(getEmote(msg, "ohno").id);
