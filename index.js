@@ -29,7 +29,7 @@ function findModServer() {
         pendingRole = ccModServ.roles.find('name', 'pending');
         watchTower = ccModServ.channels.find('name', 'admin-watchtower');
         requestsChannel = ccModServ.channels.find('name', 'requests');
-        infoChan = ccModServ.channels.find('name', 'role-chan');
+        roleChan = ccModServ.channels.find('name', 'role-chan');
     } else {
         console.log("Modding Server does not exist");
     }
