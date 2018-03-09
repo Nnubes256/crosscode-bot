@@ -21,7 +21,7 @@ let ccModServ;
 let pendingRole;
 let watchTower;
 let requestsChannel;
-let infoChan;
+let roleChan;
 function findModServer() {
     ccModServ = client.guilds.find('name', 'CrossCode Modding');
     if (ccModServ) {
@@ -29,7 +29,7 @@ function findModServer() {
         pendingRole = ccModServ.roles.find('name', 'pending');
         watchTower = ccModServ.channels.find('name', 'admin-watchtower');
         requestsChannel = ccModServ.channels.find('name', 'requests');
-        infoChan = ccModServ.channels.find('name', 'info-chan');
+        infoChan = ccModServ.channels.find('name', 'role-chan');
     } else {
         console.log("Modding Server does not exist");
     }
@@ -96,7 +96,7 @@ client.on('guildMemberAdd', function(newMember) {
     if (newMember.guild.id === ccModServ.id && pendingRole) {
         newMember.addRoles([pendingRole]);
         watchTower.send(`Added pending role to ${newMember.toString()}`);
-        requestsChannel.send(`${newMember}, what role would you like?\nFor a list of roles, please check ${infoChan}`);
+        requestsChannel.send(`${newMember}, what role would you like?\nFor a list of roles, please check ${roleChan}`);
     }
 });
 
