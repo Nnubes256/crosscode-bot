@@ -13,7 +13,7 @@
     "role-servers": [
         {
             "name": "CrossCode Modding",
-            "greeting": "welcome! Use `$PREFIX -roles request <role>` to ask for a role!",
+            "greeting": "welcome! Use `$PREFIX -roles add <role>` to ask for a role!",
             "channels": {
                 "greet": "requests",
                 "info": "role-list",

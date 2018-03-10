@@ -73,7 +73,6 @@ function newGame() {
     });
 };
 client.on('ready', () => {
-    console.log(servers);
     manageServs = util.getAllServers(client, servers);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
@@ -102,7 +101,7 @@ client.on('guildMemberRemove', member => {
                     name:"Had roles", 
                     value: member.roles.array().join('\r\n')
                 }]
-            }));
+            })).error(console.log);
             break;
         }
 });
@@ -120,7 +119,7 @@ client.on('messageUpdate', (oldMsg, newMsg) => {
                     { name: "From", value: oldMsg.content },
                     { name: "To", value: newMsg.content }
                 ]
-            }));
+            })).error(console.log);
             break;
         }
 });
@@ -137,7 +136,7 @@ client.on('messageDelete', msg => {
                 fields: [
                     { name: "Content", value: msg.content }
                 ]
-            }));
+            })).error(console.log);
             break;
         }
 });
