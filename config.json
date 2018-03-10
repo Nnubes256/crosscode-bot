@@ -10,10 +10,37 @@
         "streams",
         "voice"
     ],
+    "default-module": "general",
+
+    "activities": [
+        {"type": "WATCHING",  "name": "...Lea. -.-"},
+        {"type": "PLAYING",   "name": "...bye!"},
+        {"type": "PLAYING",   "name": "...hi?"},
+        {"type": "PLAYING",   "name": "CrossCode v1"},
+        {"type": "PLAYING",   "name": "Hi-5!!!"},
+        {"type": "LISTENING", "name": "Intero's Music"},
+        {"type": "PLAYING",   "name": "cc.ig"},
+        {"type": "PLAYING",   "name": "in multiplayer"},
+        {"type": "PLAYING",   "name": "santiballs"},
+        {"type": "WATCHING",  "name": "the devs code :)"},
+        {"type": "PLAYING",   "name": "with CCLoader"},
+        {"type": "PLAYING",   "name": "with mods"}
+    ],
+    "activity-types": [
+        "PLAYING",
+        "STREAMING",
+        "LISTENING",
+        "WATCHING"
+    ],
+
     "role-servers": [
         {
             "name": "CrossCode Modding",
+<<<<<<< HEAD
             "greeting": "welcome! Use `$PREFIX -roles add <role>` to add a role!\nTo see a list of available roles, please visit chan:info",
+=======
+            "greeting": "welcome! Use `$PREFIX -roles add <role>` to ask for a role!",
+>>>>>>> b20b6812879e26a1a2c78766da19a5546a569c3f
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
@@ -40,7 +67,8 @@
             "channels": {
                 "greet": "general",
                 "info": "general",
-                "syslog": "general"
+                "syslog": "general",
+                "editlog": "general"
             },
             "roles": {
                 "pending": [],

@@ -29,59 +29,26 @@ Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
 }
 
-let activityTypes = {
-    GAMING: 0,
-    STREAMING: 1,
-    LISTENING: 2,
-    WATCHING: 3
-};
-let gameStats = [{
-    name: "santiballs",
-    type: activityTypes.GAMING
-}, {
-    name: "...hi?",
-    type: activityTypes.GAMING
-}, {
-    name: "...bye!",
-    type: activityTypes.GAMING
-}, {
-    name: "Hi-5!!!",
-    type: activityTypes.GAMING
-}, {
-    name: "the devs code :)",
-    type: activityTypes.WATCHING
-}, {
-    name: "with mods",
-    type: activityTypes.GAMING
-}, {
-    name: "cc.ig",
-    type: activityTypes.GAMING
-}, {
-    name: "with CCLoader",
-    type: activityTypes.GAMING
-}, {
-    name: "in multiplayer :o",
-    type: activityTypes.GAMING
-}, {
-    name: "...Lea. -.-",
-    type: activityTypes.WATCHING
-}, {
-    name: "CrossCode v1",
-    type: activityTypes.GAMING
-}, {
-    name: "Intero's Music :o",
-    type: activityTypes.LISTENING
-}]
+let activities = [];
+for(let act of configuration.activities)
+{
+    act.type = configuration["activity-types"].indexOf(act.type);
+    activities.push(act);
+}
 
 function newGame() {
-    var ran = gameStats.random();
+    var ran = activities.random();
     client.user.setPresence({
-        activity: ran
+        game: ran
     });
 };
 client.on('ready', () => {
+<<<<<<< HEAD
     console.log(servers);
     manageServs = util.getAllServers(client, servers, console);
+=======
+    manageServs = util.getAllServers(client, servers);
+>>>>>>> b20b6812879e26a1a2c78766da19a5546a569c3f
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     newGame();
@@ -105,7 +72,12 @@ client.on('guildMemberRemove', member => {
             if(!serv.chans.editlog)
                 break;
 
-            serv.chans.editlog.send(`Member left the server: ${member}`);
+            serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
+                fields:[{
+                    name:"Had roles", 
+                    value: member.roles.array().join('\r\n')
+                }]
+            })).error(console.log);
             break;
         }
 });
@@ -118,12 +90,12 @@ client.on('messageUpdate', (oldMsg, newMsg) => {
             if(!serv.chans.editlog)
                 break;
 
-            serv.chans.editlog.send(`Member updated message: ${author}`, util.createRichEmbed({
+            serv.chans.editlog.send(`Member updated message in ${oldMsg.channel}: ${author}`, util.createRichEmbed({
                 fields: [
                     { name: "From", value: oldMsg.content },
                     { name: "To", value: newMsg.content }
                 ]
-            }));
+            })).error(console.log);
             break;
         }
 });
@@ -136,11 +108,11 @@ client.on('messageDelete', msg => {
             if(!serv.chans.editlog)
                 break;
 
-            serv.chans.editlog.send(`A message was deleted: ${author}`, util.createRichEmbed({
+            serv.chans.editlog.send(`A message was deleted in ${msg.channel}: ${author}`, util.createRichEmbed({
                 fields: [
                     { name: "Content", value: msg.content }
                 ]
-            }));
+            })).error(console.log);
             break;
         }
 });
@@ -158,7 +130,7 @@ function onMessage(msg) {
     if (!_prefix.startsWith(prefix))
         return;
     let invoc = _prefix;
-    let type = "general";
+    let type = configuration["default-module"];
     if (args[0] && args[0].startsWith("-")) {
         type = args[0].substring(1)
         if (!commands[type]) {
