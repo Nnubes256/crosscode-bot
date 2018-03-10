@@ -36,11 +36,7 @@
     "role-servers": [
         {
             "name": "CrossCode Modding",
-<<<<<<< HEAD
             "greeting": "welcome! Use `$PREFIX -roles add <role>` to add a role!\nTo see a list of available roles, please visit chan:info",
-=======
-            "greeting": "welcome! Use `$PREFIX -roles add <role>` to ask for a role!",
->>>>>>> b20b6812879e26a1a2c78766da19a5546a569c3f
             "channels": {
                 "greet": "requests",
                 "info": "role-list",

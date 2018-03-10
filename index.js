@@ -43,12 +43,8 @@ function newGame() {
     });
 };
 client.on('ready', () => {
-<<<<<<< HEAD
     console.log(servers);
     manageServs = util.getAllServers(client, servers, console);
-=======
-    manageServs = util.getAllServers(client, servers);
->>>>>>> b20b6812879e26a1a2c78766da19a5546a569c3f
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     newGame();
@@ -74,7 +70,7 @@ client.on('guildMemberRemove', member => {
 
             serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
                 fields:[{
-                    name:"Had roles", 
+                    name:"Had roles",
                     value: member.roles.array().join('\r\n')
                 }]
             })).error(console.log);

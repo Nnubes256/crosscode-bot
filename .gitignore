@@ -13,9 +13,8 @@ pnacl/
 *.dat
 *.html
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.zip
 *.log
 pnacl/
-=======
 .*.swp
->>>>>>> b20b6812879e26a1a2c78766da19a5546a569c3f
