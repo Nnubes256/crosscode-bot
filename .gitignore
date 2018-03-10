@@ -12,3 +12,4 @@ pnacl/
 *.nexe
 *.dat
 *.html
+.*.swp
