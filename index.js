@@ -91,6 +91,51 @@ client.on('guildMemberAdd', function(newMember) {
             break;
         }
 });
+client.on('guildMemberRemove', member => {
+    for (let serv of manageServs)
+        if (member.guild.id === serv.id) {
+            if(!serv.chans.editlog)
+                break;
+
+            serv.chans.editlog.send(`Member left the server: ${member}`);
+            break;
+        }
+});
+client.on('messageUpdate', (oldMsg, newMsg) => {
+    var author = oldMsg.author;
+    if(author.bot)
+        return;
+    for (let serv of manageServs)
+        if (oldMsg.guild.id === serv.id) {
+            if(!serv.chans.editlog)
+                break;
+
+            serv.chans.editlog.send(`Member updated message: ${author}`, util.createRichEmbed({
+                fields: [
+                    { name: "From", value: oldMsg.content },
+                    { name: "To", value: newMsg.content }
+                ]
+            }));
+            break;
+        }
+});
+client.on('messageDelete', msg => {
+    var author = msg.author;
+    if(author.bot)
+        return;
+    for (let serv of manageServs)
+        if (msg.guild.id === serv.id) {
+            if(!serv.chans.editlog)
+                break;
+
+            serv.chans.editlog.send(`A message was deleted: ${author}`, util.createRichEmbed({
+                fields: [
+                    { name: "Content", value: msg.content }
+                ]
+            }));
+            break;
+        }
+});
 
 function onMessage(msg) {
     //lel

@@ -17,7 +17,8 @@
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
-                "syslog": "admin-watchtower"
+                "syslog": "admin-watchtower",
+                "editlog": "edit-log"
             },
             "roles": {
                 "pending": [
@@ -37,6 +38,20 @@
                 "greet": "general",
                 "info": "general",
                 "syslog": "general"
+            },
+            "roles": {
+                "pending": [],
+                "blacklist": []
+            }
+        },
+        {
+            "name": "bottest",
+            "greeting": "welcome!",
+            "channels": {
+                "greet": "general",
+                "info": "general",
+                "syslog": "general",
+                "editlog": "general"
             },
             "roles": {
                 "pending": [],
