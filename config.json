@@ -37,7 +37,8 @@
             "channels": {
                 "greet": "general",
                 "info": "general",
-                "syslog": "general"
+                "syslog": "general",
+                "editlog": "general"
             },
             "roles": {
                 "pending": [],
