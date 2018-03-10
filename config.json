@@ -10,6 +10,29 @@
         "streams",
         "voice"
     ],
+    "default-module": "general",
+
+    "activities": [
+        {"name": "...Lea. -.-",      "type": "WATCHING"},
+        {"name": "...bye!",          "type": "PLAYING"},
+        {"name": "...hi?",           "type": "PLAYING"},
+        {"name": "CrossCode v1",     "type": "PLAYING"},
+        {"name": "Hi-5!!!",          "type": "PLAYING"},
+        {"name": "Intero's Music",   "type": "LISTENING"},
+        {"name": "cc.ig",            "type": "PLAYING"},
+        {"name": "in multiplayer",   "type": "PLAYING"},
+        {"name": "santiballs",       "type": "PLAYING"},
+        {"name": "the devs code :)", "type": "WATCHING"},
+        {"name": "with CCLoader",    "type": "PLAYING"},
+        {"name": "with mods",        "type": "PLAYING"}
+    ],
+    "activity-types": [
+        "PLAYING",
+        "STREAMING",
+        "LISTENING",
+        "WATCHING"
+    ],
+
     "role-servers": [
         {
             "name": "CrossCode Modding",

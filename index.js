@@ -22,54 +22,17 @@ Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
 }
 
-let activityTypes = {
-    GAMING: 0,
-    STREAMING: 1,
-    LISTENING: 2,
-    WATCHING: 3
-};
-let gameStats = [{
-    name: "santiballs",
-    type: activityTypes.GAMING
-}, {
-    name: "...hi?",
-    type: activityTypes.GAMING
-}, {
-    name: "...bye!",
-    type: activityTypes.GAMING
-}, {
-    name: "Hi-5!!!",
-    type: activityTypes.GAMING
-}, {
-    name: "the devs code :)",
-    type: activityTypes.WATCHING
-}, {
-    name: "with mods",
-    type: activityTypes.GAMING
-}, {
-    name: "cc.ig",
-    type: activityTypes.GAMING
-}, {
-    name: "with CCLoader",
-    type: activityTypes.GAMING
-}, {
-    name: "in multiplayer :o",
-    type: activityTypes.GAMING
-}, {
-    name: "...Lea. -.-",
-    type: activityTypes.WATCHING
-}, {
-    name: "CrossCode v1",
-    type: activityTypes.GAMING
-}, {
-    name: "Intero's Music :o",
-    type: activityTypes.LISTENING
-}]
+let activities = [];
+for(let act of configuration.activities)
+{
+    act.type = configuration["activity-types"].indexOf(act.type);
+    activities.push(act);
+}
 
 function newGame() {
-    var ran = gameStats.random();
+    var ran = activities.random();
     client.user.setPresence({
-        activity: ran
+        game: ran
     });
 };
 client.on('ready', () => {
@@ -153,7 +116,7 @@ function onMessage(msg) {
     if (!_prefix.startsWith(prefix))
         return;
     let invoc = _prefix;
-    let type = "general";
+    let type = configuration["default-module"];
     if (args[0] && args[0].startsWith("-")) {
         type = args[0].substring(1)
         if (!commands[type]) {
