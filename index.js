@@ -97,7 +97,12 @@ client.on('guildMemberRemove', member => {
             if(!serv.chans.editlog)
                 break;
 
-            serv.chans.editlog.send(`Member left the server: ${member}`);
+            serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
+                fields:[{
+                    name:"Had roles", 
+                    value: member.roles.array().join('\r\n')
+                }]
+            }));
             break;
         }
 });
@@ -110,7 +115,7 @@ client.on('messageUpdate', (oldMsg, newMsg) => {
             if(!serv.chans.editlog)
                 break;
 
-            serv.chans.editlog.send(`Member updated message: ${author}`, util.createRichEmbed({
+            serv.chans.editlog.send(`Member updated message in ${oldMsg.channel}: ${author}`, util.createRichEmbed({
                 fields: [
                     { name: "From", value: oldMsg.content },
                     { name: "To", value: newMsg.content }
@@ -128,7 +133,7 @@ client.on('messageDelete', msg => {
             if(!serv.chans.editlog)
                 break;
 
-            serv.chans.editlog.send(`A message was deleted: ${author}`, util.createRichEmbed({
+            serv.chans.editlog.send(`A message was deleted in ${msg.channel}: ${author}`, util.createRichEmbed({
                 fields: [
                     { name: "Content", value: msg.content }
                 ]
