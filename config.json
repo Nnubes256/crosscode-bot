@@ -36,7 +36,11 @@
     "role-servers": [
         {
             "name": "CrossCode Modding",
+<<<<<<< HEAD
             "greeting": "welcome! Use `$PREFIX -roles add <role>` to add a role!\nTo see a list of available roles, please visit chan:info",
+=======
+            "greeting": "welcome! Use `$PREFIX -roles add <role>` to ask for a role!",
+>>>>>>> refs/remotes/origin/master
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
