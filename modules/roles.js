@@ -41,7 +41,8 @@ module.exports = function(client, util, console) {
               }
             }
             if(!roles.length) {
-              msg.channel.send(`Could not add any new roles.`)
+              msg.channel.send(`Could not add any new roles.`);
+              return;
             }
             msg.member.addRoles(roles).then(function(member) {
               return removePending(member);
