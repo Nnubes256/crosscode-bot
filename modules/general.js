@@ -8,7 +8,6 @@ module.exports = function(instance, util) {
         isFromAdmin,
         getCacheEmotesIds
     } = util;
-    const database = require('sqlite3');
     const {
         readFileSync
     } = require('fs');

@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 let knownEmotes = {};
 let manageServs = []; // cache
 let roleBlacklist = [];
-
+let roleWhitelist = [];
 exports.getAllEmotes = function(client) {
     client.emojis.array().forEach(function(emote) {
         if (emote.animated)
@@ -126,29 +126,45 @@ exports.discObjFind = function(obj, name) {
     }
     return null;
 }
-function findModServer(client, serverJson) {
+function findModServer(client, serverJson, console) {
     let retval = {id: "", chans: {}, pending: []};
     try {
         let server = discObjFind(client.guilds, serverJson.name);
+        console.log(server);
+
         retval.id = server.id;
         retval.greet = serverJson.greeting.replace(/\$PREFIX/g, process.env.BOT_PREFIX);
-        for (let role in serverJson.channels)
-            retval.chans[role] = discObjFind(server.channels, serverJson.channels[role]);
-        for (let role of serverJson.roles.pending)
-            retval.pending.push(discObjFind(server.roles, role));
-        for (let role of serverJson.roles.blacklist)
-            roleBlacklist.push(discObjFind(server.roles, role).id);
+        for (let role in serverJson.channels) {
+          retval.chans[role] = discObjFind(server.channels, serverJson.channels[role]);
+        }
+
+        for (let role of serverJson.roles.pending) {
+          retval.pending.push(discObjFind(server.roles, role));
+        }
+
+        for (let role of serverJson.roles.blacklist) {
+          roleBlacklist.push(discObjFind(server.roles, role).id);
+        }
+
+        for (let role of serverJson.roles.whitelist) {
+          try {
+            roleWhitelist.push(discObjFind(server.roles, role).id);
+          } catch(e) {
+            console.log("In whitelist:", e);
+          }
+
+        }
         return retval;
     } catch(e) {
         console.log(e);
-    } 
+    }
     return null;
 }
-exports.getAllServers = function(client, servers) {
+exports.getAllServers = function(client, servers, console) {
     if(manageServs.length === 0)
         for (let json of servers)
         {
-            let modServ = findModServer(client, json);
+            let modServ = findModServer(client, json, console);
             if (modServ)
                 manageServs.push(modServ);
         }
@@ -156,4 +172,30 @@ exports.getAllServers = function(client, servers) {
 }
 exports.getRoleBlacklist = function() {
     return roleBlacklist;
+}
+exports.getRoleWhitelist = function() {
+    return roleWhitelist;
+}
+function getChanID(msg) {
+  const cLen = "chan:".length;
+  let first = msg.indexOf("chan:") + cLen;
+  if(first == -1) {
+    return -1;
+  }
+  let last = first;
+  var res = msg.indexOf(" ", first);
+  if(res > -1) {
+    last = res;
+  } else {
+    last = msg.length;
+  }
+  return [msg.substring(first - cLen, last), msg.substring(first, last)];
+}
+exports.greetingsParse = function(guild, msg) {
+   var chan;
+   while((chan = getChanID(msg)) > -1) {
+       let channel = guild.channels.find('name', chan[1]) || "#invalid-channel";
+       msg = msg.replace(new RegExp(chan[0], 'g'), channel.toString());
+   }
+   return msg;
 }

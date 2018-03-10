@@ -12,3 +12,6 @@ pnacl/
 *.nexe
 *.dat
 *.html
+*.zip
+*.log
+pnacl/

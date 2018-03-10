@@ -5,6 +5,13 @@ let {
     readFileSync
 } = require('fs');
 let util = require('./discord-util.js');
+let env = readFileSync('.env', 'utf8').split("\n");
+env.forEach(function(element) {
+    if(!element)
+        return;
+    var token = element.split("=");
+    process.env[token[0]] = token[1];
+});
 let prefix = process.env.BOT_PREFIX;
 let configuration = JSON.parse(readFileSync("./config.json"));
 
@@ -14,7 +21,7 @@ let cmdTypes = configuration.modules;
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./modules/${type}.js`)(client, util);
+    commands[type] = require(`./modules/${type}.js`)(client, util, console);
     //TODO: Add help text for each function
     helpText[type] = readFileSync(`./help/${type}.txt`).toString();
 }
@@ -74,7 +81,7 @@ function newGame() {
 };
 client.on('ready', () => {
     console.log(servers);
-    manageServs = util.getAllServers(client, servers);
+    manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     newGame();
@@ -87,7 +94,8 @@ client.on('guildMemberAdd', function(newMember) {
                 console.log(i);
             newMember.addRoles(serv.pending);
             serv.chans.syslog.send(`Added pending role to ${newMember}`);
-            serv.chans.greet.send(`${newMember}, ${serv.greet}`);
+            var newGreet = util.greetingsParse(newMember.guild, serv.greet);
+            serv.chans.greet.send(`${newMember}, ${newGreet}`);
             break;
         }
 });
@@ -139,6 +147,7 @@ client.on('messageDelete', msg => {
 
 function onMessage(msg) {
     //lel
+    console.log(msg);
     if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof");
         return;
