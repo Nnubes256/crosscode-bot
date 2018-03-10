@@ -193,7 +193,7 @@ function getChanID(msg) {
 }
 exports.greetingsParse = function(guild, msg) {
    var chan;
-   while((chan = getChanID(msg)) > -1) {
+   while((chan = getChanID(msg)).length) {
        let channel = guild.channels.find('name', chan[1]) || "#invalid-channel";
        msg = msg.replace(new RegExp(chan[0], 'g'), channel.toString());
    }
