@@ -233,9 +233,9 @@ module.exports = function(instance, util) {
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
             if (cheater) {
-                let apolloPoint = getEmote(msg, "apolloPoint").toString();
-                let apolloShout = getEmote(msg, "apolloShout").toString();
-                let message = `${cheater.toString()} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
+                let apolloPoint = getEmote(msg, "apolloPoint");
+                let apolloShout = getEmote(msg, "apolloShout");
+                let message = `${cheater} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
                 msg.channel.send(message)
             } else {
                 msg.reply('could not find the cheater.')

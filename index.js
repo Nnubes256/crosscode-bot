@@ -95,7 +95,7 @@ client.on('ready', () => {
 client.on('guildMemberAdd', function(newMember) {
     if (newMember.guild.id === ccModServ.id && pendingRole) {
         newMember.addRoles([pendingRole]);
-        watchTower.send(`Added pending role to ${newMember.toString()}`);
+        watchTower.send(`Added pending role to ${newMember}`);
         requestsChannel.send(`${newMember}, what role would you like?\nFor a list of roles, please check ${roleChan}`);
     }
 });
