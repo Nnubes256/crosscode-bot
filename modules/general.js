@@ -3,6 +3,7 @@ module.exports = function(instance, util) {
     const Discord = require("discord.js");
     const {
         getEmote,
+        getAllEmotes,
         findMember,
         createRichEmbed,
         isFromAdmin,
@@ -189,6 +190,16 @@ module.exports = function(instance, util) {
             msg.react(getEmote(msg, "ohno").id);
         },
         emote: function leaEmote(msg, args) {
+            if(args.join(" ") === "emote_reset") {
+              if(isFromAdmin(msg)) {
+                getAllEmotes(instance);
+                msg.channel.send('Emotes should be updated now');
+              } else {
+                msg.channel.send('You are not an admin.');
+              }
+
+              return;
+            }
             let reply = '';
             for (let i = 0; i < args.length; i++) {
                 let thonk = getEmote(msg, args[i]);
