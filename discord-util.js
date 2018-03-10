@@ -177,11 +177,12 @@ exports.getRoleWhitelist = function() {
     return roleWhitelist;
 }
 function getChanID(msg) {
-  const cLen = "chan:".length;
-  let first = msg.indexOf("chan:") + cLen;
+  let first = msg.indexOf("chan:");
   if(first == -1) {
     return -1;
   }
+  const cLen = "chan:".length;
+  first += cLen;
   let last = first;
   var res = msg.indexOf(" ", first);
   if(res > -1) {
@@ -193,7 +194,7 @@ function getChanID(msg) {
 }
 exports.greetingsParse = function(guild, msg) {
    var chan;
-   while((chan = getChanID(msg)).length) {
+   while(Array.isArray((chan = getChanID(msg)))) {
        let channel = guild.channels.find('name', chan[1]) || "#invalid-channel";
        msg = msg.replace(new RegExp(chan[0], 'g'), channel.toString());
    }

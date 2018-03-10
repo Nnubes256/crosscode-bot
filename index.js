@@ -53,12 +53,11 @@ client.on('ready', () => {
 client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
         if (newMember.guild.id === serv.id) {
-            for(let i in newMember)
-                console.log(i);
-            newMember.addRoles(serv.pending);
+            newMember.addRoles(serv.pending).catch(console.log);
             serv.chans.syslog.send(`Added pending role to ${newMember}`);
             var newGreet = util.greetingsParse(newMember.guild, serv.greet);
             serv.chans.greet.send(`${newMember}, ${newGreet}`);
+
             break;
         }
 });
@@ -67,13 +66,17 @@ client.on('guildMemberRemove', member => {
         if (member.guild.id === serv.id) {
             if(!serv.chans.editlog)
                 break;
+            try {
+              serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
+                  fields:[{
+                      name:"Had roles",
+                      value: member.roles.array().join('\r\n')
+                  }]
+              })).catch(console.log);
+            }catch(e) {
+              console.log(e);
+            }
 
-            serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
-                fields:[{
-                    name:"Had roles",
-                    value: member.roles.array().join('\r\n')
-                }]
-            })).catch(console.log);
             break;
         }
 });
