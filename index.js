@@ -6,7 +6,11 @@ let {
 } = require('fs');
 let util = require('./discord-util.js');
 let prefix = process.env.BOT_PREFIX;
-let cmdTypes = ["general", "nsfw", "streams", "art", "voice", "mods", "anime", "game"];
+let configuration = JSON.parse(readFileSync("./config.json"));
+
+let servers = configuration["role-servers"];
+let manageServs;
+let cmdTypes = configuration.modules;
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
@@ -17,23 +21,7 @@ for (let type of cmdTypes) {
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
 }
-let ccModServ;
-let pendingRole;
-let watchTower;
-let requestsChannel;
-let roleChan;
-function findModServer() {
-    ccModServ = client.guilds.find('name', 'CrossCode Modding');
-    if (ccModServ) {
-        console.log("Found your server.");
-        pendingRole = ccModServ.roles.find('name', 'pending');
-        watchTower = ccModServ.channels.find('name', 'admin-watchtower');
-        requestsChannel = ccModServ.channels.find('name', 'requests');
-        roleChan = ccModServ.channels.find('name', 'role-chan');
-    } else {
-        console.log("Modding Server does not exist");
-    }
-}
+
 let activityTypes = {
     GAMING: 0,
     STREAMING: 1,
@@ -79,25 +67,29 @@ let gameStats = [{
 }]
 
 function newGame() {
-    //doesn't work anymore
     var ran = gameStats.random();
     client.user.setPresence({
         activity: ran
     });
 };
 client.on('ready', () => {
-    findModServer();
+    console.log(servers);
+    manageServs = util.getAllServers(client, servers);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     newGame();
-    setInterval(newGame, 120000);
+    setInterval(newGame, 2 * 60 * 1000);
 });
 client.on('guildMemberAdd', function(newMember) {
-    if (newMember.guild.id === ccModServ.id && pendingRole) {
-        newMember.addRoles([pendingRole]);
-        watchTower.send(`Added pending role to ${newMember}`);
-        requestsChannel.send(`${newMember}, what role would you like?\nFor a list of roles, please check ${roleChan}`);
-    }
+    for (let serv of manageServs)
+        if (newMember.guild.id === serv.id) {
+            for(let i in newMember)
+                console.log(i);
+            newMember.addRoles(serv.pending);
+            serv.chans.syslog.send(`Added pending role to ${newMember}`);
+            serv.chans.greet.send(`${newMember}, ${serv.greet}`);
+            break;
+        }
 });
 
 function onMessage(msg) {

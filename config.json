@@ -1,0 +1,47 @@
+{
+    "modules": [
+        "general",
+        "anime",
+        "art",
+        "game",
+        "mods",
+        "nsfw",
+        "roles",
+        "streams",
+        "voice"
+    ],
+    "role-servers": [
+        {
+            "name": "CrossCode Modding",
+            "greeting": "welcome! Use `$PREFIX -roles request <role>` to ask for a role!",
+            "channels": {
+                "greet": "requests",
+                "info": "role-list",
+                "syslog": "admin-watchtower"
+            },
+            "roles": {
+                "pending": [
+                    "pending"
+                ],
+                "blacklist": [
+                    "admin",
+                    "bot",
+                    "new chan"
+                ]
+            }
+        },
+        {
+            "name": "Test",
+            "greeting": "welcome!",
+            "channels": {
+                "greet": "general",
+                "info": "general",
+                "syslog": "general"
+            },
+            "roles": {
+                "pending": [],
+                "blacklist": []
+            }
+        }
+    ]
+}

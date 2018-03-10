@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 
 let knownEmotes = {};
+let manageServs = []; // cache
+let roleBlacklist = [];
 
 exports.getAllEmotes = function(client) {
     client.emojis.array().forEach(function(emote) {
@@ -108,3 +110,50 @@ exports.isFromAdmin = function(msg) {
     let adminPosition = msg.member.guild.roles.size - 1;
     return msg.member.highestRole.position === adminPosition;
 };
+
+function discObjFind(obj, name) {
+    let ret = obj.find(val => val.name.match(name));
+    if (obj && name && ret)
+        return ret;
+    else
+        throw `Could not find ${name} in ${obj}`;
+}
+exports.discObjFind = function(obj, name) {
+    try {
+        return discObjFind(obj, name);
+    } catch(e) {
+        console.log(e);
+    }
+    return null;
+}
+function findModServer(client, serverJson) {
+    let retval = {id: "", chans: {}, pending: []};
+    try {
+        let server = discObjFind(client.guilds, serverJson.name);
+        retval.id = server.id;
+        retval.greet = serverJson.greeting.replace(/\$PREFIX/g, process.env.BOT_PREFIX);
+        for (let role in serverJson.channels)
+            retval.chans[role] = discObjFind(server.channels, serverJson.channels[role]);
+        for (let role of serverJson.roles.pending)
+            retval.pending.push(discObjFind(server.roles, role));
+        for (let role of serverJson.roles.blacklist)
+            roleBlacklist.push(discObjFind(server.roles, role).id);
+        return retval;
+    } catch(e) {
+        console.log(e);
+    } 
+    return null;
+}
+exports.getAllServers = function(client, servers) {
+    if(manageServs.length === 0)
+        for (let json of servers)
+        {
+            let modServ = findModServer(client, json);
+            if (modServ)
+                manageServs.push(modServ);
+        }
+    return manageServs;
+}
+exports.getRoleBlacklist = function() {
+    return roleBlacklist;
+}

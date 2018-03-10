@@ -183,7 +183,7 @@ module.exports = function(instance, util) {
 
             }
             msg.channel.send(`*${msg.author} says:*\n${pieces.join(delim)}`);
-            if(msg.deletable)
+            if (msg.deletable)
                 msg.delete();
         },
         lewd: function noLewdLea(msg, args) {
