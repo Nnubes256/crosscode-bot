@@ -68,6 +68,7 @@
             },
             "roles": {
                 "pending": [],
+                "whitelist": [],
                 "blacklist": []
             }
         },
@@ -82,6 +83,7 @@
             },
             "roles": {
                 "pending": [],
+                "whitelist": [],
                 "blacklist": []
             }
         }

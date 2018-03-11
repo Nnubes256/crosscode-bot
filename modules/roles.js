@@ -4,14 +4,17 @@ module.exports = function(client, util, console) {
         let bl = util.getRoleBlacklist();
         let wl = util.getRoleWhitelist();
         for (let arg of args) {
-          console.log(obj.find('name', arg), " ", arg);
-          if ((role = obj.find('name', arg.trim())) && (wl.indexOf(role.id) !== -1 && bl.indexOf(role.id) === -1))
+//          console.log(util.discObjFind(obj, arg), " ", arg);
+            if ((role = util.discObjFind(obj, arg.trim())) 
+              && wl.indexOf(role.id) !== -1 // use whitelist
+//              && bl.indexOf(role.id) === -1 // use blacklist
+            )
               roles.push(role);
         }
         return roles;
     }
     function fetchRole(roles, roleName) {
-      return roles.find('name', roleName);
+      return util.discObjFind(roles, roleName);
     }
     function removePending(member) {
        let pendingRole = fetchRole(member.guild.roles, "pending");

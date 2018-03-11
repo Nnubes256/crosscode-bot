@@ -130,7 +130,7 @@ function findModServer(client, serverJson, console) {
     let retval = {id: "", chans: {}, pending: []};
     try {
         let server = discObjFind(client.guilds, serverJson.name);
-        console.log(server);
+//        console.log(server);
 
         retval.id = server.id;
         retval.greet = serverJson.greeting.replace(/\$PREFIX/g, process.env.BOT_PREFIX);
@@ -195,7 +195,7 @@ function getChanID(msg) {
 exports.greetingsParse = function(guild, msg) {
    var chan;
    while(Array.isArray((chan = getChanID(msg)))) {
-       let channel = guild.channels.find('name', chan[1]) || "#invalid-channel";
+       let channel = exports.discObjFind(guild.channels, chan[1]) || "#invalid-channel";
        msg = msg.replace(new RegExp(chan[0], 'g'), channel.toString());
    }
    return msg;
