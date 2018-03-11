@@ -23,6 +23,13 @@ module.exports = function(client, util, console) {
            return element.name;
         });
     }
+    function concatString(arr) {
+      if(arr.length == 0)
+        return "";
+      if(arr.length == 1)
+        return arr.join(" ");
+      return arr.slice(0, arr.length - 1).join(" ") + " and " + arr[arr.length - 1];
+    }
     let commands = {
         add: function giveRoles(msg, args) {
             let roles = fetchRoles(msg.guild.roles, args.join(" ").split(","));
@@ -34,17 +41,21 @@ module.exports = function(client, util, console) {
                 dupRoles = dupRoles.concat(roles.splice(index, 1));
               }
             }
-            if(!roles.length) {
+            if(roles.length === 0) {
               msg.channel.send(`Could not add any new roles.`);
               return;
             }
+            
             msg.member.addRoles(roles).then(function(member) {
-              return util.removePending(msg);
+              if(util.hasPending(msg)) {
+                return util.removePending(msg, console);
+              }
+              return member;
             }).then(function(member) {
                 if(roles.length) {
-                  var newRolesName = getRolesName(roles).join(" ");
-                  console.log("Duplicate rows", dupRoles);
-                  var dupRolesName = getRolesName(dupRoles).join(" ");
+                  var newRolesName = concatString(getRolesName(roles));
+                  util.log(msg, `Added ${newRolesName} to ${member}`);
+                  var dupRolesName = concatString(getRolesName(dupRoles));
                   var retMessage = `${msg.author} is now ${newRolesName}.`;
                   if(dupRoles.length) {
                     retMessage += `\nAlready had ${dupRolesName}`;
@@ -71,10 +82,12 @@ module.exports = function(client, util, console) {
           }
         },
         rm: function takeRoles(msg, args) {
-            let role = fetchRole(msg.guild.roles, args.join(" "));
+            let role = fetchRoles(msg.guild.roles, args.join(" ").split(","));
             if(role) {
-              msg.member.removeRoles([role]).then(function(member) {
-                msg.channel.send(`${msg.author} is no longer "${getRolesName([role]).join(" ")}"`);
+              msg.member.removeRoles(role).then(function(member) {
+                var oldRoles = concatString(getRolesName(role));
+                msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
+                util.log(msg, `Removed ${oldRoles} from ${member}`);
               }).catch(function(e) {
                 msg.channel.send('Encountered an error. Could not remove role.');
                 console.log(e);

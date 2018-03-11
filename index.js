@@ -5,13 +5,13 @@ let {
     readFileSync
 } = require('fs');
 let util = require('./discord-util.js');
-/*let env = readFileSync('.env', 'utf8').split("\n");
+let env = readFileSync('.env', 'utf8').split("\n");
 env.forEach(function(element) {
     if(!element)
         return;
     var token = element.split("=");
     process.env[token[0]] = token[1];
-});*/
+});
 let prefix = process.env.BOT_PREFIX;
 let configuration = JSON.parse(readFileSync("./config.json"));
 
@@ -118,7 +118,6 @@ client.on('messageDelete', msg => {
 
 function onMessage(msg) {
     //lel
-    console.log(msg);
     if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof");
         return;

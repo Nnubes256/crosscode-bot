@@ -163,13 +163,34 @@ function findModServer(client, serverJson, console) {
     }
     return null;
 }
-exports.removePending = function(msg) {
+function findServer(msg) {
   for(let server of manageServs) {
      if(msg.guild.id === server.id) {
-        return msg.member.removeRoles(server.pending);
+        return server;
      }
   }
+}
+exports.hasPending = function(msg) {
+  var server = findServer(msg);
+  for(let pendingRole in server.pending) {
+    if(msg.member.roles.has(pendingRole.id)) {
+      return true;
+    }
+  }
+   return false;
+}
+exports.removePending = function(msg, console) {
+   var server = findServer(msg);
+   console.log(server);
+   if(server) {
+     return msg.member.removeRoles(server.pending);
+   }
+
   return msg.member;
+}
+exports.log = function(msg, message) {
+  var server = findServer(msg);
+  return server.chans["syslog"].send(message);
 }
 exports.getAllServers = function getAllServers(client, servers, console) {
     if(manageServs.length === 0)
