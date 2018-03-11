@@ -45,7 +45,7 @@
             },
             "roles": {
                 "pending": [
-                    "pending"
+                    "everyone"
                 ],
                 "whitelist": [
                     "1337 programmers",
