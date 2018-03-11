@@ -163,6 +163,14 @@ function findModServer(client, serverJson, console) {
     }
     return null;
 }
+exports.removePending = function(msg) {
+  for(let server of manageServs) {
+     if(msg.guild.id === server.id) {
+        return msg.member.removeRoles(server.pending);
+     }
+  }
+  return msg.member;
+}
 exports.getAllServers = function getAllServers(client, servers, console) {
     if(manageServs.length === 0)
         for (let json of servers)

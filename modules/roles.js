@@ -16,15 +16,6 @@ module.exports = function(client, util, console) {
     function fetchRole(roles, roleName) {
       return util.discObjFind(roles, roleName);
     }
-    function removePending(member) {
-       let pendingRole = fetchRole(member.guild.roles, "pending");
-         if(member._roles.indexOf(pendingRole.id) > -1) {
-            return member.removeRoles([pendingRole]);
-         }
-       return new Promise(function(resolve,reject) {
-         resolve(member);
-       });
-    }
     function getRolesName(roles) {
       return roles.map(function(element) {
            if(element.name.indexOf("@") == 0)
@@ -48,7 +39,7 @@ module.exports = function(client, util, console) {
               return;
             }
             msg.member.addRoles(roles).then(function(member) {
-              return removePending(member);
+              return util.removePending(msg);
             }).then(function(member) {
                 if(roles.length) {
                   var newRolesName = getRolesName(roles).join(" ");
