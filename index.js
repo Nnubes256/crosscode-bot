@@ -5,13 +5,16 @@ let {
     readFileSync
 } = require('fs');
 let util = require('./discord-util.js');
-let env = readFileSync('.env', 'utf8').split("\n");
-env.forEach(function(element) {
-    if(!element)
-        return;
-    var token = element.split("=");
-    process.env[token[0]] = token[1];
-});
+if(!process.env.BOT_PREFIX) {
+  var env = readFileSync('.env', 'utf8').split("\n");
+  env.forEach(function(element) {
+      if(!element)
+          return;
+      var token = element.split("=");
+      process.env[token[0]] = token[1];
+  });
+}
+
 let prefix = process.env.BOT_PREFIX;
 let configuration = JSON.parse(readFileSync("./config.json"));
 
