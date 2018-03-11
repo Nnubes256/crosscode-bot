@@ -4,6 +4,7 @@ let knownEmotes = {};
 let manageServs = []; // cache
 let roleBlacklist = [];
 let roleWhitelist = [];
+let roleAdmin = [];
 exports.getAllEmotes = function(client) {
     client.emojis.array().forEach(function(emote) {
         if (emote.animated)
@@ -107,8 +108,12 @@ exports.formatHelpText = function(invoc, helpText) {
 };
 
 exports.isFromAdmin = function(msg) {
-    let adminPosition = msg.member.guild.roles.size - 1;
-    return msg.member.highestRole.position === adminPosition;
+    for(let admin of roleAdmin) {
+      if(msg.member.roles.has(admin)) {
+        return true;
+      }
+    }
+    return false;
 };
 
 function discObjFind(obj, name) {
@@ -147,12 +152,10 @@ function findModServer(client, serverJson, console) {
         }
 
         for (let role of serverJson.roles.whitelist) {
-          try {
             roleWhitelist.push(discObjFind(server.roles, role).id);
-          } catch(e) {
-            console.log("In whitelist:", e);
-          }
-
+        }
+        for(let role of serverJson.roles.admin) {
+            roleAdmin.push(discObjFind(server.roles, role).id);
         }
         return retval;
     } catch(e) {
@@ -160,7 +163,7 @@ function findModServer(client, serverJson, console) {
     }
     return null;
 }
-exports.getAllServers = function(client, servers, console) {
+exports.getAllServers = function getAllServers(client, servers, console) {
     if(manageServs.length === 0)
         for (let json of servers)
         {
@@ -169,6 +172,15 @@ exports.getAllServers = function(client, servers, console) {
                 manageServs.push(modServ);
         }
     return manageServs;
+}
+exports.updateServers = function(client, console) {
+  try {
+    var cachedServers = JSON.parse(JSON.stringify(manageServs));
+    manageServs = [];
+    this.getAllServers(client, cachedServers, console);
+  }catch(e) {
+    console.log(e);
+  }
 }
 exports.getRoleBlacklist = function() {
     return roleBlacklist;

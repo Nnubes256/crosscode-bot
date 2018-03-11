@@ -5,7 +5,7 @@ module.exports = function(client, util, console) {
         let wl = util.getRoleWhitelist();
         for (let arg of args) {
 //          console.log(util.discObjFind(obj, arg), " ", arg);
-            if ((role = util.discObjFind(obj, arg.trim())) 
+            if ((role = util.discObjFind(obj, arg.trim()))
               && wl.indexOf(role.id) !== -1 // use whitelist
 //              && bl.indexOf(role.id) === -1 // use blacklist
             )
@@ -68,6 +68,16 @@ module.exports = function(client, util, console) {
         },
         get : function getRoles(msg) {
           msg.channel.send("```\n" + getRolesName(msg.guild.roles).join("\n") + "```");
+        },
+        update : function updateList(msg) {
+          if(util.isFromAdmin(msg)) {
+            console.log("Is an admin");
+            util.updateServers(client, console);
+            console.log("Updated servers");
+            msg.channel.send("Updated successfully").catch(console.error);
+          } else {
+            console.log("Is not an admin");
+          }
         },
         rm: function takeRoles(msg, args) {
             let role = fetchRole(msg.guild.roles, args.join(" "));

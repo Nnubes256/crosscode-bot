@@ -43,7 +43,6 @@ function newGame() {
     });
 };
 client.on('ready', () => {
-    console.log(servers);
     manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
@@ -53,11 +52,12 @@ client.on('ready', () => {
 client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
         if (newMember.guild.id === serv.id) {
-            newMember.addRoles(serv.pending).catch(console.log);
-            serv.chans.syslog.send(`Added pending role to ${newMember}`);
-            var newGreet = util.greetingsParse(newMember.guild, serv.greet);
-            serv.chans.greet.send(`${newMember}, ${newGreet}`);
-
+            if(serv.pending.length) {
+              newMember.addRoles(serv.pending).catch(console.log);
+              serv.chans.syslog.send(`Added ${serv.pending[0].name} role to ${newMember}`);
+              var newGreet = util.greetingsParse(newMember.guild, serv.greet);
+              serv.chans.greet.send(`${newMember}, ${newGreet}`);
+            }
             break;
         }
 });
