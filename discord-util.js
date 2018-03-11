@@ -41,6 +41,12 @@ function isId(id) {
     return (id.startsWith("<@") || id.startsWith("<@!")) && id.endsWith(">")
 }
 
+Array.prototype.listjoin = function(word) {
+    if(this.length < 3)
+        return this.join(` ${word} `);
+    return `${this.slice(0, this.length - 1).join(", ")}, ${word} ${this[this.length - 1]}`;
+}
+
 exports.getEmote = function(object, name) {
     //just in case for unintentional whitespace
     name = name.trim();
@@ -117,7 +123,7 @@ exports.isFromAdmin = function(msg) {
 };
 
 function discObjFind(obj, name) {
-    let ret = obj.find(val => val.name.match(name));
+    let ret = obj.find(val => val.name.match(name.trim()));
     if (obj && name && ret)
         return ret;
     else

@@ -5,7 +5,7 @@ module.exports = function(client, util, console) {
         let wl = util.getRoleWhitelist();
         for (let arg of args) {
 //          console.log(util.discObjFind(obj, arg), " ", arg);
-            if ((role = util.discObjFind(obj, arg.trim()))
+            if ((role = util.discObjFind(obj, arg))
               && wl.indexOf(role.id) !== -1 // use whitelist
 //              && bl.indexOf(role.id) === -1 // use blacklist
             )
@@ -22,13 +22,6 @@ module.exports = function(client, util, console) {
                  return element.name.substring(1);
            return element.name;
         });
-    }
-    function concatString(arr) {
-      if(arr.length == 0)
-        return "";
-      if(arr.length == 1)
-        return arr.join(" ");
-      return arr.slice(0, arr.length - 1).join(" ") + " and " + arr[arr.length - 1];
     }
     let commands = {
         add: function giveRoles(msg, args) {
@@ -53,9 +46,9 @@ module.exports = function(client, util, console) {
               return member;
             }).then(function(member) {
                 if(roles.length) {
-                  var newRolesName = concatString(getRolesName(roles));
+                  var newRolesName = getRolesName(roles).listjoin('and');
                   util.log(msg, `Added ${newRolesName} to ${member}`);
-                  var dupRolesName = concatString(getRolesName(dupRoles));
+                  var dupRolesName = getRolesName(dupRoles).listjoin('and');
                   var retMessage = `${msg.author} is now ${newRolesName}.`;
                   if(dupRoles.length) {
                     retMessage += `\nAlready had ${dupRolesName}`;
@@ -85,7 +78,7 @@ module.exports = function(client, util, console) {
             let role = fetchRoles(msg.guild.roles, args.join(" ").split(","));
             if(role) {
               msg.member.removeRoles(role).then(function(member) {
-                var oldRoles = concatString(getRolesName(role));
+                var oldRoles = getRolesName(role).listjoin('or');
                 msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
                 util.log(msg, `Removed ${oldRoles} from ${member}`);
               }).catch(function(e) {
