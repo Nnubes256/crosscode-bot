@@ -209,7 +209,7 @@ module.exports = function(instance, util) {
             if (reply !== '')
                 msg.channel.send(reply);
         },
-        lemotes: function listEmotes(msg, args) {
+        lsemotes: function listEmotes(msg, args) {
             let em = getCacheEmotesIds(msg.guild.id);
             //lets add animated emotes
             em = em.concat(msg.guild.emojis.findAll('animated', true).map(function(emoji) {

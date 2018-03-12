@@ -61,10 +61,10 @@ module.exports = function(client, util, console) {
               console.log(e);
             });
         },
-        get : function getRoles(msg) {
+        get: function getRoles(msg) {
           msg.channel.send("```\n" + getRolesName(msg.guild.roles).join("\n") + "```");
         },
-        update : function updateList(msg) {
+        update: function updateList(msg) {
           if(util.isFromAdmin(msg)) {
             console.log("Is an admin");
             util.updateServers(client, console);
@@ -77,14 +77,14 @@ module.exports = function(client, util, console) {
         rm: function takeRoles(msg, args) {
             let role = fetchRoles(msg.guild.roles, args.join(" ").split(","));
             if(role) {
-              msg.member.removeRoles(role).then(function(member) {
-                var oldRoles = getRolesName(role).listjoin('or');
-                msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
-                util.log(msg, `Removed ${oldRoles} from ${member}`);
-              }).catch(function(e) {
-                msg.channel.send('Encountered an error. Could not remove role.');
-                console.log(e);
-              });
+                msg.member.removeRoles(role).then(function(member) {
+                    var oldRoles = getRolesName(role).listjoin('or');
+                    msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
+                    util.log(msg, `Removed ${oldRoles} from ${member}`);
+                }).catch(function(e) {
+                    msg.channel.send('Encountered an error. Could not remove role.');
+                    console.log(e);
+                });
             }
 
         }
