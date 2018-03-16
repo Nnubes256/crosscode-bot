@@ -1,12 +1,8 @@
 const { Client, GuildMember, Message} = require('discord.js');
 const { Config } = require('./config');
+const { Module } = require('./module');
 
-export class Bot {
-    /** @type {string} */ prefix = null;
-    /** @type {string} */ token = null;
-    client = new Client();
-    config = null;
-
+class Bot {
     /**
      * 
      * @param {string} prefix 
@@ -14,6 +10,7 @@ export class Bot {
      * @param {Config} config 
      */
     constructor(prefix, token, config) {
+        this.client = new Client();
         this.prefix = prefix;
         this.token = token;
         this.config = config;
@@ -49,11 +46,10 @@ export class Bot {
         let command = args.shift();
 
         if (command === "help") {
-            msg.author.send(util.formatHelpText(invoc, helpText[type]));
-            return;
+            return this.printHelp(msg.author, args);
         }
 
-        let func = module[command];
+        let func = module.getCommands()[command];
         if (func) {
             new Promise((resolve, reject) => {
                 try {
@@ -70,27 +66,24 @@ export class Bot {
     }
 
     ready() {
-        manageServs = util.getAllServers(this.client, servers, console);
-        util.getAllEmotes(this.client);
+        this.config.init(this.client);
+
+        for (let module of Object.keys(this.config.commands)){
+            this.config.commands[module].initialize(this);
+        }
+        
+        //util.getAllEmotes(this.client);
         console.log(`Logged in as ${this.client.user.tag}!`);
         this.newGame();
         setInterval(this.newGame.bind(this), 2 * 60 * 1000);
     }
 
     /** 
-     * @param {GuildMember} newMember
+     * @param {GuildMember} member
     */
-    guildMemberAdd(newMember) {
-        for (let serv of manageServs) {
-            if (newMember.guild.id === serv.id) {
-                if(serv.pending.length) {
-                  newMember.addRoles(serv.pending).catch(console.log);
-                  serv.chans.syslog.send(`Added ${serv.pending[0].name} role to ${newMember}`);
-                  var newGreet = util.greetingsParse(newMember.guild, serv.greet);
-                  serv.chans.greet.send(`${newMember}, ${newGreet}`);
-                }
-                break;
-            }
+    guildMemberAdd(member) {
+        for (let module of Object.keys(this.config.commands)){
+            this.config.commands[module].onJoin(member);
         }
     }
 
@@ -98,23 +91,8 @@ export class Bot {
      * @param {GuildMember} member
     */
     guildMemberRemove(member) {
-        for (let serv of manageServs) {
-            if (member.guild.id === serv.id) {
-                if(!serv.chans.editlog)
-                    break;
-                try {
-                  serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
-                      fields:[{
-                          name:"Had roles",
-                          value: member.roles.array().join('\r\n')
-                      }]
-                  })).catch(console.log);
-                }catch(e) {
-                  console.log(e);
-                }
-    
-                break;
-            }
+        for (let module of Object.keys(this.config.commands)){
+            this.config.commands[module].onLeave(member);
         }
     }
 
@@ -123,23 +101,8 @@ export class Bot {
      * @param {Message} newMsg
     */
     messageUpdate(oldMsg, newMsg) {
-        var author = oldMsg.author;
-        if(author.bot)
-            return;
-
-        for (let serv of manageServs) {
-            if (oldMsg.guild.id === serv.id) {
-                if(!serv.chans.editlog)
-                    break;
-    
-                serv.chans.editlog.send(`Member updated message in ${oldMsg.channel}: ${author}`, util.createRichEmbed({
-                    fields: [
-                        { name: "From", value: oldMsg.content },
-                        { name: "To", value: newMsg.content }
-                    ]
-                })).catch(console.log);
-                break;
-            }
+        for (let module of Object.keys(this.config.commands)){
+            this.config.commands[module].onUpdate(oldMsg, newMsg);
         }
     }
 
@@ -148,21 +111,8 @@ export class Bot {
      * @param {Message} msg 
      */
     messageDelete(msg) {
-        var author = msg.author;
-        if(author.bot)
-            return;
-        for (let serv of manageServs) {
-            if (msg.guild.id === serv.id) {
-                if(!serv.chans.editlog)
-                    break;
-    
-                serv.chans.editlog.send(`A message was deleted in ${msg.channel}: ${author}`, util.createRichEmbed({
-                    fields: [
-                        { name: "Content", value: msg.content }
-                    ]
-                })).catch(console.log);
-                break;
-            }
+        for (let module of Object.keys(this.config.commands)){
+            this.config.commands[module].onDelete(msg);
         }
     }
 
@@ -205,5 +155,42 @@ export class Bot {
             game: ran
         });
     };
+
+    /**
+     * 
+     * @param {GuildMember} author 
+     * @param {string[]} args
+     */
+    printHelp(author, args) {
+        let result = '```\r\n';
+        const defaultModule = this.config["default-module"];
+
+        if(args.length === 0) {
+            args = this.config.modules; // Get help for all modules if not specified
+        }
+
+        for(let name of args) {
+            /** @type {Module} */
+            const module = this.config.commands[name]; // Get module
+            if(module) { // Check if it exists in case user misspelled
+                const helpMatrix = module.getHelp();
+                
+                if(helpMatrix) { // Check if help is avaible
+                    for(let line of helpMatrix) {
+                        result += this.prefix;
+    
+                        if(name !== defaultModule) {
+                            result += '-' + name + ' '; 
+                        }
+        
+                        result += line.name + ' - ' + line.desciption + '\r\n'; //TODO: add some padding for the looks
+                    }
+                }
+            }
+        }
+
+        author.send(result + '```');
+    }
 }
 
+exports.Bot = Bot;

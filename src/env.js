@@ -1,4 +1,4 @@
-export class Env {
+class Env {
     static get BOT_TOKEN() {
         return process.env.BOT_TOKEN;
     }
@@ -7,3 +7,5 @@ export class Env {
         return process.env.BOT_PREFIX;
     }
 }
+
+exports.Env = Env;
