@@ -16,3 +16,4 @@ pnacl/
 *.log
 pnacl/
 .*.swp
+.vscode/
