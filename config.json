@@ -26,6 +26,7 @@
         {"type": "PLAYING",   "name": "with CCLoader"},
         {"type": "PLAYING",   "name": "with mods"}
     ],
+    
     "activity-types": [
         "PLAYING",
         "STREAMING",

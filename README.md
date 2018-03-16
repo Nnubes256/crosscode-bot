@@ -1,2 +1,3 @@
 # crosscode-bot
-CrossCode bot test
+
+A discord bot for CrossCode
