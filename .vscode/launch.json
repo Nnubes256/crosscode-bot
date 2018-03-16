@@ -1,0 +1,19 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "env": {
+                "BOT_PREFIX": ".",
+                "BOT_TOKEN": "Mzc3MDM5MTExMjc5NjA3ODE4.DYVpCw.65qoowwNlXvvNPhjkPb0598JR3Q",
+                "TWITCH_CLIENT_ID": "kes1xgggxpi9tq1cf2iw6cd91p4e1o"
+            },
+            "program": "${workspaceFolder}/src/main.js"
+        }
+    ]
+}
