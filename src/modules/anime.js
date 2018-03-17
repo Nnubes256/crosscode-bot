@@ -13,11 +13,11 @@ class Anime extends Module{
     }
 
     /**
-     * @returns {{name: string, desciption: string}[]}
+     * @returns {{name: string, description: string}[]}
      */
     getHelp() {
         return [
-            { name: 'EXPLOSION!', desciption: 'Make sure Beldia won\'t get mad at you.' }
+            { name: 'EXPLOSION!', description: 'Make sure Beldia won\'t get mad at you.' }
         ]
     }
 }

@@ -50,9 +50,9 @@ class Voice extends Module {
 
     getHelp() {
         return [
-            { name: 'join', descripton: 'TODO' },
-            { name: 'play', descripton: 'TODO' },
-            { name: 'leave', descripton: 'TODO' }
+            { name: 'join', description: 'TODO' },
+            { name: 'play', description: 'TODO' },
+            { name: 'leave', description: 'TODO' }
         ]
     }
 }

@@ -51,7 +51,7 @@ class Module {
     }
 
     /**
-     * @returns {{name: string, desciption: string}[]}
+     * @returns {{name: string, description: string}[]}
      */
     getHelp() {
         return null;

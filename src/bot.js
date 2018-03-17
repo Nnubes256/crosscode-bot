@@ -184,7 +184,7 @@ class Bot {
                             result += '-' + name + ' '; 
                         }
         
-                        result += line.name + ' - ' + line.desciption + '\r\n'; //TODO: add some padding for the looks
+                        result += line.name + ' - ' + line.description + '\r\n'; //TODO: add some padding for the looks
                     }
                 }
             }
