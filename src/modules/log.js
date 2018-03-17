@@ -32,11 +32,16 @@ class Log extends Module{
                 if(!server.chans.editlog)
                     break;
 
-                server.chans.editlog.send(`Member left the server: ${member}`, Utils.createRichEmbed({
-                    fields:[{
-                        name:"Had roles",
-                        value: member.roles.array().join('\r\n')
-                    }]
+                server.chans.editlog.send('', Utils.createRichEmbed({
+                    description: `${member} left the server`,
+                    fields: [
+                        { name: "Had roles", value: member.roles.array().join('\r\n') }
+                    ],
+                    author: {
+                        name: member.user.tag,
+                        icon: member.user.avatarURL
+                    },
+                    timestamp: new Date()
                 })).catch(err => console.error(err));
     
                 break;
@@ -58,11 +63,17 @@ class Log extends Module{
                 if(!server.chans.editlog)
                     break;
 
-                server.chans.editlog.send(`Member updated message in ${oldMsg.channel}: ${oldMsg.author}`, Utils.createRichEmbed({
+                server.chans.editlog.send('', Utils.createRichEmbed({
+                    description: `${oldMsg.author} updated a message in ${oldMsg.channel}`,
                     fields: [
                         { name: "From", value: oldMsg.content },
                         { name: "To", value: newMsg.content }
-                    ]
+                    ],
+                    author: {
+                        name: oldMsg.author.tag,
+                        icon: oldMsg.author.avatarURL
+                    },
+                    timestamp: new Date()
                 })).catch(err => console.error(err));
                 break;
             }
@@ -77,15 +88,21 @@ class Log extends Module{
         if(msg.author.bot)
             return;
 
-        for (let server of manageServs) {
+        for (let server of this.bot.config.servers) {
             if (msg.guild.id === server.id) {
                 if(!server.chans.editlog)
                     break;
     
-                    server.chans.editlog.send(`A message was deleted in ${msg.channel}: ${msg.author}`, Utils.createRichEmbed({
+                server.chans.editlog.send('', Utils.createRichEmbed({
+                    description: `${msg.author}'s message was deleted in ${msg.channel}`,
                     fields: [
                         { name: "Content", value: msg.content }
-                    ]
+                    ],
+                    author: {
+                        name: msg.author.tag,
+                        icon: msg.author.avatarURL
+                    },
+                    timestamp: new Date()
                 })).catch(err => console.error(err));
                 break;
             }
