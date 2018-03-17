@@ -1,6 +1,18 @@
-const { RichEmbed, MessageEmbed } = require('discord.js');
+const { RichEmbed, MessageEmbed, GuildMember } = require('discord.js');
+const { Config } = require('./config');
+
+/** @type {Config} */
+let config = undefined;
 
 class Utils {
+    /**
+     * 
+     * @param {Config} config 
+     */
+    static setConfig(conf) {
+        config = conf;
+    }
+
     /**
      * 
      * @param {*} opts
@@ -33,6 +45,24 @@ class Utils {
         opts.footer && opts.footer.text && richEmbed.setFooter(opts.footer.text);
         return richEmbed;
     };
+
+    /**
+     * @param {GuildMember} user
+     * @returns {boolean}
+     */
+    static isAdmin(user) {
+        for(let server of config.servers) {
+            if(user.guild.id === server.id) {
+                return user.roles.has(server.admin);
+            }
+        }
+
+        return true;
+    }
+
+    static getEmote(name) {
+        //TODO
+    }
 }
 
 exports.Utils = Utils;
