@@ -128,8 +128,8 @@ class Bot {
             return null;
 
         msg = msg.substr(this.prefix.length);
-        return msg.match(/(\\"|[^ \t"])+|"(\\"|[^\"])+"/g) //Get parts
-            .map(arg => arg.replace(/^"|"$/g, '')); //Remove leading and trailing " and '
+        return msg.match(/(\\"|[^ \t"])+|"(\\"|[^"])+"/g) //Get parts
+            .map(arg => arg.startsWith('"') ? arg.substr(1, arg.length - 2) : arg); //Remove leading and trailing " and '
     }
 
     /** 
