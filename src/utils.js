@@ -31,7 +31,6 @@ class Utils {
         opts.title && richEmbed.setTitle(opts.title);
         opts.url && richEmbed.setURL(opts.url);
         opts.footer && opts.footer.text && richEmbed.setFooter(opts.footer.text);
-        opts.timestamp && richEmbed.setTimestamp(opts.timestamp);
         return richEmbed;
     };
 }
