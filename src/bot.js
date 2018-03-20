@@ -74,9 +74,9 @@ class Bot {
         
         //util.getAllEmotes(this.client);
         console.log('Logged in as %s on:', this.client.user.tag);
-        this.client.guilds.every(g => {
-            console.log('- %s', g.name);
-        }, this);
+        for (let guild of this.client.guilds.values()) {
+            console.log('- %s', guild.name);
+        }
         this.newGame();
         setInterval(this.newGame.bind(this), 2 * 60 * 1000);
     }
@@ -154,7 +154,7 @@ class Bot {
     }
 
     newGame() {
-        var ran = this.config.activities.random();
+        const ran = this.config.activities.random();
         this.client.user.setPresence({
             game: ran
         });

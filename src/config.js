@@ -55,7 +55,7 @@ class Config {
             return result;
 
         for (let role of serverJson.roles.pending) {
-            var roleEntry = server.roles.find(r => r.name === role);
+            const roleEntry = server.roles.find(r => r.name === role);
             if (!roleEntry) {
                 console.warn('pending role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
@@ -64,7 +64,7 @@ class Config {
         }
 
         for (let role of serverJson.roles.member) {
-            var roleEntry = server.roles.find(r => r.name === role);
+            const roleEntry = server.roles.find(r => r.name === role);
             if (!roleEntry) {
                 console.warn('member role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
@@ -73,7 +73,7 @@ class Config {
         }
 
         for (let role of serverJson.roles.blacklist) {
-            var roleEntry = server.roles.find(r => r.name === role);
+            const roleEntry = server.roles.find(r => r.name === role);
             if (!roleEntry) {
                 console.warn('blacklist role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
@@ -82,7 +82,7 @@ class Config {
         }
 
         for (let role of serverJson.roles.whitelist) {
-            var roleEntry = server.roles.find(r => r.name === role);
+            const roleEntry = server.roles.find(r => r.name === role);
             if (!roleEntry) {
                 console.warn('whitelist role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
@@ -91,7 +91,7 @@ class Config {
         }
 
         for(let role of serverJson.roles.admin) {
-            var roleEntry = server.roles.find(r => r.name === role);
+            const roleEntry = server.roles.find(r => r.name === role);
             if (!roleEntry) {
                 console.warn('admin role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
