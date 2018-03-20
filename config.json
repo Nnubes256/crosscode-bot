@@ -46,7 +46,8 @@
                 "editlog": "edit-log"
             },
             "roles": {
-                "pending": [
+                "pending": [],
+                "member": [
                     "member"
                 ],
                 "whitelist": [
@@ -73,6 +74,7 @@
             },
             "roles": {
                 "pending": [],
+                "member": [],
                 "whitelist": [],
                 "blacklist": [],
                 "admin" : []
@@ -89,6 +91,7 @@
             },
             "roles": {
                 "pending": [],
+                "member": [],
                 "whitelist": [],
                 "blacklist": [],
                 "admin" : []
