@@ -73,7 +73,10 @@ class Bot {
         }
         
         //util.getAllEmotes(this.client);
-        console.log(`Logged in as ${this.client.user.tag}!`);
+        console.log('Logged in as %s on:', this.client.user.tag);
+        this.client.guilds.every(g => {
+            console.log('- %s', g.name);
+        }, this);
         this.newGame();
         setInterval(this.newGame.bind(this), 2 * 60 * 1000);
     }
