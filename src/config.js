@@ -40,7 +40,7 @@ class Config {
      * @returns {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}}
      */
     findModServer(client, serverJson) {
-        let result = {id: "", chans: {}, pending: [], blacklist: [], whitelist: [], admin: []};
+        let result = {id: "", chans: {}, pending: [], member: [], blacklist: [], whitelist: [], admin: []};
         let server = client.guilds.find(g => g.name === serverJson.name);
         if (!server)
             return null;
@@ -55,18 +55,48 @@ class Config {
             return result;
 
         for (let role of serverJson.roles.pending) {
-            result.pending.push(server.roles.find(r => r.name === role));
+            var roleEntry = server.roles.find(r => r.name === role);
+            if (!roleEntry) {
+                console.warn('pending role missing (skiped) - role: %s, server: %s', role, server.name);
+                continue;
+            }
+            result.pending.push(roleEntry);
+        }
+
+        for (let role of serverJson.roles.member) {
+            var roleEntry = server.roles.find(r => r.name === role);
+            if (!roleEntry) {
+                console.warn('member role missing (skiped) - role: %s, server: %s', role, server.name);
+                continue;
+            }
+            result.member.push(roleEntry);
         }
 
         for (let role of serverJson.roles.blacklist) {
-            result.blacklist.push(server.roles.find(r => r.name === role).id);
+            var roleEntry = server.roles.find(r => r.name === role);
+            if (!roleEntry) {
+                console.warn('blacklist role missing (skiped) - role: %s, server: %s', role, server.name);
+                continue;
+            }
+            result.blacklist.push(roleEntry.id);
         }
 
         for (let role of serverJson.roles.whitelist) {
-            result.blacklist.push(server.roles.find(r => r.name === role).id);
+            var roleEntry = server.roles.find(r => r.name === role);
+            if (!roleEntry) {
+                console.warn('whitelist role missing (skiped) - role: %s, server: %s', role, server.name);
+                continue;
+            }
+            result.whitelist.push(roleEntry.id);
         }
+
         for(let role of serverJson.roles.admin) {
-            result.admin.push(server.roles.find(r => r.name === role).id);
+            var roleEntry = server.roles.find(r => r.name === role);
+            if (!roleEntry) {
+                console.warn('admin role missing (skiped) - role: %s, server: %s', role, server.name);
+                continue;
+            }
+            result.admin.push(roleEntry.id);
         }
         return result;
     }
