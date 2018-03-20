@@ -44,6 +44,9 @@ class CrossCodeFanArt {
                     image: link
                 }));
             }
+        })
+        .catch(error => {
+            console.error("Could not retrieve art: ", error);
         });
     }
 

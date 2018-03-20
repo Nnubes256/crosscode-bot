@@ -76,6 +76,9 @@ class ModInfo {
             };
 
             this.embed = Utils.createRichEmbed(embed);
+        })
+        .catch(error => {
+            console.error("Could not retrieve mod data: ", error);
         });
     }
 }
