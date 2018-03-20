@@ -10,6 +10,10 @@ class Env {
         return Env.getFileData('.env').BOT_PREFIX || process.env.BOT_PREFIX;
     }
 
+    /**
+     * 
+     * @param {string} path
+     */
     static getFileData(path) { //Maybe prefetch this data once
         try {
             return JSON.parse(fs.readFileSync(path, 'utf8'));
