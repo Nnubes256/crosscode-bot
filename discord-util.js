@@ -247,7 +247,7 @@ exports.greetingsParse = function(guild, msg) {
    }
    return msg;
 }
-function argParse(str) {
+exports.argParse = function(str) {
     let spl = [''], esc = false, quot = true;
     for (let c of str) {
         if (esc) { // last character was a backslash, skip handling
@@ -264,7 +264,7 @@ function argParse(str) {
             break;
         case ' ':
         case '\t':
-            if (quot) {
+            if (quot && !spl[spl.length - 1]) {
                 spl.push(''); // split on unquoted spaces
                 break;
             }
