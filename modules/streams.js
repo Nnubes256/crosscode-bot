@@ -24,8 +24,6 @@ module.exports = function(instance) {
     }, (30 * 60 * 1000)); //Updates channels every 30 minutes
     let commands = {
         set: function(msg) {
-            if (msg.author.id !== "208763015657553921")
-                return;
             var chan_id = msg.channel.id;
             let notif_chan = notify_channels[chan_id + "|" + msg.guild.id] = notify_channels[chan_id] || {};
             notif_chan.chan_handle = msg.channel;
@@ -36,8 +34,6 @@ module.exports = function(instance) {
             msg.channel.send("Streaming CrossCode right now:" + (sEmbed ? '' : "\n*Tumbleweeds rolling*"), sEmbed);
         },
         remove: function(msg) {
-            if (msg.author.id !== "208763015657553921")
-                return;
             var chan_id = msg.channel.id;
             delete notify_channels[chan_id + "|" + msg.guild.id];
             msg.channel.send('This channel will no longer be notified of streams');
