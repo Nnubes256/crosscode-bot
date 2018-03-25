@@ -58,7 +58,7 @@ module.exports = function(instance, util) {
             } else {
                 endAt = parseInt(args[1]);
             }
-            let reply = '\n';
+            let reply = 'You are being raided:\n';
             for (let i = 0; i < repeat; i++) {
                 let thonk = getEmote(msg, 'leaCheeseAngry');
                 if (thonk.id !== '')
