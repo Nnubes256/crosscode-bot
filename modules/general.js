@@ -51,11 +51,20 @@ module.exports = function(instance, util) {
         leaCheeseArmy : function army(msg, args) {
             if(!isNaN(args[0])) 
                 return;
+            let repeat = Math.min(parseInt(args[0]), 50);
+            let endAt;
+            if(!isNaN(args[1])) {
+                endAt = repeat/2;
+            } else {
+                endAt = parseInt(args[1]);
+            }
             let reply = '';
-            for (let i = 0; i < parseInt(args[0]); i++) {
+            for (let i = 0; i < repeat; i++) {
                 let thonk = getEmote(msg, 'leaCheeseAngry');
                 if (thonk.id !== '')
                     reply += thonk + ' ';
+                if(repeat%endAt === 0)
+                    reply += '\n';
             }
             if (reply !== '')
                 msg.channel.send(reply);
