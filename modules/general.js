@@ -48,6 +48,18 @@ module.exports = function(instance, util) {
                 });*/
 
         },
+        leaCheeseArmy : function army(msg, args) {
+            if(!isNaN(args[0])) 
+                return;
+            let reply = '';
+            for (let i = 0; i < parseInt(args[0]); i++) {
+                let thonk = getEmote(msg, 'leaCheeseAngry');
+                if (thonk.id !== '')
+                    reply += thonk + ' ';
+            }
+            if (reply !== '')
+                msg.channel.send(reply);
+        },
         purge: function(msg, args) {
             let options = {
                 limit: 100
