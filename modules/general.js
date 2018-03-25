@@ -63,7 +63,7 @@ module.exports = function(instance, util) {
                 let thonk = getEmote(msg, 'leaCheeseAngry');
                 if (thonk.id !== '')
                     reply += thonk + ' ';
-                if(repeat%endAt === 0)
+                if((i + 1)%endAt === 0)
                     reply += '\n';
             }
             if (reply !== '')
