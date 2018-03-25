@@ -93,17 +93,34 @@ class Log extends Module{
                 if(!server.chans.editlog)
                     break;
     
-                server.chans.editlog.send('', Utils.createRichEmbed({
-                    description: `${msg.author}'s message was deleted in ${msg.channel}`,
-                    fields: [
-                        { name: "Content", value: msg.content }
-                    ],
-                    author: {
-                        name: msg.author.tag,
-                        icon: msg.author.avatarURL
-                    },
-                    timestamp: new Date()
-                })).catch(err => console.error(err));
+                
+                msg.guild.fetchAuditLogs()
+                    .then(logs => {
+                        const lastEntry = logs.entries.first();
+
+                        let deletedBy = msg.author;
+
+                        if(lastEntry.actionType === "DELETE" && 
+                            lastEntry.target === msg.author &&
+                            lastEntry.extra.channel.id === msg.channel.id &&
+                            Math.abs((new Date() - lastEntry.createdAt)) < 1000) // Heuristic to detect if it is said message
+                            deletedBy = lastEntry.executor;
+
+
+                        
+                        server.chans.editlog.send('', Utils.createRichEmbed({
+                            description: `${msg.author}'s message was deleted by ${deletedBy} in ${msg.channel}`,
+                            fields: [
+                                { name: "Content", value: msg.content || "No content" }
+                            ],
+                            author: {
+                                name: msg.author.tag,
+                                icon: msg.author.avatarURL
+                            },
+                            timestamp: new Date()
+                        })).catch(err => console.error(err));
+                    })
+                    .catch(err => console.error(err));
                 break;
             }
         }
