@@ -49,11 +49,11 @@ module.exports = function(instance, util) {
 
         },
         leaCheeseArmy : function army(msg, args) {
-            if(!isNaN(args[0])) 
+            if(isNaN(args[0])) 
                 return;
             let repeat = Math.min(parseInt(args[0]), 50);
             let endAt;
-            if(!isNaN(args[1])) {
+            if(isNaN(args[1])) {
                 endAt = repeat/2;
             } else {
                 endAt = parseInt(args[1]);
