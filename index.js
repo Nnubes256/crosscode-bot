@@ -85,7 +85,7 @@ client.on('guildMemberRemove', member => {
 });
 client.on('messageUpdate', (oldMsg, newMsg) => {
     var author = oldMsg.author;
-    if(author.bot)
+    if(author.bot || oldMsg.content == newMsg.content)
         return;
     for (let serv of manageServs)
         if (oldMsg.guild.id === serv.id) {
