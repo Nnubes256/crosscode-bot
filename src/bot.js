@@ -25,7 +25,10 @@ class Bot {
         this.client.on('messageUpdate', this.messageUpdate.bind(this));
         this.client.on('messageDelete', this.messageDelete.bind(this));
         this.client.on('message', this.onMessage.bind(this));
-        this.client.login(this.token);
+        this.client.on('error', this.error.bind(this));
+        this.client.login(this.token).catch(error => {
+            console.error("Could not connect to discord: ", error);
+        });
     }
 
     /**
@@ -73,9 +76,12 @@ class Bot {
         }
         
         //util.getAllEmotes(this.client);
-        console.log(`Logged in as ${this.client.user.tag}!`);
+        console.log('Logged in as %s on:', this.client.user.tag);
+        for (let guild of this.client.guilds.values()) {
+            console.log('- %s', guild.name);
+        }
         this.newGame();
-        setInterval(this.newGame.bind(this), 2 * 60 * 1000);
+        this.client.setInterval(this.newGame.bind(this), 2 * 60 * 1000); // Used this.client.setInterval to avoid conflicts when restarting
     }
 
     /** 
@@ -151,7 +157,7 @@ class Bot {
     }
 
     newGame() {
-        var ran = this.config.activities.random();
+        const ran = this.config.activities.random();
         this.client.user.setPresence({
             game: ran
         });
@@ -191,6 +197,19 @@ class Bot {
         }
 
         author.send(result + '```');
+    }
+
+    /**
+     * 
+     * @param {Error} err 
+     */
+    error(err) {
+        console.error(err);
+        console.log('Restarting');
+        
+        this.client.destroy().then(() => {
+            this.client.login(this.token);
+        })
     }
 }
 

@@ -10,6 +10,9 @@
   "author": "ac2pic",
   "license": "MIT",
   "main": "index.html",
+  "scripts": {
+    "start": "node src/main.js"
+  },
   "dependencies": {
     "discord.js": "^11.3.2",
     "ffmpeg-binaries": "^3.2.2-3",
