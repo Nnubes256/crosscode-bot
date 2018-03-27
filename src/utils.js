@@ -63,7 +63,7 @@ class Utils {
     static isAdmin(user) {
         for(let server of config.servers) {
             if(user.guild.id === server.id) {
-                return user.roles.has(server.admin);
+                return server.admin.some(r => user.roles.array().some(a => a.id === r.id))
             }
         }
 

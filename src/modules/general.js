@@ -28,7 +28,7 @@ class General extends Module{
             },
             sleep: msg => {
                 if (Utils.isAdmin(msg.member)) {
-                    instance.destroy();
+                    this.bot.client.destroy();
                     process.exit(0);
                 } else {
                     msg.reply('You don\'t have the power to kill me!');
