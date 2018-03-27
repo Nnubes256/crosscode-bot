@@ -130,15 +130,17 @@ class Bot {
      * @param {string} msg 
      * @returns {string[]}
      */
+function argParse(str) {
+}
     getMessageArgs(msg) {
         msg = msg.replace(/^\s+|\s+$/g, ''); // Remove leading and trailing whitespace
 
         if (!msg.startsWith(this.prefix))
             return null;
 
-        msg = msg.substr(this.prefix.length);
-        return msg.match(/(\\"|[^ \t"])+|"(\\"|[^"])+"/g) //Get parts
-            .map(arg => arg.startsWith('"') ? arg.substr(1, arg.length - 2) : arg); //Remove leading and trailing " and '
+	return msg.substr(this.prefix.length)
+               .replace(/(^|.)"/g, (match, one) => (one + (one === '\\' ? '' : '\0') + '"')).split('\0"') // split on parts
+	       .map((val, idx) => (idx & 1 ? val : val.replace(/[ \t]+/g, '\0'))).join('"').split('\0'); // rejoin
     }
 
     /** 
