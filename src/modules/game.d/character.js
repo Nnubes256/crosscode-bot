@@ -1,12 +1,20 @@
+const { User } = require('discord.js');
+
 class Character {
-    constructor(name, className, User) {
+    /**
+     * 
+     * @param {string} name 
+     * @param {string} className 
+     * @param {User} user 
+     */
+    constructor(name, className, user) {
         this.name = name;
         this.className = className;
         this.level = 1;
         this.hp = 100;
         this.xp = 0;
         this.money = 0;
-        this.user = User;
+        this.user = user;
         this.inPvP = false;
         this.wins = 0;
         this.loses = 0;
@@ -15,7 +23,7 @@ class Character {
         return this.user;
     }
     toString() {
-        return `${this.name}`;
+        return this.name;
     }
     resetHealth() {
         this.hp = 100;
@@ -30,14 +38,19 @@ class Character {
         return this.inPvP;
     }
     getStats() {
-        stats = "";
-        for (var key in this) {
+        let stats = "";
+        for (let key in this) {
             if (this.hasOwnProperty(key)) {
                 stats += (key + ": " + this[key] + "\n");
             }
         }
         return stats;
     }
+    /**
+     * 
+     * @param {number} level 
+     * @param {boolean} showMessage 
+     */
     addLeveL(level, showMessage) {
         this.level += level;
         showMessage && User.send(`Wow! You are now level ${this.level}.`);
@@ -45,6 +58,11 @@ class Character {
     getName() {
         return this.name;
     }
+    /**
+     * 
+     * @param {number} newXP 
+     * @param {boolean} showMessage 
+     */
     addXP(newXP, showMessage) {
         let levelUpXP = 1000;
         let newLevel = parseInt((this.xp + newXP) / levelUpXP);
@@ -59,6 +77,10 @@ class Character {
     addLose() {
         this.loses += 1;
     }
+    /**
+     * 
+     * @param {number} deltaHp 
+     */
     changeHp(deltaHp) {
         this.hp += deltaHp;
     }
@@ -68,23 +90,42 @@ class Character {
     isAlive() {
         return this.hp > 0;
     }
+
+    /**
+     * 
+     * @param {Character} target 
+     * @param {string} name 
+     */
     attack(target, name) {
         target.changeHp(-20);
         return {
             damage: 20
         };
     }
+
+    /**
+     * 
+     * @param {string} name 
+     * @returns {boolean}
+     */
     static isValidName(name) {
-        if (name.length > 10 || !name.length)
+        if (!name || name.length > 10 || !name.length)
             return false;
     }
+
+    /**
+     * 
+     * @param {string} className 
+     * @returns {string}
+     */
     static getClass(className) {
-        var names = ["Spheromancer", "Triblader", "Quadroguard", "Pentafist", "Hexacast"];
-        let lowerClassName = className.toLowerCase();
-        var index = names.indexOf(lowerClassName[0].toUpperCase() + lowerClassName.substring(1));
-        if (index > -1)
-            return names[index];
-        return null;
+        if(!className) {
+            return;
+        }
+
+        const names = ["Spheromancer", "Triblader", "Quadroguard", "Pentafist", "Hexacast"];
+        const lowerClassName = className.toLowerCase();
+        return names.find(n => n.toLowerCase() === lowerClassName);
     }
 }
-module.exports = Character
+exports.Character = Character

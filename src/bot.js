@@ -147,7 +147,7 @@ class Bot {
         if (args[0] && args[0].startsWith("-")) {
             type = args[0].substring(1);
             if (!this.config.commands[type]) {
-                onError(msg); // onError not defined?
+                console.error(msg);
                 return;
             }
             args.shift();
