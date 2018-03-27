@@ -91,8 +91,12 @@
             },
             "roles": {
                 "pending": [],
-                "member": [],
-                "whitelist": [],
+                "member": [
+                    "member"
+                ],
+                "whitelist": [
+                    "joinable"
+                ],
                 "blacklist": [],
                 "admin" : []
             }

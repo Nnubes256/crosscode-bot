@@ -46,6 +46,9 @@ class Bot {
             return;
 
         let module = this.getModule(args);
+        if (!module)
+            return;
+
         let command = args.shift();
 
         if (command === "help") {
@@ -147,7 +150,7 @@ class Bot {
         if (args[0] && args[0].startsWith("-")) {
             type = args[0].substring(1);
             if (!this.config.commands[type]) {
-                console.error(msg);
+                console.error(new Error(`Could not find module ${type}`));
                 return;
             }
             args.shift();
