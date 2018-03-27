@@ -72,6 +72,14 @@ class Roles extends Module {
         };
     }
 
+    getHelp(){
+        return [
+            { name: 'add', description: 'Gives you each of the roles listed' },
+            { name: 'get', description: 'Lists all available roles' },
+            { name: 'rm', description: 'Removes each of the roles listed' }
+        ]
+    }
+
     /**
      * 
      * @param {Message} msg 

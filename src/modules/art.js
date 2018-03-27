@@ -35,8 +35,8 @@ class Art extends Module{
 
     getHelp() {
         return [
-            { name: 'fromstream', description: 'TODO' },
-            { name: 'fromfan', description: 'TODO' }
+            { name: 'fromstream', description: 'Displays a random official streamart' },
+            { name: 'fromfan', description: 'Displays a random fannart' }
         ]
     }
 

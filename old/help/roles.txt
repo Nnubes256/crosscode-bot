@@ -1,2 +1,0 @@
-INVOC add - gives you each of the roles listed
-INVOC rm - removes each of the roles listed

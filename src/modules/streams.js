@@ -58,6 +58,12 @@ class Streams extends Module{
             }
         }
     }
+
+    getHelp() {
+        return [
+            { name: 'get', description: 'Prints a list of current streams' }
+        ]
+    }
 }
 
 exports.streams = new Streams();

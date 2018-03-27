@@ -116,6 +116,15 @@ class Game extends Module{
             }
         };
     }
+
+    getHelp() {
+        return [
+            { name: 'add', description: '' },
+            { name: 'pvp', description: '' },
+            { name: 'attack', description: '' },
+            { name: 'stats', description: '' }
+        ]
+    }
 }
 
 exports.game = new Game();

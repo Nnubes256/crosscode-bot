@@ -22,7 +22,7 @@ class Nsfw extends Module{
     }
 
     getHelp() {
-        return null; //TODO
+        return [{name: 'lewd', description: 'The LeaDaki™. \'Nuff said.'}]; //TODO
     }
 }
 
