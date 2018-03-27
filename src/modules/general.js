@@ -346,19 +346,9 @@ class General extends Module{
      * @param {string[]} args 
      */
     leaEmote(msg, args) {
-        /*if(args.join(" ") === "emote_reset") {
-          if(Utils.isAdmin(msg.member)) {
-            getAllEmotes(instance);
-            msg.channel.send('Emotes should be updated now');
-          } else {
-            msg.channel.send('You are not an admin.');
-          }
-
-          return;
-        }*/
         let reply = '';
         for (let i = 0; i < args.length; i++) {
-            const thonk = Utils.getEmote(msg, args[i]);
+            const thonk = Utils.getEmote(args[i]);
             if (thonk.id !== '')
                 reply += thonk + ' ';
         }
@@ -372,25 +362,21 @@ class General extends Module{
      * @param {string[]} args 
      */
     listEmotes(msg, args) {
-        //TODO
-        /*
-        let em = getCacheEmotesIds(msg.guild.id);
+        let em = this.bot.client.emojis.map(e => e.name);
         //lets add animated emotes
-        em = em.concat(msg.guild.emojis.findAll('animated', true).map(function(emoji) {
-            return emoji.name;
-        }));
-        var message = "\n";
-        var count = 0;
-        for (var i = 0; i < em.length; i++) {
-            var thonk = getEmote(msg, em[i]);
-            var emojiLine = em[i] + ' ' + thonk + '\n';
+        em = em.concat(msg.guild.emojis.findAll('animated', true).map(e => e.name));
+        let message = "\n";
+        let count = 0;
+        for (let emote of em) {
+            const thonk = Utils.getEmote(emote);
+            const emojiLine = emote + ' ' + thonk + '\n';
             if (message.length + emojiLine.length > 2000) {
                 msg.channel.send(message);
                 message = "\n";
             }
             message += emojiLine;
         }
-        msg.channel.send(message);*/
+        msg.channel.send(message);
     }
 }
 
