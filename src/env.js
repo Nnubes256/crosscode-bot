@@ -10,6 +10,10 @@ class Env {
         return Env.getFileData('.env').BOT_PREFIX || process.env.BOT_PREFIX;
     }
 
+    static get TWITCH_CLIENT_ID() {
+        return Env.getFileData('.env').TWITCH_CLIENT_ID || process.env.TWITCH_CLIENT_ID;
+    }
+
     /**
      * 
      * @param {string} path

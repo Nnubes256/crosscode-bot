@@ -78,7 +78,7 @@ class Config {
                 console.warn('blacklist role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
             }
-            result.blacklist.push(roleEntry.id);
+            result.blacklist.push(roleEntry);
         }
 
         for (let role of serverJson.roles.whitelist) {
@@ -87,7 +87,7 @@ class Config {
                 console.warn('whitelist role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
             }
-            result.whitelist.push(roleEntry.id);
+            result.whitelist.push(roleEntry);
         }
 
         for(let role of serverJson.roles.admin) {
@@ -96,7 +96,7 @@ class Config {
                 console.warn('admin role missing (skiped) - role: %s, server: %s', role, server.name);
                 continue;
             }
-            result.admin.push(roleEntry.id);
+            result.admin.push(roleEntry);
         }
         return result;
     }

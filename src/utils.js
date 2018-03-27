@@ -1,8 +1,10 @@
-const { RichEmbed, MessageEmbed, GuildMember } = require('discord.js');
+const { RichEmbed, MessageEmbed, GuildMember, Client } = require('discord.js');
 const { Config } = require('./config');
 
 /** @type {Config} */
 let config = undefined;
+/** @type {Client} */
+let client = undefined;
 
 class Utils {
     /**
@@ -11,6 +13,14 @@ class Utils {
      */
     static setConfig(conf) {
         config = conf;
+    }
+
+    /**
+     * 
+     * @param {Client} client 
+     */
+    static setClient(c) {
+        client = c;
     }
 
     /**
@@ -53,15 +63,35 @@ class Utils {
     static isAdmin(user) {
         for(let server of config.servers) {
             if(user.guild.id === server.id) {
-                return user.roles.has(server.admin);
+                return server.admin.some(r => user.roles.array().some(a => a.id === r.id))
             }
         }
 
         return true;
     }
 
+    /**
+     * 
+     * @param {string} name 
+     */
     static getEmote(name) {
-        //TODO
+        const emote = client.emojis.find("name", name);
+        if(emote)
+            return emote;
+
+
+        for(let guild of client.guilds.values()) {
+            const emoji = guild.emojis.find("name", name);
+            if (emoji)
+                return emoji;
+        }
+        //console.debug(`Warning: unknown emoji "${name}"`);
+        return {
+            id: "",
+            toString: function() {
+                return "*could not find emoji*";
+            }
+        };
     }
 }
 

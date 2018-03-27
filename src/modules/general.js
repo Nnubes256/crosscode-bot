@@ -28,7 +28,7 @@ class General extends Module{
             },
             sleep: msg => {
                 if (Utils.isAdmin(msg.member)) {
-                    instance.destroy();
+                    this.bot.client.destroy();
                     process.exit(0);
                 } else {
                     msg.reply('You don\'t have the power to kill me!');
@@ -58,7 +58,7 @@ class General extends Module{
             },
             react: (msg, args) => {
                 for (let i = 0; i < args.length; i++) {
-                    let thonk = getEmote(msg, args[i]);
+                    let thonk = Utils.getEmote(msg, args[i]);
                     if (thonk.id !== '')
                         msg.react(thonk.id);
                 }
@@ -69,8 +69,8 @@ class General extends Module{
             CHEATER: msg => {
                 const cheater = msg.mentions.members.first();
                 if (cheater) {
-                    let apolloPoint = getEmote(msg, "apolloPoint");
-                    let apolloShout = getEmote(msg, "apolloShout");
+                    let apolloPoint = Utils.getEmote(msg, "apolloPoint");
+                    let apolloShout = Utils.getEmote(msg, "apolloShout");
                     let message = `${cheater} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
                     msg.channel.send(message)
                 } else {
@@ -146,35 +146,32 @@ class General extends Module{
     getHelp() {
         return [
             { name: 'help', description: 'Displays a help about a command' }, //Help is hardcoded to Bot
-            { name: 'purge', description: 'TODO' },
-            { name: 'ping', description: 'TODO' },
-            { name: 'box', description: 'TODO' },
-            { name: 'rbox', description: 'TODO' },
-            { name: 'setname', description: 'TODO' },
+            { name: 'purge', description: 'Purges bot replies' },
+            { name: 'ping', description: 'Tests bot response time' },
+            { name: 'box', description: 'Creates a triangle from the given characters, may only be used in channels named #spam' },
+            { name: 'rbox', description: 'Like box, but reverses the message beforehand' },
             { name: 'pmn', description: 'TODO' },
             { name: 'emote', description: 'TODO' },
             { name: 'lsemotes', description: 'TODO' },
-            { name: 'cloudlea', description: 'TODO' },
-            { name: 'sleep', description: 'TODO' },
-            { name: 'language', description: 'TODO' },
-            { name: 'hi', description: 'TODO' },
-            { name: 'bye', description: 'TODO' },
-            { name: 'bugs', description: 'TODO' },
-            { name: 'BUG', description: 'TODO' },
-            { name: 'lewd', description: 'TODO' },
+            { name: 'cloudlea', description: 'Displays an image of Lea on a cloud' },
+            { name: 'language', description: 'Displays that gif of Lea and the JS sign' },
+            { name: 'hi', description: 'Lea greets you' },
+            { name: 'bye', description: 'Lea says goodbye to you' },
+            { name: 'bugs', description: 'HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?' },
+            { name: 'BUG', description: ':emilieWhy: alias' },
             { name: 'react', description: 'TODO' },
-            { name: 'thinking', description: 'TODO' },
-            { name: 'CHEATER', description: 'TODO' },
-            { name: 'triggered', description: 'TODO' },
-            { name: 'verytriggered', description: 'TODO' },
-            { name: 'HI!', description: 'TODO' },
-            { name: 'vote', description: 'TODO' },
+            { name: 'thinking', description: 'Reacts with the standard thonk' },
+            { name: 'CHEATER', description: 'Accuses someone of being a C H E A T E R' },
+            { name: 'triggered', description: 'Mildly angery Lea' },
+            { name: 'verytriggered', description: '*Severely* angery Lea' },
+            { name: 'HI!', description: 'Deal With It Lea™.' },
+            { name: 'vote', description: 'Reacts with the proper vote emotes for ease of vote' },
             { name: 'ohno', description: 'TODO' },
-            { name: 'work', description: 'TODO' },
-            { name: 'balls', description: 'TODO' },
-            { name: 'vrps', description: 'TODO' },
-            { name: 'get', description: 'TODO' },
-            { name: 'thanks', description: 'TODO' }
+            { name: 'work', description: 'Why?' },
+            { name: 'balls', description: 'Displays that one image that Lachsen is oh-so "proud" of' },
+            { name: 'vrps', description: 'TheRusty22\'s oh-so-strange and beautiful mashup of Sergey, `balls`, and `language`' },
+            { name: 'get it', description: 'gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)' },
+            { name: 'thanks', description: 'Writes a template thank-you message to the devs :)' }
         
         ];
     }
@@ -346,19 +343,9 @@ class General extends Module{
      * @param {string[]} args 
      */
     leaEmote(msg, args) {
-        /*if(args.join(" ") === "emote_reset") {
-          if(Utils.isAdmin(msg.member)) {
-            getAllEmotes(instance);
-            msg.channel.send('Emotes should be updated now');
-          } else {
-            msg.channel.send('You are not an admin.');
-          }
-
-          return;
-        }*/
         let reply = '';
         for (let i = 0; i < args.length; i++) {
-            const thonk = Utils.getEmote(msg, args[i]);
+            const thonk = Utils.getEmote(args[i]);
             if (thonk.id !== '')
                 reply += thonk + ' ';
         }
@@ -372,25 +359,21 @@ class General extends Module{
      * @param {string[]} args 
      */
     listEmotes(msg, args) {
-        //TODO
-        /*
-        let em = getCacheEmotesIds(msg.guild.id);
+        let em = this.bot.client.emojis.map(e => e.name);
         //lets add animated emotes
-        em = em.concat(msg.guild.emojis.findAll('animated', true).map(function(emoji) {
-            return emoji.name;
-        }));
-        var message = "\n";
-        var count = 0;
-        for (var i = 0; i < em.length; i++) {
-            var thonk = getEmote(msg, em[i]);
-            var emojiLine = em[i] + ' ' + thonk + '\n';
+        em = em.concat(msg.guild.emojis.findAll('animated', true).map(e => e.name));
+        let message = "\n";
+        let count = 0;
+        for (let emote of em) {
+            const thonk = Utils.getEmote(emote);
+            const emojiLine = emote + ' ' + thonk + '\n';
             if (message.length + emojiLine.length > 2000) {
                 msg.channel.send(message);
                 message = "\n";
             }
             message += emojiLine;
         }
-        msg.channel.send(message);*/
+        msg.channel.send(message);
     }
 }
 

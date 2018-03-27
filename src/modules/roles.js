@@ -1,106 +1,119 @@
 //TODO: restructure
-
 const { Module } = require('../module');
-const { Message } = require('discord.js');
+const { Utils } = require('../utils');
+const { Message, Role } = require('discord.js');
 
-class Roles extends Module{
+class Roles extends Module {
     getCommands() {
         return {
             /**
              *  @param {Message} msg 
              *  @param {string[]} args
              * */
-            add: function giveRoles(msg, args) {
-                let roles = msg.guild.roles.filterArray(r => args.join(" ").split(",").includes(r.name));
-                let dupRoles = [];
-                //removes roles the user already has
-                for(var role of msg.member.roles.array()) {
-                  var index = -1;
-                  if((index = roles.indexOf(role)) > -1) {
-                    dupRoles = dupRoles.concat(roles.splice(index, 1));
-                  }
+            add: (msg, args) => {
+                const roles = msg.guild.roles.filterArray(r => args.join(" ").split(",").includes(r.name))
+                    .filter(r => this.getWhitelist(msg).includes(r));
+                const dupRoles = msg.member.roles.array().filter(r => roles.includes(r));
+                const newRoles = roles.filter(r => !dupRoles.includes(r));
+
+                if (newRoles.length === 0) {
+                    msg.channel.send(`Could not add any new roles.`);
+                    return;
                 }
-                if(roles.length === 0) {
-                  msg.channel.send(`Could not add any new roles.`);
-                  return;
-                }
-                
-                msg.member.addRoles(roles).then(function(member) {
-                  if(util.hasPending(msg)) {
-                    return util.removePending(msg, console);
-                  }
-                  return member;
-                }).then(function(member) {
-                    if(roles.length) {
-                      var newRolesName = getRolesName(roles).listjoin('and');
-                      util.log(msg, `Added ${newRolesName} to ${member}`);
-                      var dupRolesName = getRolesName(dupRoles).listjoin('and');
-                      var retMessage = `${msg.author} is now ${newRolesName}.`;
-                      if(dupRoles.length) {
-                        retMessage += `\nAlready had ${dupRolesName}`;
-                      }
-                      msg.channel.send(retMessage);
+
+                msg.member.addRoles(newRoles).then(member => {
+                    if (this.hasPending(member)) {
+                        return this.removePending(member);
                     }
-    
-                }).catch(function(e) {
-                  msg.channel.send('Encountered an error. Could not add role.');
-                  console.log(e);
+                    return member;
+                }).then(member => {
+                    if (newRoles.length) {
+                        const newRolesName = newRoles.map(r => r.name).join('and');
+                        this.log(msg, `Added ${newRolesName} to ${member}`);
+                        const dupRolesName = dupRoles.map(r => r.name).join('and');
+                        let retMessage = `${msg.author} is now ${newRolesName}.`;
+                        if (dupRoles.length) {
+                            retMessage += `\nAlready had ${dupRolesName}`;
+                        }
+                        msg.channel.send(retMessage);
+                    }
+                }).catch(err => {
+                    msg.channel.send('Encountered an error. Could not add role.');
+                    console.error(err);
                 });
             },
-            get: function getRoles(msg) {
-              msg.channel.send("```\n" + getRolesName(msg.guild.roles).join("\n") + "```");
+            /**
+             * @param {Message} msg
+             */
+            get: msg => {
+                msg.channel.send("```\n" + this.getWhitelist(msg).map(r => r.name).join("\n") + "```");
             },
-            update: function updateList(msg) {
-              if(util.isFromAdmin(msg)) {
-                console.log("Is an admin");
-                util.updateServers(client, console);
-                console.log("Updated servers");
-                msg.channel.send("Updated successfully").catch(console.error);
-              } else {
-                console.log("Is not an admin");
-              }
-            },
-            rm: function takeRoles(msg, args) {
-                let role = fetchRoles(msg.guild.roles, args.join(" ").split(","));
-                if(role) {
-                    msg.member.removeRoles(role).then(function(member) {
-                        var oldRoles = getRolesName(role).listjoin('or');
+            /**
+             *  @param {Message} msg 
+             *  @param {string[]} args
+             * */
+            rm: (msg, args) => {
+                const whitelist = this.getWhitelist(msg);
+                const requested = args.join(" ").split(",");
+                const roles = whitelist.filter(r => requested.includes(r.name));
+                if (roles.length) {
+                    msg.member.removeRoles(roles).then(member => {
+                        const oldRoles = roles.map(r => r.name).join('and');
                         msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
-                        util.log(msg, `Removed ${oldRoles} from ${member}`);
-                    }).catch(function(e) {
+                        this.log(msg, `Removed ${oldRoles} from ${member}`);
+                    }).catch(err => {
                         msg.channel.send('Encountered an error. Could not remove role.');
-                        console.log(e);
+                        console.log(err);
                     });
+                } else {
+                    msg.reply('could not find role');
                 }
-    
             }
         };
     }
 
+    getHelp(){
+        return [
+            { name: 'add', description: 'Gives you each of the roles listed' },
+            { name: 'get', description: 'Lists all available roles' },
+            { name: 'rm', description: 'Removes each of the roles listed' }
+        ]
+    }
 
-    fetchRoles(obj, args) {
-        let roles = [], role;
-        let bl = util.getRoleBlacklist();
-        let wl = util.getRoleWhitelist();
-        for (let arg of args) {
-//          console.log(util.discObjFind(obj, arg), " ", arg);
-            if ((role = util.discObjFind(obj, arg))
-              && wl.indexOf(role.id) !== -1 // use whitelist
-//              && bl.indexOf(role.id) === -1 // use blacklist
-            )
-              roles.push(role);
+    /**
+     * 
+     * @param {Message} msg 
+     * @returns {Role[]}
+     */
+    getWhitelist(msg) {
+        for(let server of this.bot.config.servers) {
+            if(msg.member.guild.id === server.id) {
+                return server.whitelist;
+            }
         }
-        return roles;
     }
-    fetchRole(roles, roleName) {
-      return util.discObjFind(roles, roleName);
+
+    hasPending(member) {
+        console.info('Pending is no longer supported')
+        return false;
     }
-    getRolesName(roles) {
-      return roles.map(function(element) {
-           if(element.name.indexOf("@") == 0)
-                 return element.name.substring(1);
-           return element.name;
-        });
+
+    removePending(member) {
+        console.warn('Pending is no longer supported')
+        return member;
+    }
+
+    /**
+     * 
+     * @param {string} msg 
+     * @param {string} text
+     */
+    log(msg, text) {
+        for(let server of this.bot.config.servers) {
+            if(msg.member.guild.id === server.id) {
+                server.chans.syslog.send(text);
+            }
+        }
     }
 }
 
