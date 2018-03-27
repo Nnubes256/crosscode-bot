@@ -58,7 +58,7 @@ class General extends Module{
             },
             react: (msg, args) => {
                 for (let i = 0; i < args.length; i++) {
-                    let thonk = getEmote(msg, args[i]);
+                    let thonk = Utils.getEmote(msg, args[i]);
                     if (thonk.id !== '')
                         msg.react(thonk.id);
                 }
@@ -69,8 +69,8 @@ class General extends Module{
             CHEATER: msg => {
                 const cheater = msg.mentions.members.first();
                 if (cheater) {
-                    let apolloPoint = getEmote(msg, "apolloPoint");
-                    let apolloShout = getEmote(msg, "apolloShout");
+                    let apolloPoint = Utils.getEmote(msg, "apolloPoint");
+                    let apolloShout = Utils.getEmote(msg, "apolloShout");
                     let message = `${cheater} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
                     msg.channel.send(message)
                 } else {
