@@ -130,8 +130,6 @@ class Bot {
      * @param {string} msg 
      * @returns {string[]}
      */
-function argParse(str) {
-}
     getMessageArgs(msg) {
         msg = msg.replace(/^\s+|\s+$/g, ''); // Remove leading and trailing whitespace
 
