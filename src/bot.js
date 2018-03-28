@@ -138,9 +138,9 @@ function argParse(str) {
         if (!msg.startsWith(this.prefix))
             return null;
 
-	return msg.substr(this.prefix.length)
-               .replace(/(^|.)"/g, (match, one) => (one + (one === '\\' ? '' : '\0') + '"')).split('\0"') // split on parts
-	       .map((val, idx) => (idx & 1 ? val : val.replace(/[ \t]+/g, '\0'))).join('"').split('\0'); // rejoin
+        return msg.substr(this.prefix.length)
+            .replace(/(^|.)"/g, (match, one) => (one + (one === '\\' ? '' : '\0') + '"')).split('\0"') // split on parts
+            .map((val, idx) => (idx & 1 ? val : val.replace(/[ \t]+/g, '\0'))).join('"').split('\0'); // rejoin
     }
 
     /** 
