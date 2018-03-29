@@ -49,12 +49,12 @@ module.exports = function(instance, util) {
 
         },
         leaCheeseArmy: function angeryRaid(msg, args) {
-            const charcap = 1000;
+            const charcap = 2000;
             let thonk = getEmote(msg, 'leaCheeseAngry').toString();
             if(isNaN(args[0]) || !thonk)
                 return;
-            let height = +args[1] || 2;
-            let str = ('\n' + thonk.repeat(args[0])).repeat(height);
+            let height = +args[1] || args[0];
+            let str = ('\n' + thonk.repeat(height).repeat(args[0]);
             if(str && str.length < charcap)
                 msg.channel.send(`**You are being raided!${str}**`);
         },
