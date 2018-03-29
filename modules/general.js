@@ -48,26 +48,15 @@ module.exports = function(instance, util) {
                 });*/
 
         },
-        leaCheeseArmy : function army(msg, args) {
-            if(isNaN(args[0])) 
+        leaCheeseArmy: function angeryRaid(msg, args) {
+            const charcap = 1000;
+            let thonk = getEmote(msg, 'leaCheeseAngry').toString();
+            if(isNaN(args[0]) || !thonk)
                 return;
-            let repeat = Math.min(parseInt(args[0]), 50);
-            let endAt;
-            if(isNaN(args[1])) {
-                endAt = repeat/2;
-            } else {
-                endAt = parseInt(args[1]);
-            }
-            let reply = 'You are being raided:\n';
-            for (let i = 0; i < repeat; i++) {
-                let thonk = getEmote(msg, 'leaCheeseAngry');
-                if (thonk.id !== '')
-                    reply += thonk + ' ';
-                if((i + 1)%endAt === 0)
-                    reply += '\n';
-            }
-            if (reply !== '')
-                msg.channel.send(reply);
+            let height = +args[1] || 2;
+            let str = ('\n' + thonk.repeat(args[0])).repeat(height);
+            if(str && str.length < charcap)
+                msg.channel.send(`**You are being raided!${str}**`);
         },
         purge: function(msg, args) {
             let options = {
