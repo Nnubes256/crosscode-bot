@@ -54,7 +54,7 @@ module.exports = function(instance, util) {
             if(isNaN(args[0]) || !thonk)
                 return;
             let height = +args[1] || args[0];
-            let str = ('\n' + thonk.repeat(height).repeat(args[0]);
+            let str = ('\n' + thonk.repeat(height)).repeat(args[0]);
             if(str && str.length < charcap)
                 msg.channel.send(`**You are being raided!${str}**`);
         },
