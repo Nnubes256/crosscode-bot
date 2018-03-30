@@ -199,6 +199,11 @@ module.exports = function(instance, util) {
         lewd: function noLewdLea(msg, args) {
             msg.react(getEmote(msg, "ohno").id);
         },
+        popsicle: function popsicleLea(msg, args) {
+            msg.channel.send(createRichEmbed({
+                image: 'https://media.discordapp.net/attachments/397800800736378880/400833387725586434/unknown.png'
+            }));
+        },
         emote: function leaEmote(msg, args) {
             if(args.join(" ") === "emote_reset") {
               if(isFromAdmin(msg)) {
