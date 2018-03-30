@@ -24,6 +24,8 @@ INVOC vrps - TheRusty22's oh-so-strange and beautiful mashup of Sergey, `INVOC b
 INVOC "get it" - gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
 INVOC thanks - writes a template thank-you message to the devs :)
 INVOC popsicle - displays Lea eating a popsicle
+INVOC lsemotes - shows all emotes that Lea can output
+INVOC leaCheeseArmy - summons a matrix of `leaCheeseAngry`s to assist you
 
 See also: 
     INVOC -anime
