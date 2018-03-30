@@ -6,6 +6,8 @@ let roleBlacklist = [];
 let roleWhitelist = [];
 let roleAdmin = [];
 exports.getAllEmotes = function(client) {
+    //to minimize the possibility of spawning deleted emotes
+    knownEmotes = {};
     client.emojis.array().forEach(function(emote) {
         if (emote.animated)
             return;
