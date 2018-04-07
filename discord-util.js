@@ -179,13 +179,17 @@ function findServer(msg) {
   }
 }
 exports.hasPending = function(msg) {
+  return true;
   var server = findServer(msg);
+  /*if(!Object.keys(server.pending)) {
+     return true;
+  }
   for(let pendingRole in server.pending) {
     if(msg.member.roles.has(pendingRole.id)) {
       return true;
     }
   }
-   return false;
+   return false;*/
 }
 exports.removePending = function(msg, console) {
    var server = findServer(msg);
