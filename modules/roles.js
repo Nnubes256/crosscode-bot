@@ -39,12 +39,12 @@ module.exports = function(client, util, console) {
               return;
             }
             
-            msg.member.addRoles(roles).then(function(member) {
+            msg.member.addRoles(roles)./**then(function(member) {
               if(util.hasPending(msg)) {
                 return util.removePending(msg, console);
               }
               return member;
-            }).then(function(member) {
+            })*/.then(function(member) {
                 if(roles.length) {
                   var newRolesName = getRolesName(roles).listjoin('and');
                   util.log(msg, `Added ${newRolesName} to ${member}`);
