@@ -44,7 +44,7 @@
                 "editlog": "edit-log"
             },
             "roles": {
-                "pending": [
+                "auto-role": [
                     "member"
                 ],
                 "whitelist": [
