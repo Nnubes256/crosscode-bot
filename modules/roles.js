@@ -39,7 +39,7 @@ module.exports = function(client, util, console) {
               return;
             }
             
-            msg.member.addRoles(roles)./**then(function(member) {
+            msg.member.addRoles(roles)/**.then(function(member) {
               if(util.hasPending(msg)) {
                 return util.removePending(msg, console);
               }
