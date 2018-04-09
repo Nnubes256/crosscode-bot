@@ -58,9 +58,9 @@ client.on('guildMemberAdd', function(newMember) {
             if(serv.pending.length) {
               //newMember.addRoles(serv.pending).catch(console.log);
               //serv.chans.syslog.send(`Added ${serv.pending[0].name} role to ${newMember}`);
-              var newGreet = util.greetingsParse(newMember.guild, serv.greet);
-              serv.chans.greet.send(`${newMember}, ${newGreet}`);
             }
+            var newGreet = util.greetingsParse(newMember.guild, serv.greet);
+            serv.chans.greet.send(`${newMember}, ${newGreet}`);
             break;
         }
 });
