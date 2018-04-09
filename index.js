@@ -56,8 +56,8 @@ client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
         if (newMember.guild.id === serv.id) {
             if(serv.pending.length) {
-              newMember.addRoles(serv.pending).catch(console.log);
-              serv.chans.syslog.send(`Added ${serv.pending[0].name} role to ${newMember}`);
+              //newMember.addRoles(serv.pending).catch(console.log);
+              //serv.chans.syslog.send(`Added ${serv.pending[0].name} role to ${newMember}`);
               var newGreet = util.greetingsParse(newMember.guild, serv.greet);
               serv.chans.greet.send(`${newMember}, ${newGreet}`);
             }
