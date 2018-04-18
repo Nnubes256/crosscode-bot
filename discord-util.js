@@ -271,7 +271,7 @@ exports.argParse = function(str) {
             break;
         case ' ':
         case '\t':
-            if (quot && !spl[spl.length - 1]) {
+            if (quot && spl[spl.length - 1]) {
                 spl.push(''); // split on unquoted spaces
                 break;
             }

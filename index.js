@@ -126,7 +126,7 @@ function onMessage(msg) {
         return;
     }
     //Allow for new line parsing
-    let args = msg.content.replace(/^\s+|\s+$/g, '').split(/[ \t]+/);
+    let args = util.argParse(msg.content.replace(/^\s+|\s+$/g, ''));
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
