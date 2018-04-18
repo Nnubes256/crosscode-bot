@@ -75,7 +75,7 @@ module.exports = function(instance, util) {
                     for (var message of messages) {
                         if (message[0] === lastKey) {
                             message[1].delete().then(function() {
-                                msg.reply('Deleted the last message')
+                                console.log('Deleted the last few messages')
                             })
                         } else {
                             message[1].delete()
