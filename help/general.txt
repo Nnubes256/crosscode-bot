@@ -26,6 +26,7 @@ INVOC thanks - writes a template thank-you message to the devs :)
 INVOC popsicle - displays Lea eating a popsicle
 INVOC lsemotes - shows all emotes that Lea can output
 INVOC leaCheeseArmy - summons a matrix of `leaCheeseAngry`s to assist you
+INVOC say - echoes the argument, with emote names enclosed in slashes replaced with their actual emote counterpart
 
 See also: 
     INVOC -anime

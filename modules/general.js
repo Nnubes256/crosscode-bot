@@ -178,7 +178,7 @@ module.exports = function(instance, util) {
             let message = getEmote(msg, 'emilieWhy').toString();
             msg.channel.send(message);
         },
-        pmn: function poorMansNitro(msg, args) {
+        say: function poorMansNitro(msg, args) {
             let delim = '/';
             let pieces = args.join(' ').split(delim);
             for (let i = 0; i < pieces.length - 1; i++) {
