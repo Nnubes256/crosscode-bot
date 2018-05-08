@@ -37,6 +37,9 @@ module.exports = function(instance, util) {
     }
 
     let commands = {
+        satoshi : function satoshiIs(msg) {
+           msg.channel.send(`is watashi`);
+        },
         poll: function createPoll(msg, args) {
             //let title = args.shift();
             /*let poll = new StrawPoll(title, args);
