@@ -95,7 +95,8 @@ module.exports = function(instance, util) {
         box: function(msg, args) {
             if (msg.channel.name !== "spam")
                 return;
-            let phrase = args.join(' ');
+            let phrase = args.join(' ').replace(/\n+/g, '\n');
+            if(!phrase.length) return;
             let charLimit = 80;
             if (phrase.length > charLimit) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
