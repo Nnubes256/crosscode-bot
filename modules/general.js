@@ -349,7 +349,7 @@ module.exports = function(instance, util) {
             let offset = Math.floor(string.length / (2 * lines));
             let height = string.length - 1;
             let depth = offset * lines;
-            let size = depth + string.length + 1;
+            let size = depth + string.length;
             if(size * size * 2 > MAXLEN) {
                 msg.channel.send("Phrase too long!");
                 return;
