@@ -339,7 +339,7 @@ module.exports = function(instance, util) {
             let str = args.join('').toUpperCase();
             if(str[0] !== str[str.length - 1])
                 str = `*${str}*`;
-            if(str.length < 7) {
+            if(str.length < 6) {
                 msg.channel.send("Sorry, that string's too short!");
                 return;
             }
