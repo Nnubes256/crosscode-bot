@@ -336,7 +336,7 @@ module.exports = function(instance, util) {
         },
         cube: function textCube(msg, args) {
             const MAXLEN = 2000;
-            let str = args.join('').toUpperCase();
+            let str = args.join('').replace(/\s+/g, '').toUpperCase();
             if(str[0] !== str[str.length - 1])
                 str = `*${str}*`;
             if(str.length < 6) {
