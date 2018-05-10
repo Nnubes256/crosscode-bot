@@ -333,6 +333,47 @@ module.exports = function(instance, util) {
             msg.channel.send('', createRichEmbed({
                 description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
             }));
+        },
+        cube: function textCube(msg, args) {
+            const MAXLEN = 2000;
+            let str = args.join('').toUpperCase();
+            if(str[0] !== str[str.length - 1])
+                str = `*${str}*`;
+            if(str.length < 7) {
+                msg.channel.send("Sorry, that string's too short!");
+                return;
+            }
+            string = splitter.splitGraphemes(str);
+            
+            let lines = Math.floor(string.length / 8) + 1;
+            let offset = Math.floor(string.length / (2 * lines));
+            let height = string.length - 1;
+            let depth = offset * lines;
+            let size = depth + string.length + 1;
+            if(size * size * 2 > MAXLEN) {
+                msg.channel.send("Phrase too long!");
+                return;
+            }
+            
+            let strings = [];
+            for(let i=0; i<size; i++)
+                strings.push(Array(size).fill(' '));
+            for(let i=0; i<2; i++)
+                for(let j=0; j<2; j++)
+                    for(let k=0; k<=depth; k++)
+                        strings[i * height + k]
+                            [j * height + depth - k] = '/';
+            for(let i=0; i<=lines; i++)
+                for(let j=0; j<string.length; j++)
+                    strings[i * offset + j][(lines - i) * offset] =
+                    strings[i * offset][(lines - i) * offset + j] =
+                    strings[i * offset + j][(lines - i) * offset + height] =
+                    strings[i * offset + height][(lines - i) * offset + j] =
+                        string[j];
+            
+            msg.channel.send('```\n' +
+		strings.map(str => str.join(' ').replace(/\s+$/, '')).join('\n')
+		+ '\n```');
         }
     }
     return commands;
