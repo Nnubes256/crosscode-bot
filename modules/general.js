@@ -343,7 +343,8 @@ module.exports = function(instance, util) {
                 msg.channel.send("Sorry, that string's too short!");
                 return;
             }
-            string = splitter.splitGraphemes(str);
+            let string = splitter.splitGraphemes(str).map(chr =>
+                chr + (chr === '`' ? '\u200b' : ''));
             
             let lines = Math.floor(string.length / 8) + 1;
             let offset = Math.floor(string.length / (2 * lines));
