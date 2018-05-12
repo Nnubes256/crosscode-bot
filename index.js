@@ -28,7 +28,7 @@ for (let type of cmdTypes) {
     //TODO: Add help text for each function
     helpText[type] = readFileSync(`./help/${type}.txt`).toString();
 }
-Array.prototype.random = function() {
+Array.prototype.random = Array.prototype.random || function() {
     return this[parseInt(Math.random() * this.length)];
 }
 
