@@ -53,13 +53,29 @@ module.exports = function(instance, util) {
         },
         leaCheeseArmy: function angeryRaid(msg, args) {
             const charcap = 2000;
-            let thonk = getEmote(msg, 'leaCheeseAngry').toString();
-            if(isNaN(args[0]) || !thonk)
+
+            // First, get the size of the rectangle
+            let width = +args[0];
+            let height = +args[1] || width;
+
+            // Validate the arguments
+            if (!width || !height)
                 return;
-            let height = +args[1] || args[0];
-            let str = ('\n' + thonk.repeat(height)).repeat(args[0]);
-            if(str && str.length < charcap)
-                msg.channel.send(`**You are being raided!${str}**`);
+
+            // get the emoji (so we can calculate the size)
+            let emoji = getEmote(msg, 'leaCheeseAngry').toString();
+            if (!emoji)
+                return;
+
+            // Now validate the char limit.
+            if ((height + emoji.length * (width * height)) > charcap) {
+                msg.reply("This message may be too long!");
+                return;
+            }
+
+            // Now create the rectangle and print it
+            let army = ('\n' + emoji.repeat(width)).repeat(height);
+            msg.channel.send(`**You are being raided!${army}**`);
         },
         purge: function(msg, args) {
             let options = {
@@ -329,9 +345,12 @@ module.exports = function(instance, util) {
                 "Keep up the good work!",
                 "You guys are awesome."
             ];
-            //Ew too long... please refractor
+
+            let nickname = msg.member.nickname;
+            let chosenMessage = thankYouMessage.random();
+
             msg.channel.send('', createRichEmbed({
-                description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
+                description: `From ${nickname},\n\t${chosenMessage}\nTo,\n\t\tRadical Fish Games`
             }));
         },
         cube: function textCube(msg, args) {
@@ -354,7 +373,7 @@ module.exports = function(instance, util) {
                 msg.channel.send("Phrase too long!");
                 return;
             }
-            
+
             let strings = [];
             for(let i=0; i<size; i++)
                 strings.push(Array(size).fill(' '));
@@ -370,7 +389,7 @@ module.exports = function(instance, util) {
                     strings[i * offset + j][(lines - i) * offset + height] =
                     strings[i * offset + height][(lines - i) * offset + j] =
                         string[j];
-            
+
             msg.channel.send('```\n' +
 		strings.map(str => str.join(' ').replace(/\s+$/, '')).join('\n')
 		+ '\n```');
