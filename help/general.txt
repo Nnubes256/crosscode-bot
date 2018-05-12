@@ -1,17 +1,17 @@
 # setname - changes the bot's nickname
 # sleep - kills Lea :ohno:
 INVOC "get it" - gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
-INVOC BUG - :emilieWhy: alias
-INVOC CHEATER - INVOCuses someone of being a C H E A T E R
-INVOC HI! - Deal With It Lea™.
 INVOC balls - displays that one image that Lachsen is oh-so "proud" of
 INVOC box - creates a triangle from the given characters, may only be used in channels named #spam
+INVOC BUG - :emilieWhy: alias
 INVOC bugs - HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?
 INVOC bye - Lea says goodbye to you
+INVOC CHEATER - INVOCuses someone of being a C H E A T E R
 INVOC cloudlea - displays an image of Lea on a cloud
 INVOC cube - draws an ASCII cube with the argument's text
 INVOC help - this text
 INVOC hi - Lea greets you
+INVOC HI! - Deal With It Lea™.
 INVOC hug - TODO
 INVOC language - displays that gif of Lea and the JS sign
 INVOC leaCheeseArmy - summons a matrix of `leaCheeseAngry`s to assist you
