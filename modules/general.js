@@ -339,12 +339,11 @@ module.exports = function(instance, util) {
             let str = args.join('').replace(/\s+/g, '').toUpperCase();
             if(str[0] !== str[str.length - 1])
                 str = `*${str}*`;
-            if(str.length < 6) {
+            let string = splitter.splitGraphemes(str);
+            if(string.length < 6) {
                 msg.channel.send("Sorry, that string's too short!");
                 return;
             }
-            let string = splitter.splitGraphemes(str).map(chr =>
-                chr + (chr === '`' ? '\u200b' : ''));
             
             let lines = Math.floor(string.length / 8) + 1;
             let offset = Math.floor(string.length / (2 * lines));
