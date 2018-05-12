@@ -38,7 +38,7 @@ module.exports = function(instance, util) {
 
     let commands = {
         satoshi : function satoshiIs(msg) {
-           msg.channel.send(`is watashi`);
+           msg.channel.send('is karoshi');
         },
         poll: function createPoll(msg, args) {
             //let title = args.shift();
