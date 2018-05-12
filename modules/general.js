@@ -59,10 +59,8 @@ module.exports = function(instance, util) {
             let height = +args[1] || width;
 
             // Validate the arguments
-            if (isNan(width) || isNan(height)) {
-                msg.reply("Invalid arguments.");
+            if (!width || !height)
                 return;
-            }
 
             // get the emoji (so we can calculate the size)
             let emoji = getEmote(msg, 'leaCheeseAngry').toString();
@@ -76,9 +74,8 @@ module.exports = function(instance, util) {
             }
 
             // Now create the rectangle and print it
-            let singleLine = ('\n' + emoji.repeat(width));
-            let completeRect = singleLine.repeat(height);
-            msg.channel.send(`**You are being raided!${completeRect}**`);
+            let army = ('\n' + emoji.repeat(width)).repeat(height);
+            msg.channel.send(`**You are being raided!${army}**`);
         },
         purge: function(msg, args) {
             let options = {
@@ -350,8 +347,7 @@ module.exports = function(instance, util) {
             ];
 
             let nickname = msg.member.nickname;
-            let chosenMessageId = parseInt((Math.random() * thankYouMessage.length));
-            let chosenMessage = thankYouMessage[chosenMessageId];
+            let chosenMessage = thankYouMessage.random();
 
             msg.channel.send('', createRichEmbed({
                 description: `From ${nickname},\n\t${chosenMessage}\nTo,\n\t\tRadical Fish Games`
@@ -367,7 +363,7 @@ module.exports = function(instance, util) {
                 msg.channel.send("Sorry, that string's too short!");
                 return;
             }
-
+            
             let lines = Math.floor(string.length / 8) + 1;
             let offset = Math.floor(string.length / (2 * lines));
             let height = string.length - 1;
@@ -377,7 +373,7 @@ module.exports = function(instance, util) {
                 msg.channel.send("Phrase too long!");
                 return;
             }
-            
+
             let strings = [];
             for(let i=0; i<size; i++)
                 strings.push(Array(size).fill(' '));
@@ -393,7 +389,7 @@ module.exports = function(instance, util) {
                     strings[i * offset + j][(lines - i) * offset + height] =
                     strings[i * offset + height][(lines - i) * offset + j] =
                         string[j];
-            
+
             msg.channel.send('```\n' +
 		strings.map(str => str.join(' ').replace(/\s+$/, '')).join('\n')
 		+ '\n```');
