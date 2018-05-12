@@ -53,13 +53,32 @@ module.exports = function(instance, util) {
         },
         leaCheeseArmy: function angeryRaid(msg, args) {
             const charcap = 2000;
-            let thonk = getEmote(msg, 'leaCheeseAngry').toString();
-            if(isNaN(args[0]) || !thonk)
+
+            // First, get the size of the rectangle
+            let width = +args[0];
+            let height = +args[1] || width;
+
+            // Validate the arguments
+            if (isNan(width) || isNan(height)) {
+                msg.reply("Invalid arguments.");
                 return;
-            let height = +args[1] || args[0];
-            let str = ('\n' + thonk.repeat(height)).repeat(args[0]);
-            if(str && str.length < charcap)
-                msg.channel.send(`**You are being raided!${str}**`);
+            }
+
+            // get the emoji (so we can calculate the size)
+            let emoji = getEmote(msg, 'leaCheeseAngry').toString();
+            if (!emoji)
+                return;
+
+            // Now validate the char limit.
+            if ((height + emoji.length * (width * height)) > charcap) {
+                msg.reply("This message may be too long!");
+                return;
+            }
+
+            // Now create the rectangle and print it
+            let singleLine = ('\n' + emoji.repeat(width));
+            let completeRect = singleLine.repeat(height);
+            msg.channel.send(`**You are being raided!${completeRect}**`);
         },
         purge: function(msg, args) {
             let options = {
@@ -329,9 +348,13 @@ module.exports = function(instance, util) {
                 "Keep up the good work!",
                 "You guys are awesome."
             ];
-            //Ew too long... please refractor
+
+            let nickname = msg.member.nickname;
+            let chosenMessageId = parseInt((Math.random() * thankYouMessage.length));
+            let chosenMessage = thankYouMessage[chosenMessageId];
+
             msg.channel.send('', createRichEmbed({
-                description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
+                description: `From ${nickname},\n\t${chosenMessage}\nTo,\n\t\tRadical Fish Games`
             }));
         },
         cube: function textCube(msg, args) {
@@ -344,7 +367,7 @@ module.exports = function(instance, util) {
                 msg.channel.send("Sorry, that string's too short!");
                 return;
             }
-            
+
             let lines = Math.floor(string.length / 8) + 1;
             let offset = Math.floor(string.length / (2 * lines));
             let height = string.length - 1;
