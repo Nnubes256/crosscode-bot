@@ -348,7 +348,7 @@ module.exports = function(instance, util) {
                 "Keep up the good work!",
                 "You guys are awesome."
             ];
-            //Ew too long... please refractor
+
             let nickname = msg.member.nickname;
             let chosenMessageId = parseInt((Math.random() * thankYouMessage.length));
             let chosenMessage = thankYouMessage[chosenMessageId];
