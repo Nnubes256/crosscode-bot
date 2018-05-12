@@ -70,7 +70,7 @@ module.exports = function(instance, util) {
                 return;
 
             // Now validate the char limit.
-            if (emoji.length * (width * height) > charcap) {
+            if ((height + emoji.length * (width * height)) > charcap) {
                 msg.reply("This message may be too long!");
                 return;
             }
