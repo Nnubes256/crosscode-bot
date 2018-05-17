@@ -195,8 +195,9 @@ module.exports = function(instance, util) {
             }))
         },
         BUG: function scareEmilie(msg) {
-            let message = getEmote(msg, 'emilieWhy').toString();
-            msg.channel.send(message);
+            msg.channel.send('', createRichEmbed({
+                image: 'https://cdn.discordapp.com/attachments/286824914604916747/446126154303406080/emilieWhyyyyyyyy.gif'
+            }));
         },
         say: function poorMansNitro(msg, args) {
             let delim = '/';
