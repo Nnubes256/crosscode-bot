@@ -274,7 +274,7 @@ module.exports = function(instance, util) {
         thinking: function think(msg) {
             let thonk = getEmote(msg, 'leaTHINK');
             //            console.log(thonk);
-            msg.channel.send(thonk);
+            msg.react(thonk.id);
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
