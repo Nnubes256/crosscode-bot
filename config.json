@@ -41,9 +41,9 @@
                 "greet": "requests",
                 "info": "role-list",
                 "syslog": "admin-watchtower",
-                "editlog": "edit-log",
-                "stream": ["spam"]
+                "editlog": "edit-log"
             },
+            "stream-chans": ["spam"],
             "roles": {
                 "pending" : [],
                 "auto-role": [

@@ -125,7 +125,7 @@ exports.isFromAdmin = function(msg) {
 };
 
 function discObjFind(obj, name) {
-    let re = new RegExp(name.trim(), 'i');
+    let re = new RegExp(name.toString().trim(), 'i');
     let ret = obj.find(val => re.test(val.name));
     if (obj && name && ret)
         return ret;

@@ -41,7 +41,7 @@ module.exports = function(instance, util, config) {
     };
     config["role-servers"].forEach(serv => {
         let server = util.discObjFind(instance.guilds, serv.name);
-        let chans = serv.channels.stream;
+        let chans = serv["stream-chans"];
         if(!server || !Array.isArray(chans)) return;
         chans.forEach(name => {
             let chan = util.discObjFind(server.channels, name);
