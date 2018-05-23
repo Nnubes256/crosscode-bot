@@ -24,7 +24,7 @@ let cmdTypes = configuration.modules;
 let commands = {};
 let helpText = {};
 for (let type of cmdTypes) {
-    commands[type] = require(`./modules/${type}.js`)(client, util, console);
+    commands[type] = require(`./modules/${type}.js`)(client, util, configuration, console);
     //TODO: Add help text for each function
     helpText[type] = readFileSync(`./help/${type}.txt`).toString();
 }

@@ -1,12 +1,12 @@
 const TwitchStreams = require('./streams.d/crosscode-twitch-search.js');
 let streams = new TwitchStreams();
-module.exports = function(instance) {
+module.exports = function(instance, util, config) {
     let notify_channels = {};
     instance.on('channelDelete', function() {
-        //check if it had an associate channel
+        //TODO: check if it had an associate channel
     });
     instance.on('guildDelete', function() {
-        //check if it had an associated guild
+        //TODO: check if it had an associated guild
     });
     setInterval(function() {
         var streamEmbed = streams.get();
@@ -39,5 +39,16 @@ module.exports = function(instance) {
             msg.channel.send('This channel will no longer be notified of streams');
         }
     };
+    config["role-servers"].forEach(serv => {
+        let server = util.discObjFind(client.guilds, serv.name);
+        let chans = serv.channels.stream;
+        if(!server || !Array.isArray(chans)) return;
+        chans.forEach(name => {
+            let chan = util.discObjFind(server.channels, name);
+            if(chan)
+                commands.set({channel: chan, guild: server});
+        });
+    });
+    
     return commands;
 };

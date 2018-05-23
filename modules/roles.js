@@ -1,4 +1,4 @@
-module.exports = function(client, util, console) {
+module.exports = function(client, util, config, console) {
     function fetchRoles(obj, args) {
         let roles = [], role;
         let bl = util.getRoleBlacklist();
