@@ -1,5 +1,6 @@
 const { RichEmbed, MessageEmbed, GuildMember, Client } = require('discord.js');
 const { Config } = require('./config');
+const { Bot } = require('./bot');
 
 /** @type {Config} */
 let config = undefined;
@@ -7,20 +8,14 @@ let config = undefined;
 let client = undefined;
 
 class Utils {
-    /**
-     * 
-     * @param {Config} config 
-     */
-    static setConfig(conf) {
-        config = conf;
-    }
 
     /**
      * 
-     * @param {Client} client 
+     * @param {Bot} bot 
      */
-    static setClient(c) {
-        client = c;
+    static init(bot) {
+        config = bot.config;
+        client = bot.client;
     }
 
     /**
