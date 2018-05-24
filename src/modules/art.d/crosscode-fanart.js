@@ -7,12 +7,12 @@ const { Utils } = require('../../utils');
 
 class CrossCodeFanArt {
     constructor() {
-        const url = 'http://backend.deviantart.com/rss.xml?q=boost%3Apopular+in%3Afanart+crosscode&type=deviation'
+        const url = 'http://backend.deviantart.com/rss.xml?q=boost%3Apopular+in%3Afanart+crosscode&type=deviation';
         
         /** @type {(RichEmbed | MessageEmbed)[]}} */
-        this.images = []
+        this.images = [];
         this.defaultImage = Utils.createRichEmbed({
-            title: "No art found"
+            title: 'No art found'
         });
         
         /** @type {{discord: {type: string, username: string, description: string, image_url: string}[]}} */
@@ -33,10 +33,10 @@ class CrossCodeFanArt {
             for (let i = 0; i < fanart_items.length; i++) {
                 const fan_item = fanart_items.item(i);
 
-                const title = fan_item.getElementsByTagName("title")[0].textContent;
-                const author = fan_item.getElementsByTagName("media:credit")[0].textContent;
-                const postLink = fan_item.getElementsByTagName("link")[0].textContent;
-                const link = fan_item.getElementsByTagName("media:content")[0].getAttribute("url");
+                const title = fan_item.getElementsByTagName('title')[0].textContent;
+                const author = fan_item.getElementsByTagName('media:credit')[0].textContent;
+                const postLink = fan_item.getElementsByTagName('link')[0].textContent;
+                const link = fan_item.getElementsByTagName('media:content')[0].getAttribute('url');
 
                 this.images.push(Utils.createRichEmbed({
                     title: `${title} - by ${author}`,
@@ -45,9 +45,9 @@ class CrossCodeFanArt {
                 }));
             }
         })
-        .catch(error => {
-            console.error("Could not retrieve art: ", error);
-        });
+            .catch(error => {
+                console.error('Could not retrieve art: ', error);
+            });
     }
 
 
@@ -55,22 +55,22 @@ class CrossCodeFanArt {
      * @param {{type: string, username: string, description: string, image_url: string}} opts 
      */
     addFanArt(opts) {
-        if (opts.type === "twitter") {
+        if (opts.type === 'twitter') {
             this.images.push(Utils.createRichEmbed({
-                title: "Fan art",
+                title: 'Fan art',
                 description: `[Artist twitter link](${opts.user_link})\n\n[View on Twitter](${opts.link})`,
                 image: opts.image_url,
                 url: opts.twitter_link
             }));
-        } else if (opts.type === "discord") {
+        } else if (opts.type === 'discord') {
             this.images.push(Utils.createRichEmbed({
-                title: `Fan art`,
+                title: 'Fan art',
                 description: opts.description,
                 image: opts.image_url
             }));
-        } else if (opts.type === "deviant") {
+        } else if (opts.type === 'deviant') {
             this.images.push(Utils.createRichEmbed({
-                title: `Fan art`,
+                title: 'Fan art',
                 description: opts.description,
                 url: opts.user_link,
                 image: opts.image_url
@@ -95,4 +95,4 @@ class CrossCodeFanArt {
         return this.images[index] || this.defaultImage;
     }
 }
-module.exports.CrossCodeFanArt = CrossCodeFanArt
+module.exports.CrossCodeFanArt = CrossCodeFanArt;

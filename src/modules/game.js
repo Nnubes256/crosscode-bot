@@ -20,19 +20,19 @@ class Game extends Module{
              * @param {string[]} args
              */
             add: (msg, args) => {
-                if (args[0] === "character") {
+                if (args[0] === 'character') {
                     if (this.characters.has(msg.author.id)) {
                         msg.reply('but you already have a character!');
                         return;
                     }
                     const name = args[1];
                     if (Character.isValidName(name)) {
-                        msg.reply("not a valid name.");
+                        msg.reply('not a valid name.');
                         return;
                     }
                     const className = Character.getClass(args[2]);
                     if (!className) {
-                        msg.reply("not a valid class.");
+                        msg.reply('not a valid class.');
                         return;
                     }
                     const newChar = new Character(name, className, msg.author);
@@ -123,7 +123,7 @@ class Game extends Module{
             { name: 'pvp', description: '' },
             { name: 'attack', description: '' },
             { name: 'stats', description: '' }
-        ]
+        ];
     }
 }
 

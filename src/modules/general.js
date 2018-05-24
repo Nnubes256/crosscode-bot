@@ -48,13 +48,13 @@ class General extends Module{
             bugs: msg => {
                 msg.channel.send('', Utils.createRichEmbed({
                     image: 'https://cdn.discordapp.com/attachments/380588134712475665/383705658731659266/tumblr_mtud5kX2T71r7fahjo1_250.gif'
-                }))
+                }));
             },
             BUG: msg => {
                 msg.channel.send(Utils.getEmote(msg, 'emilieWhy'));
             },
             lewd: msg => {
-                msg.react(Utils.getEmote(msg, "ohno").id);
+                msg.react(Utils.getEmote(msg, 'ohno').id);
             },
             react: (msg, args) => {
                 for (let i = 0; i < args.length; i++) {
@@ -64,80 +64,80 @@ class General extends Module{
                 }
             },
             thinking: msg => {
-                msg.react(Utils.getEmote(msg, 'mia_thinking').id)
+                msg.react(Utils.getEmote(msg, 'mia_thinking').id);
             },
             CHEATER: msg => {
                 const cheater = msg.mentions.members.first();
                 if (cheater) {
-                    let apolloPoint = Utils.getEmote(msg, "apolloPoint");
-                    let apolloShout = Utils.getEmote(msg, "apolloShout");
-                    let message = `${cheater} ${apolloPoint}${apolloShout} I GOT YOU NOW!`
-                    msg.channel.send(message)
+                    let apolloPoint = Utils.getEmote(msg, 'apolloPoint');
+                    let apolloShout = Utils.getEmote(msg, 'apolloShout');
+                    let message = `${cheater} ${apolloPoint}${apolloShout} I GOT YOU NOW!`;
+                    msg.channel.send(message);
                 } else {
-                    msg.reply('could not find the cheater.')
+                    msg.reply('could not find the cheater.');
                 }
             },
             triggered: msg => {
                 msg.channel.send(Utils.createRichEmbed({
-                    title: "...WHY?!?!",
+                    title: '...WHY?!?!',
                     image: 'https://cdn.discordapp.com/attachments/374851126627008514/382063690557685760/Lea_triggered.gif'
-                }))
+                }));
             },
             verytriggered: msg => {
                 msg.channel.send(Utils.createRichEmbed({
-                    title: "何？",
-                    image: "https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif"
-                }))
+                    title: '何？',
+                    image: 'https://cdn.discordapp.com/attachments/381866628108910593/382331699213893632/triggeredlea.gif'
+                }));
             },
-            "HI!": msg => {
+            'HI!': msg => {
                 msg.channel.send(Utils.createRichEmbed({
                     image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
-                }))
+                }));
             },
             vote: msg => {
-                msg.react("👍")
-                    .then((msgReact) => msgReact.message.react("👊"))
-                    .then((msgReact) => msgReact.message.react("👎"))
+                msg.react('👍')
+                    .then((msgReact) => msgReact.message.react('👊'))
+                    .then((msgReact) => msgReact.message.react('👎'));
     
             },
             ohno: msg => {
-                msg.channel.send(":(", Utils.createRichEmbed({
-                    image: "https://cdn.discordapp.com/emojis/400836365295812619.png"
-                }))
+                msg.channel.send(':(', Utils.createRichEmbed({
+                    image: 'https://cdn.discordapp.com/emojis/400836365295812619.png'
+                }));
             },
             work: msg => {
-                msg.channel.send("...why?", Utils.createRichEmbed({
-                    image: "https://cdn.discordapp.com/emojis/337987528625881090.png"
-                }))
+                msg.channel.send('...why?', Utils.createRichEmbed({
+                    image: 'https://cdn.discordapp.com/emojis/337987528625881090.png'
+                }));
             },
             balls: msg => {
-                msg.channel.send("BALLS", Utils.createRichEmbed({
-                    image: "https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png"
-                }))
+                msg.channel.send('BALLS', Utils.createRichEmbed({
+                    image: 'https://cdn.discordapp.com/attachments/143364538958348288/368033879162093581/balls.png'
+                }));
             },
             vrps: msg => {
-                msg.channel.send("VRPS", Utils.createRichEmbed({
-                    image: "https://cdn.discordapp.com/attachments/143364538958348288/409861255046889472/CC_SergayVRPs_062.gif"
-                }))
+                msg.channel.send('VRPS', Utils.createRichEmbed({
+                    image: 'https://cdn.discordapp.com/attachments/143364538958348288/409861255046889472/CC_SergayVRPs_062.gif'
+                }));
             },
             get: msg => {
-                msg.channel.send("", Utils.createRichEmbed({
-                    title: "Steam link",
-                    url: "http://store.steampowered.com/app/368340/"
+                msg.channel.send('', Utils.createRichEmbed({
+                    title: 'Steam link',
+                    url: 'http://store.steampowered.com/app/368340/'
                 }));
             },
             thanks: msg => {
                 //make this a class :p
                 const thankYouMessage = [
-                    "Keep up the good work!",
-                    "You guys are awesome."
+                    'Keep up the good work!',
+                    'You guys are awesome.'
                 ];
                 //Ew too long... please refractor
                 msg.channel.send('', Utils.createRichEmbed({
                     description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
                 }));
             }
-        }
+        };
     }
     
     /**
@@ -188,7 +188,7 @@ class General extends Module{
         const id = this.bot.client.user.id;
         const options = {
             limit: 100
-        }
+        };
 
         if (args.length > 0) {
             options.after = args[0];
@@ -201,7 +201,7 @@ class General extends Module{
                 });
             }).then(messages => {
                 msg.channel.bulkDelete(messages).then(() => {
-                    msg.reply('Deleted the last message')
+                    msg.reply('Deleted the last message');
                 });
             });
     }
@@ -213,11 +213,11 @@ class General extends Module{
     ping(msg) {
         //this measures the time it took to get here
         const duration = Date.now() - msg.createdTimestamp;
-        msg.reply(`>:) pew pew. Got here in ${duration} ms, and...`).then(function(msg) {
+        msg.reply(`>:) pew pew. Got here in ${duration} ms, and...`).then((msg) => {
             //this measures the return trip time
             const newDuration = Date.now() - msg.createdTimestamp;
-            msg.channel.send(`sent back in ${newDuration} ms`)
-        })
+            msg.channel.send(`sent back in ${newDuration} ms`);
+        });
     }
 
     /**
@@ -248,8 +248,8 @@ class General extends Module{
      */
     boxGenerate(phrase, characterArray) {
         const maxMessageLength = 1960;
-        const maxPhraseLength = phrase.length;
-        const currentMessage = '';
+        let maxPhraseLength = phrase.length;
+        let currentMessage = '';
         const messagePayloads = [];
 
         let currCharLength = 0;
@@ -285,7 +285,7 @@ class General extends Module{
             msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
             return;
         }
-        const arr = splitter.splitGraphemes(phrase).reverse();
+        const arr = this.splitter.splitGraphemes(phrase).reverse();
         this.boxGenerate(arr.join(''), arr).forEach(message => {
             msg.channel.send('```js\n' + message + '```');
         });
@@ -304,14 +304,14 @@ class General extends Module{
         if (args.length < 2) 
             return msg.reply('Not enough arguments supplied.');
         
-        const oldName = args.shift()
+        const oldName = args.shift();
         const member = msg.mentions.members.first();
         if (!member) 
             return msg.reply(`Could not find ${oldName}. Did you mentioned the user?`);
         
         member.setNickname(args.join(' ')).catch(error => {
             msg.reply(`${error}`);
-        })
+        });
     }
 
     /**
@@ -362,14 +362,14 @@ class General extends Module{
         let em = this.bot.client.emojis.map(e => e.name);
         //lets add animated emotes
         em = em.concat(msg.guild.emojis.findAll('animated', true).map(e => e.name));
-        let message = "\n";
+        let message = '\n';
         let count = 0;
         for (let emote of em) {
             const thonk = Utils.getEmote(emote);
             const emojiLine = emote + ' ' + thonk + '\n';
             if (message.length + emojiLine.length > 2000) {
                 msg.channel.send(message);
-                message = "\n";
+                message = '\n';
             }
             message += emojiLine;
         }

@@ -27,7 +27,7 @@ class Bot {
         this.client.on('message', this.onMessage.bind(this));
         this.client.on('error', this.error.bind(this));
         this.client.login(this.token).catch(error => {
-            console.error("Could not connect to discord: ", error);
+            console.error('Could not connect to discord: ', error);
         });
     }
 
@@ -36,8 +36,8 @@ class Bot {
      * @param {Message} msg 
      */
     onMessage(msg) {
-        if (msg.content.toLowerCase().startsWith("failed to load")) {
-            msg.channel.send("oof");
+        if (msg.content.toLowerCase().startsWith('failed to load')) {
+            msg.channel.send('oof');
             return;
         }
 
@@ -51,7 +51,7 @@ class Bot {
 
         let command = args.shift();
 
-        if (command === "help") {
+        if (command === 'help') {
             return this.printHelp(msg.author, args);
         }
 
@@ -63,7 +63,7 @@ class Bot {
                 } catch (err) {
                     reject(err);
                 }
-            }).then(function(res) {}, function(err) {
+            }).then(() => {}, (err) => {
                 console.error(err);
             });
         } else {
@@ -146,8 +146,8 @@ class Bot {
      * @returns {Module}
     */
     getModule(args) {
-        let type = this.config["default-module"];
-        if (args[0] && args[0].startsWith("-")) {
+        let type = this.config['default-module'];
+        if (args[0] && args[0].startsWith('-')) {
             type = args[0].substring(1);
             if (!this.config.commands[type]) {
                 console.error(new Error(`Could not find module ${type}`));
@@ -164,7 +164,7 @@ class Bot {
         this.client.user.setPresence({
             game: ran
         });
-    };
+    }
 
     /**
      * 
@@ -173,7 +173,7 @@ class Bot {
      */
     printHelp(author, args) {
         let result = '```\r\n';
-        const defaultModule = this.config["default-module"];
+        const defaultModule = this.config['default-module'];
 
         if(args.length === 0) {
             args = this.config.modules; // Get help for all modules if not specified
@@ -212,7 +212,7 @@ class Bot {
         
         this.client.destroy().then(() => {
             this.client.login(this.token);
-        })
+        });
     }
 }
 

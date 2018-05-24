@@ -38,10 +38,10 @@ class Character {
         return this.inPvP;
     }
     getStats() {
-        let stats = "";
+        let stats = '';
         for (let key in this) {
             if (this.hasOwnProperty(key)) {
-                stats += (key + ": " + this[key] + "\n");
+                stats += (key + ': ' + this[key] + '\n');
             }
         }
         return stats;
@@ -67,7 +67,7 @@ class Character {
         let levelUpXP = 1000;
         let newLevel = parseInt((this.xp + newXP) / levelUpXP);
         if (newLevel > 0)
-            addLevel(newLevel, showMessage);
+            this.addLevel(newLevel, showMessage);
         this.xp += (this.xp + newXP) % levelUpXP;
         showMessage && User.send(`You got ${newXP} xp.`);
     }
@@ -123,9 +123,9 @@ class Character {
             return;
         }
 
-        const names = ["Spheromancer", "Triblader", "Quadroguard", "Pentafist", "Hexacast"];
+        const names = ['Spheromancer', 'Triblader', 'Quadroguard', 'Pentafist', 'Hexacast'];
         const lowerClassName = className.toLowerCase();
         return names.find(n => n.toLowerCase() === lowerClassName);
     }
 }
-exports.Character = Character
+exports.Character = Character;

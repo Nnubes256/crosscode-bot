@@ -32,7 +32,7 @@ class Mods extends Module{
         return [
             { name: 'get', description: 'Get a list of mods'},
             { name: 'install', description: 'Get a link to the installation guide for CrossCode mods'}
-        ]
+        ];
     }
 }
 

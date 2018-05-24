@@ -19,7 +19,7 @@ class Config {
     }
 
     get roleServers() {
-        return this["role-servers"];
+        return this['role-servers'];
     }
 
     /** @param {Client} client */
@@ -40,7 +40,7 @@ class Config {
      * @returns {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}}
      */
     findModServer(client, serverJson) {
-        let result = {id: "", chans: {}, pending: [], member: [], blacklist: [], whitelist: [], admin: []};
+        let result = {id: '', chans: {}, pending: [], member: [], blacklist: [], whitelist: [], admin: []};
         let server = client.guilds.find(g => g.name === serverJson.name);
         if (!server)
             return null;

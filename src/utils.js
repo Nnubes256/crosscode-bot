@@ -29,7 +29,7 @@ class Utils {
             let fields = opts.fields.concat([]);
             //to get the first 25 fields
             fields = fields.splice(0, 25);
-            fields.forEach(function(field) {
+            fields.forEach((field) => {
                 richEmbed.addField(field.name, field.value);
             });
         }
@@ -49,7 +49,7 @@ class Utils {
         opts.url && richEmbed.setURL(opts.url);
         opts.footer && opts.footer.text && richEmbed.setFooter(opts.footer.text);
         return richEmbed;
-    };
+    }
 
     /**
      * @param {GuildMember} user
@@ -58,7 +58,7 @@ class Utils {
     static isAdmin(user) {
         for(let server of config.servers) {
             if(user.guild.id === server.id) {
-                return server.admin.some(r => user.roles.array().some(a => a.id === r.id))
+                return server.admin.some(r => user.roles.array().some(a => a.id === r.id));
             }
         }
 
@@ -70,21 +70,21 @@ class Utils {
      * @param {string} name 
      */
     static getEmote(name) {
-        const emote = client.emojis.find("name", name);
+        const emote = client.emojis.find('name', name);
         if(emote)
             return emote;
 
 
         for(let guild of client.guilds.values()) {
-            const emoji = guild.emojis.find("name", name);
+            const emoji = guild.emojis.find('name', name);
             if (emoji)
                 return emoji;
         }
         //console.debug(`Warning: unknown emoji "${name}"`);
         return {
-            id: "",
+            id: '',
             toString: function() {
-                return "*could not find emoji*";
+                return '*could not find emoji*';
             }
         };
     }

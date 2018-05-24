@@ -14,7 +14,7 @@ class Log extends Module{
                 if(server.pending.length) {
                     member.addRoles(server.pending).catch(err => console.error(err));
                     server.chans.syslog.send(`Added ${server.pending[0].name} role to ${member}`);
-                    var newGreet = util.greetingsParse(member.guild, server.greet);
+                    var newGreet = this.util.greetingsParse(member.guild, server.greet);
                     server.chans.greet.send(`${member}, ${newGreet}`);
                 }
                 break;
@@ -35,7 +35,7 @@ class Log extends Module{
                 server.chans.editlog.send('', Utils.createRichEmbed({
                     description: `${member} left the server`,
                     fields: [
-                        { name: "Had roles", value: member.roles.array().join('\r\n') }
+                        { name: 'Had roles', value: member.roles.array().join('\r\n') }
                     ],
                     author: {
                         name: member.user.tag,
@@ -66,8 +66,8 @@ class Log extends Module{
                 server.chans.editlog.send('', Utils.createRichEmbed({
                     description: `${oldMsg.author} updated a message in ${oldMsg.channel}`,
                     fields: [
-                        { name: "From", value: oldMsg.content },
-                        { name: "To", value: newMsg.content }
+                        { name: 'From', value: oldMsg.content },
+                        { name: 'To', value: newMsg.content }
                     ],
                     author: {
                         name: oldMsg.author.tag,
@@ -100,7 +100,7 @@ class Log extends Module{
 
                         let deletedBy = msg.author;
 
-                        if(lastEntry.actionType === "DELETE" && 
+                        if(lastEntry.actionType === 'DELETE' && 
                             lastEntry.target === msg.author &&
                             lastEntry.extra.channel.id === msg.channel.id &&
                             Math.abs((new Date() - lastEntry.createdAt)) < 1000) // Heuristic to detect if it is said message
@@ -111,7 +111,7 @@ class Log extends Module{
                         server.chans.editlog.send('', Utils.createRichEmbed({
                             description: `${msg.author}'s message was deleted by ${deletedBy} in ${msg.channel}`,
                             fields: [
-                                { name: "Content", value: msg.content || "No content" }
+                                { name: 'Content', value: msg.content || 'No content' }
                             ],
                             author: {
                                 name: msg.author.tag,

@@ -7,8 +7,8 @@ class CrossCodeStream {
     constructor() {
         this.getGameId()
             .then(() => {
-                console.log("CrossCode id:", this.id);
-                console.log("Updating list");
+                console.log('CrossCode id:', this.id);
+                console.log('Updating list');
                 this.updateList();
             })
             .catch(err => console.error(err));
@@ -33,11 +33,11 @@ class CrossCodeStream {
             json: true
         };
         for (let keys in opts) {
-            if (keys !== "headers") {
+            if (keys !== 'headers') {
                 options[keys] = opts[keys];
             }
         }
-        if (typeof opts.headers === "object") {
+        if (typeof opts.headers === 'object') {
             for (let header_value in opts.headers) {
                 options.headers[header_value] = opts.headers[header_value];
             }
@@ -53,11 +53,11 @@ class CrossCodeStream {
      */
     createIdStream(ids_arr) {
         /** @type {string[]} */
-        const copy = JSON.parse(JSON.stringify(ids_arr))
+        const copy = JSON.parse(JSON.stringify(ids_arr));
         copy.forEach((id, index, arr) => {
-            arr[index] = "id=" + id;
+            arr[index] = 'id=' + id;
         });
-        return copy.join("&");
+        return copy.join('&');
     }
     /**
      * 
@@ -71,14 +71,14 @@ class CrossCodeStream {
         //TODO: Finish this
 
         this.list = Utils.createRichEmbed({
-            title: "CrossCode Twitch Streams",
+            title: 'CrossCode Twitch Streams',
             fields: stream_list,
             timestamp: new Date()
         });
     }
     updateList() {
         if (!this.id) {
-            console.log("Could not find id");
+            console.log('Could not find id');
             return;
         }
         let streamData = [];
@@ -114,4 +114,4 @@ class CrossCodeStream {
 
     }
 }
-exports.CrossCodeStream = CrossCodeStream
+exports.CrossCodeStream = CrossCodeStream;

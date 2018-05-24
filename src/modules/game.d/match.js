@@ -30,7 +30,7 @@ class Match {
         const result = {
             winners: [],
             losers: []
-        }
+        };
         for (let player of this.players) {
             if (player.isAlive()) {
                 result.winners.push(player);
@@ -94,4 +94,4 @@ class Match {
         this.channel.send(`${playerName} attacks ${targetName}. \n${targetName} recieves ${attackInfo.damage}`);
     }
 }
-exports.Match = Match
+exports.Match = Match;

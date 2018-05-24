@@ -44,7 +44,7 @@ class Streams extends Module{
              */
             get: msg => {
                 const sEmbed = this.streams.get();
-                msg.channel.send("Streaming CrossCode right now:" + (sEmbed ? '' : "\n*Tumbleweeds rolling*"), sEmbed);
+                msg.channel.send('Streaming CrossCode right now:' + (sEmbed ? '' : '\n*Tumbleweeds rolling*'), sEmbed);
             },
             /**
              * @param {Message} msg
@@ -56,13 +56,13 @@ class Streams extends Module{
                 delete this.notify_channels[this.notify_channels.indexOf(msg.channel)];
                 msg.channel.send('This channel will no longer be notified of streams');
             }
-        }
+        };
     }
 
     getHelp() {
         return [
             { name: 'get', description: 'Prints a list of current streams' }
-        ]
+        ];
     }
 }
 

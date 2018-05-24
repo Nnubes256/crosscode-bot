@@ -23,7 +23,7 @@ class ModInfo {
             config.value += `\nLicense: ${mod.license}`;
         }
 
-        mod.page.forEach(function(page) {
+        mod.page.forEach((page) => {
             config.value += `\n[View on ${page.name}](${page.url})`;
         });
 
@@ -67,19 +67,19 @@ class ModInfo {
             if (embed.fields.length > 25)
                 embed.description = `Showing 25 out of ${embed.fields.length} mods.`;
             else
-                embed.description = `Showing all mods.`;
+                embed.description = 'Showing all mods.';
 
             embed.description += `\nNote: All mods require [CCLoader](${CCLoaderLink}) to work.`;
             embed.timestamp = new Date();
             embed.footer = {
-                text: `From CCModDB`
+                text: 'From CCModDB'
             };
 
             this.embed = Utils.createRichEmbed(embed);
         })
-        .catch(error => {
-            console.error("Could not retrieve mod data: ", error);
-        });
+            .catch(error => {
+                console.error('Could not retrieve mod data: ', error);
+            });
     }
 }
 

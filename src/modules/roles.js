@@ -11,13 +11,13 @@ class Roles extends Module {
              *  @param {string[]} args
              * */
             add: (msg, args) => {
-                const roles = msg.guild.roles.filterArray(r => args.join(" ").split(",").includes(r.name))
+                const roles = msg.guild.roles.filterArray(r => args.join(' ').split(',').includes(r.name))
                     .filter(r => this.getWhitelist(msg).includes(r));
                 const dupRoles = msg.member.roles.array().filter(r => roles.includes(r));
                 const newRoles = roles.filter(r => !dupRoles.includes(r));
 
                 if (newRoles.length === 0) {
-                    msg.channel.send(`Could not add any new roles.`);
+                    msg.channel.send('Could not add any new roles.');
                     return;
                 }
 
@@ -46,7 +46,7 @@ class Roles extends Module {
              * @param {Message} msg
              */
             get: msg => {
-                msg.channel.send("```\n" + this.getWhitelist(msg).map(r => r.name).join("\n") + "```");
+                msg.channel.send('```\n' + this.getWhitelist(msg).map(r => r.name).join('\n') + '```');
             },
             /**
              *  @param {Message} msg 
@@ -54,7 +54,7 @@ class Roles extends Module {
              * */
             rm: (msg, args) => {
                 const whitelist = this.getWhitelist(msg);
-                const requested = args.join(" ").split(",");
+                const requested = args.join(' ').split(',');
                 const roles = whitelist.filter(r => requested.includes(r.name));
                 if (roles.length) {
                     msg.member.removeRoles(roles).then(member => {
@@ -77,7 +77,7 @@ class Roles extends Module {
             { name: 'add', description: 'Gives you each of the roles listed' },
             { name: 'get', description: 'Lists all available roles' },
             { name: 'rm', description: 'Removes each of the roles listed' }
-        ]
+        ];
     }
 
     /**
@@ -94,12 +94,12 @@ class Roles extends Module {
     }
 
     hasPending(member) {
-        console.info('Pending is no longer supported')
+        console.info('Pending is no longer supported');
         return false;
     }
 
     removePending(member) {
-        console.warn('Pending is no longer supported')
+        console.warn('Pending is no longer supported');
         return member;
     }
 

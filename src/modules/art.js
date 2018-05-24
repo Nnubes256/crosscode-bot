@@ -20,11 +20,11 @@ class Art extends Module{
             fromstream: function showStreamArt(msg) {
                 const index = parseInt(Math.random() * streamArtLinks.length);
                 const image = Utils.createRichEmbed({
-                    description: "Random stream art",
+                    description: 'Random stream art',
                     image: streamArtLinks[index]
                 });
-                msg.channel.send('', image).catch(function(error) {
-                    console.log("streamart error:\n${error}")
+                msg.channel.send('', image).catch(error => {
+                    console.log(`streamart error:\n${error}`);
                 });
             },
             fromfan: function showFanArt(msg) {
@@ -37,7 +37,7 @@ class Art extends Module{
         return [
             { name: 'fromstream', description: 'Displays a random official streamart' },
             { name: 'fromfan', description: 'Displays a random fannart' }
-        ]
+        ];
     }
 
     /**
@@ -45,7 +45,7 @@ class Art extends Module{
      */
     getStreamArt() {
         let data = fs.readFileSync('stream.txt', 'utf8');
-        return data.split("\n");
+        return data.split('\n');
     }
 }
 
