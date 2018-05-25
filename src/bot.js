@@ -36,11 +36,6 @@ class Bot {
      * @param {Message} msg 
      */
     onMessage(msg) {
-        if (msg.content.toLowerCase().startsWith('failed to load')) {
-            msg.channel.send('oof');
-            return;
-        }
-
         let args = this.getMessageArgs(msg.content);
         if (!args)
             return;
