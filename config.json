@@ -45,8 +45,10 @@
                 "syslog": "admin-watchtower",
                 "editlog": "edit-log"
             },
+            "stream-chans": ["spam"],
             "roles": {
-                "pending": [
+                "pending" : [],
+                "auto-role": [
                     "member"
                 ],
                 "whitelist": [

@@ -37,6 +37,9 @@ module.exports = function(instance, util) {
     }
 
     let commands = {
+        satoshi : function satoshiIs(msg) {
+           msg.channel.send('is karoshi');
+        },
         poll: function createPoll(msg, args) {
             //let title = args.shift();
             /*let poll = new StrawPoll(title, args);
@@ -47,6 +50,32 @@ module.exports = function(instance, util) {
                     console.log(err);
                 });*/
 
+        },
+        leaCheeseArmy: function angeryRaid(msg, args) {
+            const charcap = 2000;
+
+            // First, get the size of the rectangle
+            let width = +args[0];
+            let height = +args[1] || width;
+
+            // Validate the arguments
+            if (!width || !height)
+                return;
+
+            // get the emoji (so we can calculate the size)
+            let emoji = getEmote(msg, 'leaCheeseAngry').toString();
+            if (!emoji)
+                return;
+
+            // Now validate the char limit.
+            if ((height + emoji.length * (width * height)) > charcap) {
+                msg.reply("This message may be too long!");
+                return;
+            }
+
+            // Now create the rectangle and print it
+            let army = ('\n' + emoji.repeat(width)).repeat(height);
+            msg.channel.send(`**You are being raided!${army}**`);
         },
         purge: function(msg, args) {
             let options = {
@@ -65,7 +94,7 @@ module.exports = function(instance, util) {
                     for (var message of messages) {
                         if (message[0] === lastKey) {
                             message[1].delete().then(function() {
-                                msg.reply('Deleted the last message')
+                                console.log('Deleted the last few messages')
                             })
                         } else {
                             message[1].delete()
@@ -85,7 +114,8 @@ module.exports = function(instance, util) {
         box: function(msg, args) {
             if (msg.channel.name !== "spam")
                 return;
-            let phrase = args.join(' ');
+            let phrase = args.join(' ').replace(/\n+/g, '\n');
+            if(!phrase.length) return;
             let charLimit = 80;
             if (phrase.length > charLimit) {
                 msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
@@ -165,10 +195,11 @@ module.exports = function(instance, util) {
             }))
         },
         BUG: function scareEmilie(msg) {
-            let message = getEmote(msg, 'emilieWhy').toString();
-            msg.channel.send(message);
+            msg.channel.send('', createRichEmbed({
+                image: 'https://cdn.discordapp.com/attachments/286824914604916747/446126154303406080/emilieWhyyyyyyyy.gif'
+            }));
         },
-        pmn: function poorMansNitro(msg, args) {
+        say: function poorMansNitro(msg, args) {
             let delim = '/';
             let pieces = args.join(' ').split(delim);
             for (let i = 0; i < pieces.length - 1; i++) {
@@ -188,6 +219,11 @@ module.exports = function(instance, util) {
         },
         lewd: function noLewdLea(msg, args) {
             msg.react(getEmote(msg, "ohno").id);
+        },
+        popsicle: function popsicleLea(msg, args) {
+            msg.channel.send(createRichEmbed({
+                image: 'https://media.discordapp.net/attachments/397800800736378880/400833387725586434/unknown.png'
+            }));
         },
         emote: function leaEmote(msg, args) {
             if(args.join(" ") === "emote_reset") {
@@ -236,9 +272,9 @@ module.exports = function(instance, util) {
             }
         },
         thinking: function think(msg) {
-            let thonk = getEmote(msg, 'mia_thinking');
+            let thonk = getEmote(msg, 'leaTHINK');
             //            console.log(thonk);
-            msg.react(thonk.id)
+            msg.react(thonk.id);
         },
         CHEATER: function exposeCheater(msg, args, command) {
             let cheater = findMember(msg, args[0])
@@ -310,10 +346,54 @@ module.exports = function(instance, util) {
                 "Keep up the good work!",
                 "You guys are awesome."
             ];
-            //Ew too long... please refractor
+
+            let nickname = msg.member.nickname;
+            let chosenMessage = thankYouMessage.random();
+
             msg.channel.send('', createRichEmbed({
-                description: `From ${msg.member.nickname},\n\t${thankYouMessage[parseInt((Math.random() * thankYouMessage.length))]}\nTo,\n\t\tRadical Fish Games`
+                description: `From ${nickname},\n\t${chosenMessage}\nTo,\n\t\tRadical Fish Games`
             }));
+        },
+        cube: function textCube(msg, args) {
+            const MAXLEN = 2000;
+            let str = args.join('').replace(/\s+/g, '').toUpperCase();
+            if(str[0] !== str[str.length - 1])
+                str = `*${str}*`;
+            let string = splitter.splitGraphemes(str);
+            if(string.length < 6) {
+                msg.channel.send("Sorry, that string's too short!");
+                return;
+            }
+            
+            let lines = Math.floor(string.length / 8) + 1;
+            let offset = Math.floor(string.length / (2 * lines));
+            let height = string.length - 1;
+            let depth = offset * lines;
+            let size = depth + string.length;
+            if(size * size * 2 > MAXLEN) {
+                msg.channel.send("Phrase too long!");
+                return;
+            }
+
+            let strings = [];
+            for(let i=0; i<size; i++)
+                strings.push(Array(size).fill(' '));
+            for(let i=0; i<2; i++)
+                for(let j=0; j<2; j++)
+                    for(let k=0; k<=depth; k++)
+                        strings[i * height + k]
+                            [j * height + depth - k] = '/';
+            for(let i=0; i<=lines; i++)
+                for(let j=0; j<string.length; j++)
+                    strings[i * offset + j][(lines - i) * offset] =
+                    strings[i * offset][(lines - i) * offset + j] =
+                    strings[i * offset + j][(lines - i) * offset + height] =
+                    strings[i * offset + height][(lines - i) * offset + j] =
+                        string[j];
+
+            msg.channel.send('```\n' +
+		strings.map(str => str.join(' ').replace(/\s+$/, '')).join('\n')
+		+ '\n```');
         }
     }
     return commands;

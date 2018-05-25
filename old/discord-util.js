@@ -6,6 +6,8 @@ let roleBlacklist = [];
 let roleWhitelist = [];
 let roleAdmin = [];
 exports.getAllEmotes = function(client) {
+    //to minimize the possibility of spawning deleted emotes
+    knownEmotes = {};
     client.emojis.array().forEach(function(emote) {
         if (emote.animated)
             return;
@@ -123,7 +125,8 @@ exports.isFromAdmin = function(msg) {
 };
 
 function discObjFind(obj, name) {
-    let ret = obj.find(val => val.name.match(name.trim()));
+    let re = new RegExp(name.toString().trim(), 'i');
+    let ret = obj.find(val => re.test(val.name));
     if (obj && name && ret)
         return ret;
     else
@@ -177,13 +180,17 @@ function findServer(msg) {
   }
 }
 exports.hasPending = function(msg) {
+  return true;
   var server = findServer(msg);
+  /*if(!Object.keys(server.pending)) {
+     return true;
+  }
   for(let pendingRole in server.pending) {
     if(msg.member.roles.has(pendingRole.id)) {
       return true;
     }
   }
-   return false;
+   return false;*/
 }
 exports.removePending = function(msg, console) {
    var server = findServer(msg);
@@ -246,4 +253,31 @@ exports.greetingsParse = function(guild, msg) {
        msg = msg.replace(new RegExp(chan[0], 'g'), channel.toString());
    }
    return msg;
+}
+exports.argParse = function(str) {
+    let spl = [''], esc = false, quot = true;
+    for (let c of str) {
+        if (esc) { // last character was a backslash, skip handling
+            esc = false;
+            spl[spl.length - 1] += '\\' + c;
+            continue;
+        }
+        switch(c) {
+        case '\\':
+            esc = true; // escape next character
+            break;
+        case '"':
+            quot = !quot;
+            break;
+        case ' ':
+        case '\t':
+            if (quot && spl[spl.length - 1]) {
+                spl.push(''); // split on unquoted spaces
+                break;
+            }
+        default:
+            spl[spl.length - 1] += c;
+        }
+    }
+    return spl;
 }

@@ -11,4 +11,6 @@ Array.prototype.random = function() {
 
 
 const config = new Config('config.json');
+
+Env.init();
 const bot = new Bot(Env.BOT_PREFIX, Env.BOT_TOKEN, config); 

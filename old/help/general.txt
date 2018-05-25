@@ -1,28 +1,33 @@
-INVOC purge - *should* purge bot replies, but seems to be broken atm
-INVOC ping - tests bot response time
-INVOC box - creates a triangle from the given characters, may only be used in channels named #spam
-INVOC rbox - `INVOC box`, but reverses the message beforehand
 # setname - changes the bot's nickname
-INVOC cloudlea - displays an image of Lea on a cloud
 # sleep - kills Lea :ohno:
+INVOC "get it" - gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
+INVOC balls - displays that one image that Lachsen is oh-so "proud" of
+INVOC box - creates a triangle from the given characters, may only be used in channels named #spam
+INVOC BUG - :emilieWhy: alias
+INVOC bugs - HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?
+INVOC bye - Lea says goodbye to you
+INVOC CHEATER - INVOCuses someone of being a C H E A T E R
+INVOC cloudlea - displays an image of Lea on a cloud
+INVOC cube - draws an ASCII cube with the argument's text
+INVOC help - this text
+INVOC hi - Lea greets you
+INVOC HI! - Deal With It Lea™.
 INVOC hug - TODO
 INVOC language - displays that gif of Lea and the JS sign
-INVOC hi - Lea greets you
-INVOC bye - Lea says goodbye to you
-INVOC bugs - HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?
-INVOC BUG - :emilieWhy: alias
+INVOC leaCheeseArmy - summons a matrix of `leaCheeseAngry`s to assist you
+INVOC lsemotes - shows all emotes that Lea can output
+INVOC ping - tests bot response time
+INVOC popsicle - displays Lea eating a popsicle
+INVOC purge - *should* purge bot replies, but seems to be broken atm
+INVOC rbox - `INVOC box`, but reverses the message beforehand
+INVOC say - echoes the argument, with emote names enclosed in slashes replaced with their actual emote counterpart
+INVOC thanks - writes a template thank-you message to the devs :)
 INVOC thinking - reacts with the standard thonk
-INVOC CHEATER - INVOCuses someone of being a C H E A T E R
-INVOC help - this text
 INVOC triggered - mildly angery Lea
 INVOC verytriggered - *severely* angery Lea
-INVOC HI! - Deal With It Lea™.
 INVOC vote - reacts with the proper vote emotes for ease of vote
-INVOC work - Why?
-INVOC balls - displays that one image that Lachsen is oh-so "proud" of
 INVOC vrps - TheRusty22's oh-so-strange and beautiful mashup of Sergey, `INVOC balls`, and `INVOC language`
-INVOC "get it" - gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
-INVOC thanks - writes a template thank-you message to the devs :)
+INVOC work - Why?
 
 See also: 
     INVOC -anime

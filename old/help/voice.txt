@@ -1,3 +1,3 @@
 INVOC join - join the voice channel that the caller is in
+INVOC leave -  leave the voicechat
 INVOC play - play a song (invoke as `<...> play <songname>`), where <songname> (as of writing) is one of `bad_ascend`, `emilie_e`, `not_jazz`, and `wrong_hi`
-INVOC leave: leave the voicechat
