@@ -10,6 +10,10 @@ class General extends Module{
 
         this.splitter = new Splitter();
     }
+    
+    initialize(bot) {
+        super.initialize(bot, 'general');
+    }
 
     getCommands() {
         return {
@@ -138,42 +142,6 @@ class General extends Module{
                 }));
             }
         };
-    }
-    
-    /**
-     * @returns {{name: string, description: string}[]}
-     */
-    getHelp() {
-        return [
-            { name: 'help', description: 'Displays a help about a command' }, //Help is hardcoded to Bot
-            { name: 'purge', description: 'Purges bot replies' },
-            { name: 'ping', description: 'Tests bot response time' },
-            { name: 'box', description: 'Creates a triangle from the given characters, may only be used in channels named #spam' },
-            { name: 'rbox', description: 'Like box, but reverses the message beforehand' },
-            { name: 'pmn', description: 'TODO' },
-            { name: 'emote', description: 'TODO' },
-            { name: 'lsemotes', description: 'TODO' },
-            { name: 'cloudlea', description: 'Displays an image of Lea on a cloud' },
-            { name: 'language', description: 'Displays that gif of Lea and the JS sign' },
-            { name: 'hi', description: 'Lea greets you' },
-            { name: 'bye', description: 'Lea says goodbye to you' },
-            { name: 'bugs', description: 'HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?' },
-            { name: 'BUG', description: ':emilieWhy: alias' },
-            { name: 'react', description: 'TODO' },
-            { name: 'thinking', description: 'Reacts with the standard thonk' },
-            { name: 'CHEATER', description: 'Accuses someone of being a C H E A T E R' },
-            { name: 'triggered', description: 'Mildly angery Lea' },
-            { name: 'verytriggered', description: '*Severely* angery Lea' },
-            { name: 'HI!', description: 'Deal With It Lea™.' },
-            { name: 'vote', description: 'Reacts with the proper vote emotes for ease of vote' },
-            { name: 'ohno', description: 'TODO' },
-            { name: 'work', description: 'Why?' },
-            { name: 'balls', description: 'Displays that one image that Lachsen is oh-so "proud" of' },
-            { name: 'vrps', description: 'TheRusty22\'s oh-so-strange and beautiful mashup of Sergey, `balls`, and `language`' },
-            { name: 'get it', description: 'gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)' },
-            { name: 'thanks', description: 'Writes a template thank-you message to the devs :)' }
-        
-        ];
     }
 
     /**

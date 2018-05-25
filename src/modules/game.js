@@ -12,6 +12,10 @@ class Game extends Module{
         /** @type {Map<string, Match>} */
         this.matches = new Map();
     }
+    
+    initialize(bot) {
+        super.initialize(bot, 'game');
+    }
 
     getCommands(){
         return {
@@ -115,15 +119,6 @@ class Game extends Module{
                 msg.channel.send(character.getStats());
             }
         };
-    }
-
-    getHelp() {
-        return [
-            { name: 'add', description: '' },
-            { name: 'pvp', description: '' },
-            { name: 'attack', description: '' },
-            { name: 'stats', description: '' }
-        ];
     }
 }
 

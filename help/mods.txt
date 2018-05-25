@@ -1,0 +1,2 @@
+get: Get a list of mods
+install: Get a link to the installation guide for CrossCode mods

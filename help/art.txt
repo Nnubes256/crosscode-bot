@@ -1,0 +1,2 @@
+fromstream: Displays a random official streamart
+fromfan: Displays a random fannart

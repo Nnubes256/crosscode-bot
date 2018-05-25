@@ -4,6 +4,10 @@ const { Utils } = require('../utils');
 const { Message, Role } = require('discord.js');
 
 class Roles extends Module {
+    initialize(bot) {
+        super.initialize(bot, 'roles');
+    }
+
     getCommands() {
         return {
             /**
@@ -70,14 +74,6 @@ class Roles extends Module {
                 }
             }
         };
-    }
-
-    getHelp(){
-        return [
-            { name: 'add', description: 'Gives you each of the roles listed' },
-            { name: 'get', description: 'Lists all available roles' },
-            { name: 'rm', description: 'Removes each of the roles listed' }
-        ];
     }
 
     /**

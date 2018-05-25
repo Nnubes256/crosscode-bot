@@ -1,0 +1,27 @@
+help: Displays a help about a command
+purge: Purges bot replies
+ping: Tests bot response time
+box: Creates a triangle from the given characters, may only be used in channels named #spam
+rbox: Like box, but reverses the message beforehand
+pmn: TODO
+emote: TODO
+lsemotes: TODO
+cloudlea: Displays an image of Lea on a cloud
+language: Displays that gif of Lea and the JS sign
+hi: Lea greets you
+bye: Lea says goodbye to you
+bugs: HAVE YOU TRIED TURNING IT OFF AND ON AGAIN?
+BUG: :emilieWhy: alias
+react: TODO
+thinking: Reacts with the standard thonk
+CHEATER: Accuses someone of being a C H E A T E R
+triggered: Mildly angery Lea
+verytriggered: *Severely* angery Lea
+HI!: Deal With It Lea™.
+vote: Reacts with the proper vote emotes for ease of vote
+ohno: TODO
+work: Why?
+balls: Displays that one image that Lachsen is oh-so "proud" of
+vrps: TheRusty22\'s oh-so-strange and beautiful mashup of Sergey, `balls`, and `language`
+get it: gives you the link to the Steam page for CrossCode (which, by the way, this author has memorized by heart)
+thanks: Writes a template thank-you message to the devs :)

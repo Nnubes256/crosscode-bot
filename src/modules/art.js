@@ -11,6 +11,10 @@ class Art extends Module{
         this.streamArtLinks = this.getStreamArt();
         this.fanArt = new CrossCodeFanArt();
     }
+    
+    initialize(bot) {
+        super.initialize(bot, 'art');
+    }
 
     getCommands() {
         const streamArtLinks = this.streamArtLinks;
@@ -32,14 +36,7 @@ class Art extends Module{
             }
         };
     }
-
-    getHelp() {
-        return [
-            { name: 'fromstream', description: 'Displays a random official streamart' },
-            { name: 'fromfan', description: 'Displays a random fannart' }
-        ];
-    }
-
+    
     /**
      * @returns {string[]}
      */

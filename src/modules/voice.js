@@ -1,6 +1,10 @@
 const { Module } = require('../module');
 
 class Voice extends Module {
+    initialize(bot) {
+        super.initialize(bot, 'voice');
+    }
+
     getCommands(){
         return {
             join: function joinVoiceChannel(msg) {
@@ -46,14 +50,6 @@ class Voice extends Module {
                 }
             },
         };
-    }
-
-    getHelp() {
-        return [
-            { name: 'join', description: 'Joins the voice channel that the caller is in' },
-            { name: 'play', description: 'Play a song (invoke as `<...> play <songname>`), where <songname> (as of writing) is one of `bad_ascend`, `emilie_e`, `not_jazz`, and `wrong_hi`' },
-            { name: 'leave', description: 'Leave the voicechat' }
-        ];
     }
 }
 

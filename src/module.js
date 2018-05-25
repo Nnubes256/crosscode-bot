@@ -1,13 +1,19 @@
 const { Message, GuildMember } = require('discord.js');
 const { Bot } = require('./bot');
+const { Utils } = require('./utils');
 
 class Module {
     /**
      * 
      * @param {Bot} bot 
+     * @param {string?} help File that contains help data 
      */
-    initialize(bot) {
+    initialize(bot, help) {
         this.bot = bot;
+
+        if(help) {
+            this.help = Utils.generateHelp(help);
+        }
     }
     
     /**
@@ -54,7 +60,10 @@ class Module {
      * @returns {{name: string, description: string}[]}
      */
     getHelp() {
-        return null;
+        if(this.help !== undefined)
+            return this.help;
+        else 
+            return null;
     }
 }
 

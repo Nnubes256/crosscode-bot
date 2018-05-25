@@ -9,6 +9,10 @@ class Mods extends Module{
 
         this.modInfo = new ModInfo();
     }
+    
+    initialize(bot) {
+        super.initialize(bot, 'mods');
+    }
 
     getCommands() {
         const modInfo = this.modInfo;
@@ -26,13 +30,6 @@ class Mods extends Module{
                 }));
             }
         };
-    }
-
-    getHelp() {
-        return [
-            { name: 'get', description: 'Get a list of mods'},
-            { name: 'install', description: 'Get a link to the installation guide for CrossCode mods'}
-        ];
     }
 }
 

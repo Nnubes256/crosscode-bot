@@ -2,6 +2,10 @@ const { Module } = require('../module');
 const { Utils } = require('../utils');
 
 class Nsfw extends Module{
+    initialize(bot) {
+        super.initialize(bot, 'nsfw');
+    }
+
     getCommands() {
         return {
             lewd: function showLewdArt(msg, args, command) {
@@ -19,10 +23,6 @@ class Nsfw extends Module{
                 }
             },
         };
-    }
-
-    getHelp() {
-        return [{name: 'lewd', description: 'The LeaDaki™. \'Nuff said.'}]; //TODO
     }
 }
 

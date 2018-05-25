@@ -1,0 +1,1 @@
+get: Prints a list of current streams

@@ -2,6 +2,10 @@ const { Module } = require('../module');
 const { Utils } = require('../utils');
 
 class Anime extends Module{
+    initialize(bot) {
+        super.initialize(bot, 'anime');
+    }
+
     getCommands() {
         return {
             'EXPLOSION!': function(msg) {
@@ -10,15 +14,6 @@ class Anime extends Module{
                 }));
             }
         };
-    }
-
-    /**
-     * @returns {{name: string, description: string}[]}
-     */
-    getHelp() {
-        return [
-            { name: 'EXPLOSION!', description: 'Make sure Beldia won\'t get mad at you.' }
-        ];
     }
 }
 

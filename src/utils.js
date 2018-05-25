@@ -1,6 +1,7 @@
 const { RichEmbed, MessageEmbed, GuildMember, Client } = require('discord.js');
 const { Config } = require('./config');
 const { Bot } = require('./bot');
+const fs = require('fs');
 
 /** @type {Config} */
 let config = undefined;
@@ -87,6 +88,31 @@ class Utils {
                 return '*could not find emoji*';
             }
         };
+    }
+    
+    /**
+     * Reads the help texts from the file, splits it into name and desciption and returns it as an array
+     * @param {string} name
+     * @returns {{name: string, description: string}[]}
+     */
+    static generateHelp(name) {
+        if(!fs.existsSync(`help/${name}.txt`)) {
+            console.warn(`File not found: help/${name}.txt` );
+            return [];
+        }
+    
+        const file = fs.readFileSync(`help/${name}.txt`, 'utf8');
+        const lines = file.split('\r\n');
+        const result = [];
+    
+        for(let line of lines) {
+            const name = line.substring(0, line.indexOf(': '));
+            const description = line.substring(name.length + 2);
+    
+            result.push({name: name, description: description});
+        }
+    
+        return result;
     }
 }
 

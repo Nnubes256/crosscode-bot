@@ -1,0 +1,3 @@
+add: Gives you each of the roles listed
+get: Lists all available roles
+rm: Removes each of the roles listed

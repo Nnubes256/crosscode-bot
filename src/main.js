@@ -7,7 +7,7 @@ const { Utils } = require('./utils');
 
 Array.prototype.random = function() {
     return this[parseInt(Math.random() * this.length)];
-}
+};
 
 
 

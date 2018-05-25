@@ -26,6 +26,10 @@ class Streams extends Module{
             }
         }, (30 * 60 * 1000)); //Updates channels every 30 minutes
     }
+    
+    initialize(bot) {
+        super.initialize(bot, 'streams');
+    }
 
     getCommands() {
         return {
@@ -57,12 +61,6 @@ class Streams extends Module{
                 msg.channel.send('This channel will no longer be notified of streams');
             }
         };
-    }
-
-    getHelp() {
-        return [
-            { name: 'get', description: 'Prints a list of current streams' }
-        ];
     }
 }
 
