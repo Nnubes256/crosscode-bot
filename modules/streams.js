@@ -46,7 +46,6 @@ module.exports = function(instance, util, config) {
             if(!server || !Array.isArray(chans)) return;
             chans.forEach(name => {
                 let chan = util.discObjFind(server.channels, name);
-                console.log(chan);
                 if(chan)
                     commands.set({channel: chan, guild: server});
             });
