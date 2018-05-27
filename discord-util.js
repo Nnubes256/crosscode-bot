@@ -149,6 +149,7 @@ function findModServer(client, serverJson, console) {
         retval.id = server.id;
         retval.greet = serverJson.greeting.replace(/\$PREFIX/g, process.env.BOT_PREFIX);
         for (let role in serverJson.channels) {
+          if(!role) return;
           retval.chans[role] = discObjFind(server.channels, serverJson.channels[role]);
         }
 
