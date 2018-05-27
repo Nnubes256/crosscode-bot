@@ -39,14 +39,17 @@ module.exports = function(instance, util, config) {
             msg.channel.send('This channel will no longer be notified of streams');
         }
     };
-    config["role-servers"].forEach(serv => {
-        let server = util.discObjFind(instance.guilds, serv.name);
-        let chans = serv["stream-chans"];
-        if(!server || !Array.isArray(chans)) return;
-        chans.forEach(name => {
-            let chan = util.discObjFind(server.channels, name);
-            if(chan)
-                commands.set({channel: chan, guild: server});
+    instance.on('ready', function() {
+        config["role-servers"].forEach(serv => {
+            let server = util.discObjFind(instance.guilds, serv.name);
+            let chans = serv["stream-chans"];
+            if(!server || !Array.isArray(chans)) return;
+            chans.forEach(name => {
+                let chan = util.discObjFind(server.channels, name);
+                console.log(chan);
+                if(chan)
+                    commands.set({channel: chan, guild: server});
+            });
         });
     });
     
