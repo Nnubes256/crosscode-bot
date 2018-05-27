@@ -35,15 +35,33 @@
 
     "role-servers": [
         {
+            "name": "CrossCode",
+            "greeting": "Welcome!",
+            "stream-chans": ["spam"],
+            "channels": {
+                "greet": "",
+                "info": "",
+                "syslog": "",
+                "editlog": ""
+            },
+            "roles": {
+                "pending" : [],
+                "auto-role": [],
+                "whitelist": [],
+                "blacklist" : [],
+                "admin" : []
+            }
+        },
+        {
             "name": "CrossCode Modding",
             "greeting": "Welcome! Use `$PREFIX -roles add <role>` to add a role!\nTo see a list of available roles, please visit chan:role-list",
+            "stream-chans": ["trash"],
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
                 "syslog": "admin-watchtower",
                 "editlog": "edit-log"
             },
-            "stream-chans": ["spam"],
             "roles": {
                 "pending" : [],
                 "auto-role": [
