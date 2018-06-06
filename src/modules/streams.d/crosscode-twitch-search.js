@@ -98,18 +98,19 @@ class CrossCodeStream {
             this.list = null;
 
         }).then(res => {
-            //we will assume the result is in the order that they came in...
-            const users = res.data;
-            /** @type {{name: string, value: string}[]} */
-            const streams_list = [];
-            streamData.forEach((stream, index) => {
-                const user = users[index];
-                streams_list.push({
-                    name: `${stream.title} by ${user.display_name}`,
-                    value: `Stream language: ${stream.language}\n[Join Stream](https://www.twitch.tv/${user.login})`
+            if (res) {
+                const users = res.data;
+                /** @type {{name: string, value: string}[]} */
+                const streams_list = [];
+                streamData.forEach((stream, index) => {
+                    const user = users[index];
+                    streams_list.push({
+                        name: `${stream.title} by ${user.display_name}`,
+                        value: `Stream language: ${stream.language}\n[Join Stream](https://www.twitch.tv/${user.login})`
+                    });
                 });
-            });
-            this.generateList(streams_list);
+                this.generateList(streams_list);
+            }
         }).catch(err => console.error(err));
 
     }
