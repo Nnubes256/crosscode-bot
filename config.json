@@ -35,7 +35,7 @@
 
     "role-servers": [
         {
-            "name": "CrossCode",
+            "name": "CrossCode$",
             "greeting": "Welcome!",
             "stream-chans": ["spam"],
             "channels": {

@@ -149,23 +149,32 @@ function findModServer(client, serverJson, console) {
         retval.id = server.id;
         retval.greet = serverJson.greeting.replace(/\$PREFIX/g, process.env.BOT_PREFIX);
         for (let role in serverJson.channels) {
-          if(!role) return;
-          retval.chans[role] = discObjFind(server.channels, serverJson.channels[role]);
+          if(!serverJson.channels[role]) continue;
+          retval.chans[role] = exports.discObjFind(server.channels, serverJson.channels[role]);
         }
 
-        for (let role of serverJson.roles.pending) {
-          retval.pending.push(discObjFind(server.roles, role));
+        if (serverJson.roles.pending) {
+            for (let role of serverJson.roles.pending) {
+              retval.pending.push(exports.discObjFind(server.roles, role));
+            }
         }
 
-        for (let role of serverJson.roles.blacklist) {
-          roleBlacklist.push(discObjFind(server.roles, role).id);
+        if (serverJson.roles.blacklist) {
+            for (let role of serverJson.roles.blacklist) {
+              roleBlacklist.push(exports.discObjFind(server.roles, role).id);
+            }
         }
 
-        for (let role of serverJson.roles.whitelist) {
-            roleWhitelist.push(discObjFind(server.roles, role).id);
+        if (serverJson.roles.whitelist) {
+            for (let role of serverJson.roles.whitelist) {
+                roleWhitelist.push(exports.discObjFind(server.roles, role).id);
+            }
         }
-        for(let role of serverJson.roles.admin) {
-            roleAdmin.push(discObjFind(server.roles, role).id);
+
+        if (serverJson.roles.admin) {
+            for(let role of serverJson.roles.admin) {
+                roleAdmin.push(exports.discObjFind(server.roles, role).id);
+            }
         }
         return retval;
     } catch(e) {
