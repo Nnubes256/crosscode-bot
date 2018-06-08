@@ -59,8 +59,7 @@
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
-                "syslog": "admin-watchtower",
-                "editlog": "edit-log"
+                "syslog": "admin-watchtower"
             },
             "roles": {
                 "pending" : [],
