@@ -24,7 +24,7 @@ class Config {
 
     /** @param {Client} client */
     init(client) {
-        /** @type {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}[]} */ 
+        /** @type {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[], member: Role[]}[]} */ 
         this.servers = [];
         for (let json of this.roleServers) {
             let server = this.findModServer(client, json);
@@ -37,7 +37,7 @@ class Config {
      * 
      * @param {Client} client 
      * @param {*} serverJson 
-     * @returns {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}}
+     * @returns {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[], member: Role[]}}
      */
     findModServer(client, serverJson) {
         let result = {id: '', chans: {}, pending: [], member: [], blacklist: [], whitelist: [], admin: []};

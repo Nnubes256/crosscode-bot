@@ -1,7 +1,6 @@
-//TODO: restructure
 const { Module } = require('../module');
 const { Utils } = require('../utils');
-const { Message, Role } = require('discord.js');
+const { Message, Role, GuildMember } = require('discord.js');
 
 class Roles extends Module {
     initialize(bot) {
@@ -25,6 +24,8 @@ class Roles extends Module {
                     return;
                 }
 
+                this.addMember(msg.member, newRoles);
+
                 msg.member.addRoles(newRoles).then(member => {
                     if (this.hasPending(member)) {
                         return this.removePending(member);
@@ -32,14 +33,15 @@ class Roles extends Module {
                     return member;
                 }).then(member => {
                     if (newRoles.length) {
-                        const newRolesName = newRoles.map(r => r.name).join('and');
+                        const newRolesName = newRoles.map(r => r.name).join(' and ');
                         this.log(msg, `Added ${newRolesName} to ${member}`);
-                        const dupRolesName = dupRoles.map(r => r.name).join('and');
+                        const dupRolesName = dupRoles.map(r => r.name).join(' and ');
                         let retMessage = `${msg.author} is now ${newRolesName}.`;
                         if (dupRoles.length) {
                             retMessage += `\nAlready had ${dupRolesName}`;
                         }
                         msg.channel.send(retMessage);
+                        return member;
                     }
                 }).catch(err => {
                     msg.channel.send('Encountered an error. Could not add role.');
@@ -62,7 +64,7 @@ class Roles extends Module {
                 const roles = whitelist.filter(r => requested.includes(r.name));
                 if (roles.length) {
                     msg.member.removeRoles(roles).then(member => {
-                        const oldRoles = roles.map(r => r.name).join('and');
+                        const oldRoles = roles.map(r => r.name).join(' and ');
                         msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
                         this.log(msg, `Removed ${oldRoles} from ${member}`);
                     }).catch(err => {
@@ -97,6 +99,28 @@ class Roles extends Module {
     removePending(member) {
         console.warn('Pending is no longer supported');
         return member;
+    }
+
+    /**
+     * 
+     * @param {GuildMember} member 
+     * @param {string[]} roles
+     */
+    addMember(member, roles) {
+        for(const server of this.bot.config.servers) {
+            if(member.guild.id === server.id) {
+                if(server.member.length !== 0) {
+                    
+                    for(const role of server.member) {
+                        if(!member.roles.has(role.name)) {
+                            roles.push(role);
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
     }
 
     /**
