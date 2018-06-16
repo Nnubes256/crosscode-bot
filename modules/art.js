@@ -7,7 +7,7 @@ let streamArtLink = function getStreamArt() {
 }();
 const FanArt = require('./art.d/crosscode-fanart.js');
 let fanArt = new FanArt();
-module.exports = function(instance) {
+module.exports = function(instance, {createRichEmbed}) {
     let commands = {
         fromstream: function showStreamArt(msg) {
             let index = parseInt(Math.random() * streamArtLink.length)
