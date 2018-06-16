@@ -5,6 +5,7 @@ let {
     readFileSync
 } = require('fs');
 let util = require('./discord-util.js');
+const fetch = require('node-fetch');
 if(!process.env.BOT_PREFIX) {
   var env = readFileSync('.env', 'utf8').split("\n");
   env.forEach(function(element) {
