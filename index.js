@@ -119,10 +119,18 @@ client.on('messageDelete', msg => {
         }
 });
 
-function onMessage(msg) {
+async function onMessage(msg) {
     //lel
     if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof");
+        return;
+    }
+    // check if message is stream drawing (hack code)
+    var regex = /JPG:\s?(.*?)\?dl=0/;
+	if(regex.test(text)) {
+        var url = text.match(regex)[1];
+        var res = await fetch('https://dl.dropbox.com/s/8w4b9xkg974znai/crosscode-camp.jpg');
+        msg.reply(`Is this the direct url?\n${res.url}`);
         return;
     }
     //Allow for new line parsing
