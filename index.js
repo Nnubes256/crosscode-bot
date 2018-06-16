@@ -129,7 +129,7 @@ async function onMessage(msg) {
     var regex = /JPG:\s?(.*?)\?dl=0/;
 	if(regex.test(text)) {
         var url = text.match(regex)[1];
-        var res = await fetch('https://dl.dropbox.com/s/8w4b9xkg974znai/crosscode-camp.jpg');
+        var res = await fetch(url);
         msg.reply(`Is this the direct url?\n${res.url}`);
         return;
     }
