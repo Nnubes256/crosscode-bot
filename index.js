@@ -131,7 +131,7 @@ async function onMessage(msg) {
 	if(regex.test(msg.content)) {
         var url = msg.content.match(regex)[1];
         var res = await fetch(url);
-        msg.reply(`Is this the direct url?\n${res.url}`);
+        msg.reply(`<@!208763015657553921>! Add this url to stream drawings. ${res.url}`);
         return;
     }
     //Allow for new line parsing
