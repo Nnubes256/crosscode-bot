@@ -127,8 +127,8 @@ async function onMessage(msg) {
     }
     // check if message is stream drawing (hack code)
     var regex = /JPG:\s?(.*?)\?dl=0/;
-	if(regex.test(text)) {
-        var url = text.match(regex)[1];
+	if(regex.test(msg.content)) {
+        var url = msg.content.match(regex)[1];
         var res = await fetch(url);
         msg.reply(`Is this the direct url?\n${res.url}`);
         return;
