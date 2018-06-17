@@ -264,8 +264,18 @@ module.exports = function(instance, util) {
             }
             msg.channel.send(message);
         },
-        react: function leaReact(msg, args) {
-            for (let i = 0; i < args.length; i++) {
+        react: async function leaReact(msg, args) {
+            let i = 0;
+            if(args[0].startsWith("id=")) {
+                try {
+                  msg = await msg.channel.fetchMessage(args[0].replace("id=", ""));
+		} catch(e) {
+                   msg.reply(`There was an error: ${e}`);
+                   return;
+                }
+                i = 1;
+            }
+            for (; i < args.length; i++) {
                 let thonk = getEmote(msg, args[i]);
                 if (thonk.id !== '')
                     msg.react(thonk.id);
