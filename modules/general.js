@@ -270,7 +270,7 @@ module.exports = function(instance, util) {
                 try {
                   msg = await msg.channel.fetchMessage(args[0].replace("id=", ""));
 		} catch(e) {
-                   msg.reply(`There was an error: ${e}`);
+                   msg.reply(e);
                    return;
                 }
                 i = 1;
