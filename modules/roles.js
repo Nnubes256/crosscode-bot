@@ -30,6 +30,10 @@ module.exports = function(client, util, config, console) {
 			
 			// users were mentioned
 			if(msg.mentions.members) {
+				if(!util.isFromAdmin(msg)) {
+					msg.reply('You are not an admin');
+					return;
+				}
 				member = msg.mentions.members.first();
 			}
             let roles = fetchRoles(msg.guild.roles, args.join(" ").split(","));
@@ -82,11 +86,21 @@ module.exports = function(client, util, config, console) {
           }
         },
         rm: function takeRoles(msg, args) {
+			var member = msg.member;
+		
+			// users were mentioned
+			if(msg.mentions.members) {
+				if(!util.isFromAdmin(msg)) {
+					msg.reply('You are not an admin');
+					return;
+				}
+				member = msg.mentions.members.first();
+			}
             let role = fetchRoles(msg.guild.roles, args.join(" ").split(","));
             if(role) {
-                msg.member.removeRoles(role).then(function(member) {
+                member.removeRoles(role).then(function(member) {
                     var oldRoles = getRolesName(role).listjoin('or');
-                    msg.channel.send(`${msg.author} is no longer ${oldRoles}`);
+                    msg.channel.send(`${member} is no longer ${oldRoles}`);
                     util.log(msg, `Removed ${oldRoles} from ${member}`);
                 }).catch(function(e) {
                     msg.channel.send('Encountered an error. Could not remove role.');
