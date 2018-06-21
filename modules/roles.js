@@ -24,11 +24,13 @@ module.exports = function(client, util, config, console) {
         });
     }
     let commands = {
-        add: function giveRoles(msg, args) {
+        add: async function giveRoles(msg, args) {
+			var guild = msg.guild;
+			var member = msg.member;
             let roles = fetchRoles(msg.guild.roles, args.join(" ").split(","));
             let dupRoles = [];
             //removes roles the user already has
-            for(var role of msg.member.roles.array()) {
+            for(var role of member.roles.array()) {
               var index = -1;
               if((index = roles.indexOf(role)) > -1) {
                 dupRoles = dupRoles.concat(roles.splice(index, 1));
@@ -38,13 +40,13 @@ module.exports = function(client, util, config, console) {
               msg.channel.send(`Could not add any new roles.`);
               return;
             }
-            
-            msg.member.addRoles(roles)/**.then(function(member) {
-              if(util.hasPending(msg)) {
-                return util.removePending(msg, console);
-              }
-              return member;
-            })*/.then(function(member) {
+            if(!util.hasRoles('auto-role', guild, member, console)) {
+              var autoRoles = util.getRoles('auto-role', guild);
+			  for(let role of autoRoles) {
+				  roles.push(role);
+			  }
+            }
+            msg.member.addRoles(roles).then(function(member) {
                 if(roles.length) {
                   var newRolesName = getRolesName(roles).listjoin('and');
                   util.log(msg, `Added ${newRolesName} to ${member}`);
@@ -57,7 +59,7 @@ module.exports = function(client, util, config, console) {
                 }
 
             }).catch(function(e) {
-              msg.channel.send('Encountered an error. Could not add role.');
+              msg.channel.send('There was an error adding a role.');
               console.log(e);
             });
         },

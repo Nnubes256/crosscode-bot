@@ -141,7 +141,7 @@ exports.discObjFind = function(obj, name) {
     return null;
 }
 function findModServer(client, serverJson, console) {
-    let retval = {id: "", chans: {}, pending: []};
+    let retval = {id: "", chans: {}, pending: [],"auto-role" :[]};
     try {
         let server = discObjFind(client.guilds, serverJson.name);
 //        console.log(server);
@@ -159,6 +159,11 @@ function findModServer(client, serverJson, console) {
             }
         }
 
+        if(serverJson.roles["auto-role"]) {
+          for (let role of serverJson.roles["auto-role"]) {
+            retval['auto-role'].push(exports.discObjFind(server.roles, role));
+          }
+        }
         if (serverJson.roles.blacklist) {
             for (let role of serverJson.roles.blacklist) {
               roleBlacklist.push(exports.discObjFind(server.roles, role).id);
@@ -182,37 +187,29 @@ function findModServer(client, serverJson, console) {
     }
     return null;
 }
-function findServer(msg) {
+function findServer(guild) {
   for(let server of manageServs) {
-     if(msg.guild.id === server.id) {
+     if(guild.id === server.id) {
         return server;
      }
   }
 }
-exports.hasPending = function(msg) {
-  return true;
-  var server = findServer(msg);
-  /*if(!Object.keys(server.pending)) {
-     return true;
-  }
-  for(let pendingRole in server.pending) {
-    if(msg.member.roles.has(pendingRole.id)) {
-      return true;
+exports.hasRoles = function(roleType, guild, member, console) {
+  var server = findServer(guild);
+  var roles = server[roleType];
+  for(let role of (roles || [])) {
+    if(!member.roles.has(role.id)) {
+      return false;
     }
   }
-   return false;*/
+  return true;
 }
-exports.removePending = function(msg, console) {
-   var server = findServer(msg);
-   console.log(server);
-   if(server) {
-     return msg.member.removeRoles(server.pending);
-   }
-
-  return msg.member;
+exports.getRoles = function(roleType, guild) {
+  var server = findServer(guild);
+  return server[roleType] || [];	
 }
 exports.log = function(msg, message) {
-  var server = findServer(msg);
+  var server = findServer(msg.guild);
   return server.chans["syslog"].send(message);
 }
 exports.getAllServers = function getAllServers(client, servers, console) {
