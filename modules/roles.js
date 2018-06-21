@@ -27,6 +27,11 @@ module.exports = function(client, util, config, console) {
         add: async function giveRoles(msg, args) {
 			var guild = msg.guild;
 			var member = msg.member;
+			
+			// users were mentioned
+			if(msg.mentions.members) {
+				member = msg.mentions.members.first();
+			}
             let roles = fetchRoles(msg.guild.roles, args.join(" ").split(","));
             let dupRoles = [];
             //removes roles the user already has
@@ -46,12 +51,12 @@ module.exports = function(client, util, config, console) {
 				  roles.push(role);
 			  }
             }
-            msg.member.addRoles(roles).then(function(member) {
+            member.addRoles(roles).then(function(member) {
                 if(roles.length) {
                   var newRolesName = getRolesName(roles).listjoin('and');
                   util.log(msg, `Added ${newRolesName} to ${member}`);
                   var dupRolesName = getRolesName(dupRoles).listjoin('and');
-                  var retMessage = `${msg.author} is now ${newRolesName}.`;
+                  var retMessage = `${member} is now ${newRolesName}.`;
                   if(dupRoles.length) {
                     retMessage += `\nAlready had ${dupRolesName}`;
                   }
