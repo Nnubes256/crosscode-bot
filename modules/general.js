@@ -357,7 +357,7 @@ module.exports = function(instance, util) {
                 "You guys are awesome."
             ];
 
-            let nickname = msg.member.nickname;
+            let nickname = msg.member.displayName;
             let chosenMessage = thankYouMessage.random();
 
             msg.channel.send('', createRichEmbed({
