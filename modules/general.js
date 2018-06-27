@@ -314,11 +314,13 @@ module.exports = function(instance, util) {
                 image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
             }))
         },
-        vote: function vote(msg) {
-            msg.react("👍")
-                .then((msgReact) => msgReact.message.react("👊"))
-                .then((msgReact) => msgReact.message.react("👎"))
-
+        vote: async function vote(msg) {
+            	var yes = getEmote(msg, 'leaHappy');
+		var neutral = getEmote(msg, 'leaTHINK');
+		var no = getEmote(msg, 'leabat');
+		await msg.react(yes);
+		await msg.react(neutral);
+		await msg.react(no);
         },
         ohno: function ohNo(msg) {
             msg.channel.send(":(", createRichEmbed({
