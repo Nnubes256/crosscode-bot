@@ -318,9 +318,9 @@ module.exports = function(instance, util) {
             	var yes = getEmote(msg, 'leaHappy');
 		var neutral = getEmote(msg, 'leaTHINK');
 		var no = getEmote(msg, 'leabat');
-		await msg.react(yes);
-		await msg.react(neutral);
-		await msg.react(no);
+		await msg.react(yes.id);
+		await msg.react(neutral.id);
+		await msg.react(no.id);
         },
         ohno: function ohNo(msg) {
             msg.channel.send(":(", createRichEmbed({
