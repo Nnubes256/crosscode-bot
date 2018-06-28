@@ -63,15 +63,20 @@ class CrossCodeStream {
         return _copy.join("&");
     }
     generateList(stream_list) {
+        var _fields = [];
         if (!stream_list.length) {
-            this.list = null;
-            return;
+            _fields.push({
+                name: "",
+                value: "No streams currently!"
+            });
+        } else {
+            _fields = stream_list;
         }
         //TODO: FInish this
 
         this.list = createRichEmbed({
             title: "CrossCode Twitch Streams",
-            fields: stream_list,
+            fields: _fields,
             timestamp: new Date()
         });
     }
