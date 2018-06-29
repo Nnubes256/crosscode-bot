@@ -37,7 +37,7 @@
         {
             "name": "CrossCode$",
             "greeting": "Welcome!",
-            "stream-chans": ["^bot-spam$"],
+            "stream-chans": ["^spam$"],
             "channels": {
                 "greet": "",
                 "info": "",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "name": "CrossCode Modding",
+            "name": "CrossCode Modding$",
             "greeting": "Welcome! Use `$PREFIX -roles add <role>` to add a role!\nTo see a list of available roles, please visit chan:role-list",
             "stream-chans": ["^bot-spam$"],
             "channels": {
