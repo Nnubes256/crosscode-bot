@@ -15,6 +15,7 @@ module.exports = function(instance, util) {
 
     const StrawPoll = require('./general.d/strawpoll.js');
 
+    ['Create', 'Delete', 'Update'].forEach(ev => instance.on('emoji' + ev, () => getAllEmotes(instance)));
     function boxGenerate(phrase, characterArray) {
         let maxMessageLength = 1960;
         let maxPhraseLength = phrase.length;
