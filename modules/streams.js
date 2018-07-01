@@ -52,16 +52,14 @@ module.exports = function(instance, util, config) {
 
             if (channel) {
                 if (channel.update_message) {
-                    channel.update_message.edit('', streamEmbed);
-                } else {
-                    channel.chan_handle.send('', streamEmbed)
-                        .then((message) => {
-                            // Watch out for race conditions!
-                            if (notify_channels[id]) {
-                                notify_channels[id].update_message = message;
-                            }
-                        });
+                    channel.update_message.delete(1000).catch(console.error);
                 }
+                channel.chan_handle.send('', streamEmbed).then((message) => {
+                    // Watch out for race conditions!
+                    if (notify_channels[id]) {
+                        notify_channels[id].update_message = message;
+                    }
+                });
             }
         }
 
