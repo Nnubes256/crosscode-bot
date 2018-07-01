@@ -1,7 +1,7 @@
 const TwitchStreams = require('./streams.d/crosscode-twitch-search.js');
 let streams = new TwitchStreams();
 module.exports = function(instance, util, config) {
-    let notify_channels = {};
+    let notify_channels = {}, oldStreams;
     instance.on('channelDelete', function(deletedChannel) {
         for (var id in notify_channels) {
             let channel = notify_channels[id];
@@ -44,11 +44,9 @@ module.exports = function(instance, util, config) {
 
     setInterval(function() {
         var streamEmbed = streams.get();
-
+        //if(streamEmbed == oldStreams) return;
         for (var id in notify_channels) {
             let channel = notify_channels[id];
-
-            console.log(streamEmbed)
 
             if (channel) {
                 if (channel.update_message) {
@@ -63,7 +61,7 @@ module.exports = function(instance, util, config) {
             }
         }
 
-    }, (/*30 * */10 * 1000)); //Updates channels every 30 minutes
+    }, (60 * 10 * 1000)); //Updates channels every 30 minutes
     let commands = {
         set: function(msg) {
             var chan_id = msg.channel.id;
