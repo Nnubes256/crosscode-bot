@@ -135,7 +135,7 @@ async function onMessage(msg) {
         return;
     }
     //Allow for new line parsing
-	var message = msg.content.replace(/\<\@\!?(.*?)\>/g,"") // Remove mentions
+	var message = msg.content.replace(/<@!?(.*?)>/g,"") // Remove mentions
 	                                    .replace(/^\s+|\s+$/g, '')
     let args = util.argParse(message); 
     let _prefix = args.shift();

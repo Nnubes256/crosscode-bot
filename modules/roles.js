@@ -37,7 +37,7 @@ module.exports = function(client, util, config, console) {
 			var member = msg.member;
 			
 			// users were mentioned
-			if(msg.mentions.members) {
+			if(msg.mentions.members.size) {
 				if(!util.isFromAdmin(msg)) {
 					msg.reply('You are not an admin');
 					return;
@@ -97,7 +97,7 @@ module.exports = function(client, util, config, console) {
 			var member = msg.member;
 		
 			// users were mentioned
-			if(msg.mentions.members) {
+			if(msg.mentions.members.size) {
 				if(!util.isFromAdmin(msg)) {
 					msg.reply('You are not an admin');
 					return;

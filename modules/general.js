@@ -15,6 +15,7 @@ module.exports = function(instance, util) {
 
     const StrawPoll = require('./general.d/strawpoll.js');
 
+    ['Create', 'Delete', 'Update'].forEach(ev => instance.on('emoji' + ev, () => getAllEmotes(instance)));
     function boxGenerate(phrase, characterArray) {
         let maxMessageLength = 1960;
         let maxPhraseLength = phrase.length;
@@ -314,11 +315,13 @@ module.exports = function(instance, util) {
                 image: 'https://cdn.discordapp.com/attachments/373163281755537420/381790329550143488/Deal_with_it_Lea.gif'
             }))
         },
-        vote: function vote(msg) {
-            msg.react("👍")
-                .then((msgReact) => msgReact.message.react("👊"))
-                .then((msgReact) => msgReact.message.react("👎"))
-
+        vote: async function vote(msg) {
+            	var yes = getEmote(msg, 'leaHappy');
+		var neutral = getEmote(msg, 'leaTHINK');
+		var no = getEmote(msg, 'leabat');
+		await msg.react(yes.id);
+		await msg.react(neutral.id);
+		await msg.react(no.id);
         },
         ohno: function ohNo(msg) {
             msg.channel.send(":(", createRichEmbed({
@@ -357,7 +360,7 @@ module.exports = function(instance, util) {
                 "You guys are awesome."
             ];
 
-            let nickname = msg.member.nickname;
+            let nickname = msg.member.displayName;
             let chosenMessage = thankYouMessage.random();
 
             msg.channel.send('', createRichEmbed({
