@@ -24,6 +24,14 @@ module.exports = function(client, util, config, console) {
         });
     }
     let commands = {
+		countMembers : function countAmount(msg, args) {
+			var guild = msg.guild;
+			var autoRoles = util.getRoles('auto-role', guild);
+			var members = guild.members.filter(function(member) {
+				return member.roles.has(autoRoles[0].id);
+			});
+			msg.channel.send(`There are ${members.size} members.`);
+		},
         add: async function giveRoles(msg, args) {
 			var guild = msg.guild;
 			var member = msg.member;
