@@ -126,18 +126,24 @@ async function onMessage(msg) {
         msg.channel.send("oof");
         return;
     }
-    // check if message is stream drawing (hack code)
-    var regex = /JPG:\s?(.*?)\?dl=0/;
-	if(regex.test(msg.content)) {
-        var url = msg.content.match(regex)[1];
-        var res = await fetch(url);
-        msg.channel.send(`<@!208763015657553921>! Add this url to stream drawings. ${res.url}`);
+    // Get stream drawings links automatically
+	if(msg.channel.name === "media") {
+        var regex = /JPG:\s?(.*?)\?dl=0/;
+        if(regex.test(msg.content)) {
+            var url = msg.content.match(regex)[1];
+
+            // this will auto redirect to raw location
+            var res = await fetch(url);
+
+            var ccChan = util.discObjFind(msg.guild.channels, "^crosscode$");
+            ccChan && ccChan.send(`<@!208763015657553921>! Add this url to stream drawings. ${res.url}`);
+        }
         return;
     }
     //Allow for new line parsing
 	var message = msg.content.replace(/<@!?(.*?)>/g,"") // Remove mentions
 	                                    .replace(/^\s+|\s+$/g, '')
-    let args = util.argParse(message); 
+    let args = util.argParse(message);
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
