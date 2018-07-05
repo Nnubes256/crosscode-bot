@@ -37,7 +37,7 @@
         {
             "name": "CrossCode$",
             "greeting": "Welcome!",
-            "stream-chans": ["^crosscode"],
+            "stream-chans": ["^spam$"],
             "channels": {
                 "greet": "",
                 "info": "",
