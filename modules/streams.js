@@ -119,7 +119,6 @@ module.exports = function(instance, util, config, console) {
             let notif_chan = notify_channels[chan_id + "|" + msg.guild.id] = notify_channels[chan_id] || {};
             notif_chan.chan_handle = msg.channel;
             notif_chan.update_message = null;
-            msg.channel.send('This channel has been set to be notified of CrossCode streams periodically.');
         },
         remove: function(msg) {
             var chan_id = msg.channel.id;
