@@ -119,6 +119,20 @@ client.on('messageDelete', msg => {
             break;
         }
 });
+async function getDriveFileDirLink(url) {
+	var regexfileID = /\/d\/(.*?)\//;
+
+	var fileID = url.match(regexfileID)[1];
+	var response = await fetch(`https://drive.google.com/uc?id=${fileID}`)
+	return response.url
+}
+function getJPGUrl(msg) {
+  var regexfileURL = /(?:JPG\:\s?)(.*)/;
+  if(regexfileURL.test(msg)) {
+    return msg.match(regexfileURL)[1];
+  }
+  return "";
+}
 
 async function onMessage(msg) {
     //lel
@@ -128,16 +142,21 @@ async function onMessage(msg) {
     }
     // Get stream drawings links automatically
 	if(msg.channel.name === "media") {
-        var regex = /JPG:\s?(.*?)\?dl=0/;
-        if(regex.test(msg.content)) {
-            var url = msg.content.match(regex)[1];
-
-            // this will auto redirect to raw location
-            var res = await fetch(url);
-
-            var ccChan = util.discObjFind(msg.guild.channels, "^crosscode$");
-            ccChan && ccChan.send(`<@!208763015657553921>! Add this url to stream drawings. ${res.url}`);
+        var ccChan = util.discObjFind(msg.guild.channels, "^crosscode$");
+        if(ccChan) {
+            var url = getJPGUrl(msg.content);
+            if(!url)
+              return;
+            if(url.includes("dropbox")) {
+                // this will auto redirect to raw location
+                var res = await fetch(url);
+                ccChan.send(`<@!208763015657553921>! Add this url to stream drawings. ${res.url}`);
+            } else if(url.includes("drive.google.com")) {
+                var directLink = await getDriveFileDirLink(url);
+                ccChan.send(`<@!208763015657553921>! Add this url to stream drawings. ${directLink}`);
+            }
         }
+
         return;
     }
     //Allow for new line parsing
