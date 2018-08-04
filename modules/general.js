@@ -318,7 +318,7 @@ module.exports = function(instance, util) {
         vote: async function vote(msg) {
             	var yes = getEmote(msg, 'leaHappy');
 		var neutral = getEmote(msg, 'leaTHINK');
-		var no = getEmote(msg, 'leabat');
+		var no = getEmote(msg, 'leaBAT');
 		await msg.react(yes.id);
 		await msg.react(neutral.id);
 		await msg.react(no.id);
