@@ -1,12 +1,9 @@
 {
     "modules": [
         "general",
-        "anime",
         "art",
-        "game",
         "log",
         "mods",
-        "nsfw",
         "roles",
         "streams",
         "voice"
@@ -27,7 +24,7 @@
         {"type": "PLAYING",   "name": "with CCLoader"},
         {"type": "PLAYING",   "name": "with mods"}
     ],
-    
+
     "activity-types": [
         "PLAYING",
         "STREAMING",

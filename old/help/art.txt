@@ -1,2 +1,0 @@
-INVOC fromfan - displays a random fannart
-INVOC fromstream - displays a random official streamart

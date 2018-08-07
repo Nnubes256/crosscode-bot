@@ -2,11 +2,11 @@ const { Module } = require('../module');
 const { GuildMember, Message } = require('discord.js');
 const { Utils } = require('../utils');
 
-class Log extends Module{
-    
+class Log extends Module {
+
     /**
-     * 
-     * @param {GuildMember} member 
+     *
+     * @param {GuildMember} member
      */
     onJoin(member) {
         for (let server of this.bot.config.servers) {
@@ -23,8 +23,8 @@ class Log extends Module{
     }
 
     /**
-     * 
-     * @param {GuildMember} member 
+     *
+     * @param {GuildMember} member
      */
     onLeave(member) {
         for (let server of this.bot.config.servers) {
@@ -38,14 +38,14 @@ class Log extends Module{
                         value: member.roles.array().join('\r\n')
                     }]
                 })).catch(err => console.error(err));
-    
+
                 break;
             }
         }
     }
 
-    
-    /** 
+
+    /**
      * @param {Message} oldMsg
      * @param {Message} newMsg
     */
@@ -68,20 +68,20 @@ class Log extends Module{
             }
         }
     }
-    
+
     /**
-     * 
-     * @param {Message} msg 
+     *
+     * @param {Message} msg
      */
     onDelete(msg) {
-        if(msg.author.bot)
+        if(true || msg.author.bot)
             return;
 
-        for (let server of manageServs) {
+        /**for (let server of manageServs) {
             if (msg.guild.id === server.id) {
                 if(!server.chans.editlog)
                     break;
-    
+
                     server.chans.editlog.send(`A message was deleted in ${msg.channel}: ${msg.author}`, Utils.createRichEmbed({
                     fields: [
                         { name: "Content", value: msg.content }
@@ -89,7 +89,7 @@ class Log extends Module{
                 })).catch(err => console.error(err));
                 break;
             }
-        }
+        }*/
     }
 
 }

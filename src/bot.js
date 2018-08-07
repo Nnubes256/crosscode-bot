@@ -2,19 +2,21 @@ const { Client, GuildMember, Message} = require('discord.js');
 const { Config } = require('./config');
 const { Module } = require('./module');
 
-class Bot {
-    /**
-     * 
-     * @param {string} prefix 
-     * @param {string} token 
-     * @param {Config} config 
-     */
-    constructor(prefix, token, config) {
-        this.client = new Client();
-        this.prefix = prefix;
-        this.token = token;
-        this.config = config;
+import CommandManager from './command-manager';
 
+class Bot {
+
+    /**
+     *
+     * @param {Env} env
+     * @param {Config} config
+     */
+    constructor(env, config) {
+        this.client = new Client();
+        this.prefix = evn.prefix;
+        this.token = evn.token;
+        this.config = config;
+        this.cmdManager = new CommandManager();
         this.init();
     }
 
@@ -29,39 +31,16 @@ class Bot {
     }
 
     /**
-     * 
-     * @param {Message} msg 
+     *
+     * @param {Message} msg
      */
     onMessage(msg) {
-        if (msg.content.toLowerCase().startsWith("failed to load")) {
-            msg.channel.send("oof");
-            return;
-        }
-
-        let args = this.getMessageArgs(msg.content);
-        if (!args)
-            return;
-
-        let module = this.getModule(args);
-        let command = args.shift();
-
-        if (command === "help") {
-            return this.printHelp(msg.author, args);
-        }
-
-        let func = module.getCommands()[command];
-        if (func) {
-            new Promise((resolve, reject) => {
-                try {
-                    resolve(func(msg, args, command));
-                } catch (err) {
-                    reject(err);
-                }
-            }).then(function(res) {}, function(err) {
-                console.error(err);
-            });
-        } else {
-            //TODO: function not found
+        //no bots allowed to message
+        const matchPrefix = /^(.*?)\s/;
+        let message = msg.content;
+        let prefix = message.match(matchPrefix);
+        if(prefix === this.prefix) {
+          this.cmdManager.onMessage(msg, message.replace(prefix, ""));
         }
     }
 
@@ -69,16 +48,14 @@ class Bot {
         this.config.init(this.client);
 
         for (let module of Object.keys(this.config.commands)){
-            this.config.commands[module].initialize(this);
+            this.config.commands[module].initialize(this, this.cmd,this.console);
         }
-        
         //util.getAllEmotes(this.client);
         console.log(`Logged in as ${this.client.user.tag}!`);
         this.newGame();
         setInterval(this.newGame.bind(this), 2 * 60 * 1000);
     }
-
-    /** 
+    /**
      * @param {GuildMember} member
     */
     guildMemberAdd(member) {
@@ -87,7 +64,7 @@ class Bot {
         }
     }
 
-    /** 
+    /**
      * @param {GuildMember} member
     */
     guildMemberRemove(member) {
@@ -96,7 +73,7 @@ class Bot {
         }
     }
 
-    /** 
+    /**
      * @param {Message} oldMsg
      * @param {Message} newMsg
     */
@@ -107,8 +84,8 @@ class Bot {
     }
 
     /**
-     * 
-     * @param {Message} msg 
+     *
+     * @param {Message} msg
      */
     messageDelete(msg) {
         for (let module of Object.keys(this.config.commands)){
@@ -117,8 +94,8 @@ class Bot {
     }
 
     /**
-     * 
-     * @param {string} msg 
+     *
+     * @param {string} msg
      * @returns {string[]}
      */
     getMessageArgs(msg) {
@@ -131,7 +108,7 @@ class Bot {
         return msg.replace(/^\s+|\s+$/g, '').split(/[ \t]+/);
     }
 
-    /** 
+    /**
      * @param {string[]} args
      * @returns {Module}
     */
@@ -157,8 +134,8 @@ class Bot {
     };
 
     /**
-     * 
-     * @param {GuildMember} author 
+     *
+     * @param {GuildMember} author
      * @param {string[]} args
      */
     printHelp(author, args) {
@@ -174,15 +151,15 @@ class Bot {
             const module = this.config.commands[name]; // Get module
             if(module) { // Check if it exists in case user misspelled
                 const helpMatrix = module.getHelp();
-                
+
                 if(helpMatrix) { // Check if help is avaible
                     for(let line of helpMatrix) {
                         result += this.prefix;
-    
+
                         if(name !== defaultModule) {
-                            result += '-' + name + ' '; 
+                            result += '-' + name + ' ';
                         }
-        
+
                         result += line.name + ' - ' + line.desciption + '\r\n'; //TODO: add some padding for the looks
                     }
                 }
