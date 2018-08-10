@@ -1,8 +1,7 @@
 const { Client, GuildMember, Message} = require('discord.js');
-const { Config } = require('./config');
-const { Module } = require('./module');
+//const { Config } = require('./config');
 
-import CommandManager from './command-manager';
+const CommandManager = require('./command-manager');
 
 class Bot {
 
@@ -11,40 +10,50 @@ class Bot {
      * @param {Env} env
      * @param {Config} config
      */
-    constructor(env, config) {
+    constructor(env, utils) {
         this.client = new Client();
-        this.prefix = evn.prefix;
-        this.token = evn.token;
-        this.config = config;
+        this.prefix = env.BOT_PREFIX;
+        this.token = env.BOT_TOKEN;
+        this.utils = utils;
+
         this.cmdManager = new CommandManager();
+        this.cmdManager.addDependency('client', this.client);
+        this.cmdManager.addDependency('cmdManager', this.cmdManager);
+        this.cmdManager.addDependency('utils', utils);
+
         this.init();
     }
 
     init() {
+        this.cmdManager.init();
         this.client.on('ready', this.ready.bind(this));
-        this.client.on('guildMemberAdd', this.guildMemberAdd.bind(this));
+        /**this.client.on('guildMemberAdd', this.guildMemberAdd.bind(this));
         this.client.on('guildMemberRemove', this.guildMemberRemove.bind(this));
         this.client.on('messageUpdate', this.messageUpdate.bind(this));
-        this.client.on('messageDelete', this.messageDelete.bind(this));
+        this.client.on('messageDelete', this.messageDelete.bind(this));**/
         this.client.on('message', this.onMessage.bind(this));
         this.client.login(this.token);
     }
 
+    ready() {
+      //this.cmdManager.addSection('');
+    }
     /**
      *
      * @param {Message} msg
      */
     onMessage(msg) {
         //no bots allowed to message
-        const matchPrefix = /^(.*?)\s/;
+        const matchPrefix = /^([\S]*)/;
         let message = msg.content;
-        let prefix = message.match(matchPrefix);
+        let prefix = message.match(matchPrefix)[1];
         if(prefix === this.prefix) {
-          this.cmdManager.onMessage(msg, message.replace(prefix, ""));
+          this.cmdManager.onMessage(msg, message.replace(prefix, "")
+                                                .trim());
         }
     }
 
-    ready() {
+    /**ready() {
         this.config.init(this.client);
 
         for (let module of Object.keys(this.config.commands)){
@@ -54,7 +63,7 @@ class Bot {
         console.log(`Logged in as ${this.client.user.tag}!`);
         this.newGame();
         setInterval(this.newGame.bind(this), 2 * 60 * 1000);
-    }
+    }**/
     /**
      * @param {GuildMember} member
     */

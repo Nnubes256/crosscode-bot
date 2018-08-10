@@ -20,7 +20,7 @@ class ListMods extends Mods {
                && emoji.name === '⬅'
                || emoji.name === '➡';
     }.bind(this);
-
+    // sorry but this was the only way
     msg.channel.send(content, embed)
          .then(function(msg) {
            msg.createReactionCollector(filter, {time : 15000})

@@ -1,13 +1,18 @@
-
-
-export default class Art {
+class Art {
   constructor({utils}) {
     this.art = [];
     this.utils = utils;
+    this.name = "";
   }
+
   init() {
 
   }
+
+  equals(name) {
+    return this.name && this.name === name;
+  }
+
   add(richEmbed) {
     this.art.push(richEmbed);
   }
@@ -30,4 +35,10 @@ export default class Art {
       embed : this.getRandom()
     }
   }
+
+  getHelpText() {
+    return '*Not implemented*';
+  }
 }
+
+exports.Art = Art;

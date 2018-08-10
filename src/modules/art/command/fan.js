@@ -1,20 +1,22 @@
-
+const {Art} = require('./template/art');
 
 class FanArt extends Art {
+
   init() {
-    const fanart = JSON.parse(require('./data/other-fanart.json'));
+
+    this.name = "fanart";
+    const fanart = require('../data/other-fanart.json').discord;
 
     for(var fanartConfig of fanart) {
-      this.add(config);
+      this.add(fanartConfig);
     }
   }
   add(opts) {
         if (opts.type === "twitter") {
             super.add(this.utils.createRichEmbed({
                 title: "Fan art",
-                description: `[Artist twitter link](${opts.user_link})\n\n[View on Twitter](${opts.link})`,
-                image: opts.image_url,
-                url: opts.twitter_link
+                description: `[Artist twitter link](${opts.user_link})\n\n[View on Twitter](${opts.status_link})`,
+                image: opts.image_url
             }));
         } else if (opts.type === "discord") {
             super.add(this.utils.createRichEmbed({
@@ -32,3 +34,4 @@ class FanArt extends Art {
         }
     }
 }
+module.exports = FanArt;

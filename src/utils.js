@@ -1,7 +1,7 @@
 const { RichEmbed } = require('discord.js');
 const rp = require('request-promise');
 
-export default class Utils {
+class Utils {
     static createRichEmbed(opts) {
         let richEmbed = new RichEmbed;
         if (opts.fields) {
@@ -34,3 +34,4 @@ export default class Utils {
       return new rp(options);
     }
 }
+module.exports = Utils;

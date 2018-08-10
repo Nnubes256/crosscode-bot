@@ -1,12 +1,11 @@
 const fs = require('fs');
 const { Client, GuildChannel, Role } = require('discord.js');
 const { Env } = require('./env');
-const { Module } = require('./module');
 
 class Config {
     /**
-     * 
-     * @param {string} path 
+     *
+     * @param {string} path
      */
     constructor(path) {
         Object.assign(this, JSON.parse(fs.readFileSync(path)));
@@ -14,7 +13,7 @@ class Config {
         /** @type {Module[]} */
         this.commands = [];
         for (let type of this.modules) {
-            this.commands[type] = require(`./modules/${type}.js`)[type];
+            //this.commands[type] = require(`./modules/${type}.js`)[type];
         }
     }
 
@@ -24,7 +23,7 @@ class Config {
 
     /** @param {Client} client */
     init(client) {
-        /** @type {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}[]} */ 
+        /** @type {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}[]} */
         this.servers = [];
         for (let json of this.roleServers) {
             let server = this.findModServer(client, json);
@@ -34,9 +33,9 @@ class Config {
     }
 
     /**
-     * 
-     * @param {Client} client 
-     * @param {*} serverJson 
+     *
+     * @param {Client} client
+     * @param {*} serverJson
      * @returns {{id: string, chans: GuildChannel[], pending: Role[], blacklist: Role[], whitelist: Role[], admin: Role[]}}
      */
     findModServer(client, serverJson) {

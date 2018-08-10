@@ -1,26 +1,51 @@
-export default class CommandManager {
+const fs = require('fs');
+const path = require('path');
+
+ class CommandManager {
   constructor() {
-    this.commands = [];
+    this.sections = [];
+    this.dependencies = {};
   }
-  addCommand(cmd) {
-    this.commands.push(cmd);
+
+  async init() {
+    var files = fs.readdirSync(path.join(__dirname, 'modules'));
+    var instances = [];
+    for(var file of files) {
+      if(file === "art") {
+        var moduleRequire = require(path.join(__dirname, 'modules', file, 'section.js'));
+        var instance = new moduleRequire(this.getDependencies());
+      }
+    }
   }
-  findCommand(name) {
-    for(var cmd of this.commands) {
-      if(cmd.equals(name)) {
-        return cmd;
+
+  addDependency(name, dependencies) {
+    this.dependencies[name] = dependencies;
+  }
+
+  getDependencies() {
+    return this.dependencies;
+  }
+
+  addSection(cmd) {
+    this.sections.push(cmd);
+  }
+  findSection(name) {
+    for(let section of this.sections) {
+      if(section.equals(name)) {
+        return section;
       }
     }
     return null;
   }
   onMessage(msg, text) {
-      const getCmdName = /\s?(.*)\s?/;
-      let cmdName = text.getCmdName("")[1];
-      let cmd = this.findCommand(cmdName);
-      if(cmd) {
-        cmd.onMessage(msg, text
-                             .trim()
-                             .replace(cmdName, ""));
+      const regexSectionName = /^(.*?)\s/;
+      let sectionName = text.match(regexSectionName)[1];
+      let section = this.findSection(sectionName);
+      if(section) {
+        section.onMessage(msg, text
+                             .replace(sectionName, "")
+                             .trim());
       }
   }
 }
+module.exports = CommandManager;

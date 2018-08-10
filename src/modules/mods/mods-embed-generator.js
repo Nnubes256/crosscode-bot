@@ -2,13 +2,14 @@
 
 
 export default class ModsEmbedGenerator {
+  //TODO: Turn off pagination for mods
   constructor(utils) {
     this.mods = [];
     this.utils = utils;
   }
-  setMods(mods) [
+  setMods(mods) {
     this.mods = mods;
-  ]
+  }
   createPageEmbed(pageNum) {
     let [startIndex, endIndex] = this.getPageRange(pageNum);
     var options = {
