@@ -50,7 +50,7 @@ for(let act of configuration.activities)
 function countDowm() {
   let releaseDate = new Date('September 20, 2018 12:00:00');
   let currentDate = new Date();
-  let diffDays = Math.floor(releaseDate - currentDate/ 86400000);
+  let diffDays = Math.floor((releaseDate - currentDate)/ 86400000);
 
   client.user.setPresence({
       game: {
