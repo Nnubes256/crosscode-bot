@@ -47,17 +47,15 @@ for(let act of configuration.activities)
     });
 };*/
 
-function countDown() {
-  let releaseDate = new Date('Thu, 20 Sep 2018 00:00:00 GMT+02:00');
+function countDowm() {
+  let releaseDate = new Date('September 20, 2018 12:00:00');
   let currentDate = new Date();
-  let diffDays = Math.ceil((releaseDate - currentDate)/ 86400000);
+  let diffDays = Math.floor((releaseDate - currentDate)/ 86400000);
 
   client.user.setPresence({
       game: {
-          type: 3,
-          name: diffDays > 0
-            ? `the calendar - ${diffDays} days left!`
-            : `RFG's website - just a few hours to go!!`
+        type : 3,
+        name : `the calendar - ${diffDays} days left!`
       }
   });
 }
@@ -65,8 +63,8 @@ client.on('ready', () => {
     manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
-    countDown();
-    setInterval(countDown, 2 * 60 * 1000);
+    countDowm();
+    setInterval(countDowm, 2 * 60 * 1000);
 });
 client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
