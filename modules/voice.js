@@ -17,12 +17,19 @@ module.exports = function(instance) {
                     return member.user.id === instance.user.id;
                 });
                 if (voiceChannel) {
-                    try {
-                        msg.member.voiceChannel.connection.playFile('./music/' + args.join(" ") + '.mp3');
-                        msg.reply('am I playing music?');
-                    } catch (e) {
-                        console.log(e)
+                    var name = args.join(" ");
+                    if(name.indexOf("http") > -1) {
+                      msg.member.voiceChannel.connection.playFile(name);
+                      msg.reply('am I playing music?');
+                    } else {
+                      try {
+                          msg.member.voiceChannel.connection.playFile('./music/' + name + '.mp3');
+                          msg.reply('am I playing music?');
+                      } catch (e) {
+                          console.log(e)
+                      }
                     }
+
 
                 } else {
                     msg.reply("not in your voice channel.")
