@@ -267,19 +267,31 @@ module.exports = function(instance, util) {
         },
         react: async function leaReact(msg, args) {
             let i = 0;
+            let channel = msg.channel;
+            let originalMsg = msg;
+            if(args[0].startsWith("chan=")) {
+              channel = msg.guild.channels.find('name', args[0].replace("chan=", ""));
+              if(!channel)
+                return;
+              args.shift();
+            }
             if(args[0].startsWith("id=")) {
                 try {
-                  msg = await msg.channel.fetchMessage(args[0].replace("id=", ""));
-		} catch(e) {
+                  msg = await channel.fetchMessage(args[0].replace("id=", ""));
+		            } catch(e) {
                    msg.reply(e);
                    return;
                 }
-                i = 1;
+                args.shift();
             }
+            let emoteCount = 0;
             for (; i < args.length; i++) {
                 let thonk = getEmote(msg, args[i]);
-                if (thonk.id !== '')
-                    msg.react(thonk.id);
+                if (thonk.id !== '') {
+                  emoteCount++;
+                  msg.react(thonk.id);
+                }
+
             }
         },
         thinking: function think(msg) {
@@ -377,7 +389,7 @@ module.exports = function(instance, util) {
                 msg.channel.send("Sorry, that string's too short!");
                 return;
             }
-            
+
             let lines = Math.floor(string.length / 8) + 1;
             let offset = Math.floor(string.length / (2 * lines));
             let height = string.length - 1;
