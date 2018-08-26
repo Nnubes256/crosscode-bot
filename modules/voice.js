@@ -36,7 +36,7 @@ module.exports = function(instance) {
         if (!currentVoiceChannel) return;
         if (
             msg.isMentioned(instance.user) &&
-            /what is your name/.test(msg.content.toLowerCase()) &&
+            /wh?at(\s+i|')[sz]\s+y(ou|[ae])r?\s+nae?me?/i.test(msg.content) &&
             msg.member.voiceChannel.id === currentVoiceChannel.channel.id
         ) {
             currentVoiceChannel.playFile('./music/voice/' + leaTracks[Math.floor(Math.random()*leaTracks.length)] + '.ogg', {volume: 4});
