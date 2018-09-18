@@ -56,7 +56,7 @@ function countDown() {
       game: {
           type: 3,
           name: diffDays > 0
-            ? `the calendar - ${diffDays} days left!`
+            ? `the calendar - ${diffDays} day${diffDays == 1 ? 's' : ''} left!`
             : `RFG's website - just a few hours to go!!`
       }
   });
