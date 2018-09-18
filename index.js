@@ -57,7 +57,7 @@ function countDown() {
       game: {
           type: 3,
           name: diffDays >= 1
-            ? `the calendar - ${diffDays} day${diffDays == 1 ? 's' : ''} left!`
+            ? `the calendar - ${diffDays} day${diffDays == 1 ? '' : 's'} left!`
             : diffHrs > 1
               ? `the clock - ${diffHrs} hours left!`
               : 'RFG\'s website - just a few minutes to go!!'
