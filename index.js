@@ -48,16 +48,19 @@ for(let act of configuration.activities)
 };*/
 
 function countDown() {
-  let releaseDate = new Date('Thu, 20 Sep 2018 00:00:00 GMT+02:00');
+  let releaseDate = new Date('Thu, 20 Sep 2018 20:00:00 GMT+02:00');
   let currentDate = new Date();
   let diffDays = Math.ceil((releaseDate - currentDate)/ 86400000);
+  let diffHrs = Math.ceil((releaseDate - currentDate)/ 1440000);
 
   client.user.setPresence({
       game: {
           type: 3,
-          name: diffDays > 0
-            ? `the calendar - ${diffDays} day${diffDays == 1 ? 's' : ''} left!`
-            : `RFG's website - just a few hours to go!!`
+          name: diffDays > 1
+            ? `the calendar - ${diffDays} days left!`
+            : diffHrs > 1
+              ? `the clock - ${diffHrs} hours left!`
+              : 'RFG\'s website - just a few minutes to go!!'
       }
   });
 }
