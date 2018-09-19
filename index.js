@@ -47,22 +47,58 @@ for(let act of configuration.activities)
     });
 };*/
 
+function singularPluralMaker(time, baseTimeString) {
+    return baseTimeString + (time > 1? "s" : "");
+}
+function timeUnitStringNormalizer(time) {
+   if(time < 10) {
+	return "0" + time;
+   }
+   return "" + time;
+}
 function countDown() {
   let releaseDate = new Date('Thu, 20 Sep 2018 17:00:00 GMT+02:00');
   let currentDate = new Date();
   let diffDays = Math.floor((releaseDate - currentDate)/ (1000 * 60**2 * 24));// below * 24 hours in a day
-  let diffHrs = Math.ceil((releaseDate - currentDate)/ (1000      // ms in a second
+  let diffHrs = Math.floor((releaseDate - currentDate)/ (1000      // ms in a second
                                                        * 60     // second in a minute
                                                        * 60)); // minutes in an hour 
+  let diffMinutes = Math.floor(((releaseDate - currentDate)/(1000 * 60 * 60)%diffHrs) * 60);
+  let timeType = "";
+  let timeString = "";
+  let watchType = ["the calendar", "the clock", "the last hour"];
+  let watchTypeIndex = 0;
 
+  if(diffMinutes >= 1) {
+      timeType = singularPluralMaker(diffMinutes, "minute"); 
+      timeString = timeUnitStringNormalizer(diffMinutes) + " " + timeType;
+      watchTypeIndex = 2;
+   }
+   if(diffHrs >= 1) {
+      timeType = singularPluralMaker(diffHrs, "hour");
+      timeString = timeUnitStringNormalizer(diffHrs) + " " + timeType + " " + timeString;
+      watchTypeIndex = 1;
+   }
+   if(diffDays >= 1) {
+      timeType = singularPluralMaker(diffDays, "day");
+      timeString = timeUnitStringNormalizer(diffDays)  + " " + timeType + " " + timeString;
+      watchTypeIndex = 0;
+   }
+
+  let presenceMessage = "";
+  let presenceType = 3;
+  if(timeType) {
+        let watching = watchType[watchTypeIndex];
+ 	presenceMessage = `${watching} - ${timeString} left`;
+  } else {
+        presenceType = 0;
+	presenceMessage = "CrossCode v1";
+   }
+  
   client.user.setPresence({
       game: {
-          type: 3,
-          name: diffDays >= 1
-            ? `the calendar - ${diffDays} day${diffDays == 1 ? '' : 's'} left!`
-            : diffHrs > 1
-              ? `the clock - ${diffHrs} hours left!`
-              : 'RFG\'s website - just a few minutes to go!!'
+          type: presenceType,
+          name: presenceMessage
       }
   });
 }
