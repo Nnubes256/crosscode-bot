@@ -107,7 +107,7 @@ client.on('ready', () => {
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     countDown();
-    setInterval(countDown, 2 * 60 * 1000);
+    setInterval(countDown, 30 * 1000);// every 30 seconds it updates to be more precise
 });
 client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
