@@ -57,7 +57,7 @@ function timeUnitStringNormalizer(time) {
    return "" + time;
 }
 function countDown() {
-  let releaseDate = new Date('Thu, 20 Sep 2018 17:00:00 GMT+02:00');
+  let releaseDate = new Date('Thu, 20 Sep 2018 20:00:00 GMT+02:00');
   let currentDate = new Date();
   let diffDays = Math.floor((releaseDate - currentDate)/ (1000 * 60**2 * 24));// below * 24 hours in a day
   let diffHrs = Math.floor((releaseDate - currentDate)/ (1000      // ms in a second
