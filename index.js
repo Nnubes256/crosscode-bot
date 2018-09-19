@@ -50,8 +50,10 @@ for(let act of configuration.activities)
 function countDown() {
   let releaseDate = new Date('Thu, 20 Sep 2018 20:00:00 GMT+02:00');
   let currentDate = new Date();
-  let diffDays = Math.floor((releaseDate - currentDate)/ 86400000);
-  let diffHrs = Math.ceil((releaseDate - currentDate)/ 1440000);
+  let diffDays = Math.floor((releaseDate - currentDate)/ (1000 * 60**2 * 24));// below * 24 hours in a day
+  let diffHrs = Math.ceil((releaseDate - currentDate)/ (1000      // ms in a second
+                                                       * 60     // second in a minute
+                                                       * 60)); // minutes in an hour 
 
   client.user.setPresence({
       game: {
