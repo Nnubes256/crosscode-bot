@@ -87,17 +87,17 @@ function getCountDown() {
 
   let name = "";
   let type = 3;
-  if(timeType) {
+   if(timeType) {
         let watching = watchType[watchTypeIndex];
  	name = `${watching} - ${timeString} left`;
-  } else {
+    } else {
         type = 0;
 	name = "CrossCode v1";
    }
   
     return {type, name};
 }
-functon onCountdown() {
+function onCountDown() {
      client.user.setPresence({
       game: getCountDown()
      });
@@ -106,8 +106,8 @@ client.on('ready', () => {
     manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
-    onCountdown();
-    setInterval(onCountdown, 30 * 1000);// every 30 seconds it updates to be more precise
+    onCountDown();
+    setInterval(onCountDown, 30 * 1000);// every 30 seconds it updates to be more precise
 });
 client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
