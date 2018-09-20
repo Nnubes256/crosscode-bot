@@ -56,7 +56,7 @@ function timeUnitStringNormalizer(time) {
    }
    return "" + time;
 }
-function countDown() {
+function getCountDown() {
   let releaseDate = new Date('Thu, 20 Sep 2018 20:00:00 GMT+02:00');
   let currentDate = new Date();
   let diffDays = Math.floor((releaseDate - currentDate)/ (1000 * 60**2 * 24));// below * 24 hours in a day
@@ -85,29 +85,29 @@ function countDown() {
       watchTypeIndex = 0;
    }
 
-  let presenceMessage = "";
-  let presenceType = 3;
+  let name = "";
+  let type = 3;
   if(timeType) {
         let watching = watchType[watchTypeIndex];
- 	presenceMessage = `${watching} - ${timeString} left`;
+ 	name = `${watching} - ${timeString} left`;
   } else {
-        presenceType = 0;
-	presenceMessage = "CrossCode v1";
+        type = 0;
+	name = "CrossCode v1";
    }
   
-  client.user.setPresence({
-      game: {
-          type: presenceType,
-          name: presenceMessage
-      }
-  });
+    return {type, name};
+}
+functon onCountdown() {
+     client.user.setPresence({
+      game: getCountDown()
+     });
 }
 client.on('ready', () => {
     manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
-    countDown();
-    setInterval(countDown, 30 * 1000);// every 30 seconds it updates to be more precise
+    onCountdown();
+    setInterval(onCountdown, 30 * 1000);// every 30 seconds it updates to be more precise
 });
 client.on('guildMemberAdd', function(newMember) {
     for (let serv of manageServs)
@@ -191,7 +191,10 @@ function getJPGUrl(msg) {
 }
 
 async function onMessage(msg) {
-    //lel
+    if (msg.content.toLowerCase().startsWith("?release")) {
+	msg.channel.send("Watching " + getCountDown().name);
+    }
+
     if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof");
         return;
