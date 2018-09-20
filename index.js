@@ -63,7 +63,7 @@ function getCountDown() {
   let diffHrs = Math.floor((releaseDate - currentDate)/ (1000      // ms in a second
                                                        * 60     // second in a minute
                                                        * 60)); // minutes in an hour 
-  let diffMinutes = Math.floor(((releaseDate - currentDate)/(1000 * 60 * 60)%diffHrs) * 60);
+  let diffMinutes = Math.floor(((releaseDate - currentDate)/(1000 * 60 * 60)%(diffHrs ? diffHrs : 1)) * 60);
   let timeType = "";
   let timeString = "";
   let watchType = ["the calendar", "the clock", "the last hour"];
