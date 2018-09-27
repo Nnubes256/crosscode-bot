@@ -111,7 +111,7 @@ module.exports = function(instance, util, config, console) {
             }
        }
        updateIdsList(streamData);
-    }, (1 * 30 * 1000)); //Update every 30 seconds
+    }, (15 * 60 * 1000)); //Update every 15 minutes
 
     let commands = {
         set: function(msg) {
