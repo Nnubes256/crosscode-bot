@@ -40,6 +40,8 @@ for(let act of configuration.activities)
     activities.push(act);
 }
 
+util.setRateLimiterDefaultConfig(configuration["ratelimit-defaults"]);
+
 /*function newGame() {
     var ran = activities.random();
     client.user.setPresence({
@@ -62,7 +64,7 @@ function getCountDown() {
   let diffDays = Math.floor((releaseDate - currentDate)/ (1000 * 60**2 * 24));// below * 24 hours in a day
   let diffHrs = Math.floor((releaseDate - currentDate)/ (1000      // ms in a second
                                                        * 60     // second in a minute
-                                                       * 60)); // minutes in an hour 
+                                                       * 60)); // minutes in an hour
   let diffMinutes = Math.floor(((releaseDate - currentDate)/(1000 * 60 * 60)%(diffHrs ? diffHrs : 1)) * 60);
   let timeType = "";
   let timeString = "";
@@ -70,7 +72,7 @@ function getCountDown() {
   let watchTypeIndex = 0;
 
   if(diffMinutes >= 1) {
-      timeType = singularPluralMaker(diffMinutes, "minute"); 
+      timeType = singularPluralMaker(diffMinutes, "minute");
       timeString = timeUnitStringNormalizer(diffMinutes) + " " + timeType;
       watchTypeIndex = 2;
    }
@@ -94,7 +96,7 @@ function getCountDown() {
         type = 0;
 	name = "CrossCode v1";
    }
-  
+
     return {type, name};
 }
 function onCountDown() {
@@ -104,6 +106,7 @@ function onCountDown() {
 }
 client.on('ready', () => {
     manageServs = util.getAllServers(client, servers, console);
+    util.setupDMRatelimiter();
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     onCountDown();
@@ -192,11 +195,16 @@ function getJPGUrl(msg) {
 
 async function onMessage(msg) {
     if (msg.content.toLowerCase().startsWith("?release")) {
-	msg.channel.send("Watching " + getCountDown().name);
+        util.consumeRateLimitToken(msg).then(() => {
+            msg.channel.send("Watching " + getCountDown().name);
+        });
+        return;
     }
 
     if (msg.content.toLowerCase().startsWith("failed to load")) {
-        msg.channel.send("oof");
+        util.consumeRateLimitToken(msg).then(() => {
+            msg.channel.send("oof");
+        });
         return;
     }
     // Get stream drawings links automatically
@@ -218,6 +226,7 @@ async function onMessage(msg) {
 
         return;
     }
+
     //Allow for new line parsing
 	var message = msg.content.replace(/<@!?(.*?)>/g,"") // Remove mentions
 	                                    .replace(/^\s+|\s+$/g, '')
@@ -225,6 +234,7 @@ async function onMessage(msg) {
     let _prefix = args.shift();
     if (!_prefix.startsWith(prefix))
         return;
+
     let invoc = _prefix;
     let type = configuration["default-module"];
     if (args[0] && args[0].startsWith("-")) {
@@ -237,26 +247,30 @@ async function onMessage(msg) {
         args.shift();
     }
 
-    let command = args.shift()
+    let command = args.shift();
     if (command === "help") {
-        msg.author.send(util.formatHelpText(invoc, helpText[type]));
-        return;
+        util.consumeRateLimitToken(msg).then(() => {
+            msg.author.send(util.formatHelpText(invoc, helpText[type]));
+            return;
+        });
     }
     let func = commands[type][command]
     if (func) {
-        (new Promise((resolve, reject) => {
-            let result;
-            try {
-                result = func(msg, args, command, console);
-            } catch (err) {
-                reject(err);
-            }
-            resolve(result);
-        })).then(function(res) {}, function(err) {
+        util.consumeRateLimitToken(msg).then(() => {
+            return new Promise((resolve, reject) => {
+                let result;
+                try {
+                    result = func(msg, args, command, console);
+                } catch (err) {
+                    reject(err);
+                }
+                resolve(result);
+            });
+        }).then(function(res) {}, function(err) {
             console.log(err);
         });
     }
-
 }
+
 client.on('message', onMessage);
 client.login(process.env.BOT_TOKEN);

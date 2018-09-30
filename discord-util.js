@@ -1,10 +1,14 @@
 const Discord = require('discord.js');
+const FastRateLimit = require("fast-ratelimit").FastRateLimit;
 
 let knownEmotes = {};
 let manageServs = []; // cache
 let roleBlacklist = [];
 let roleWhitelist = [];
 let roleAdmin = [];
+let rateLimiters = {};
+let rateLimiterDefaultConfig = {};
+
 exports.getAllEmotes = function(client) {
     //to minimize the possibility of spawning deleted emotes
     knownEmotes = {};
@@ -143,6 +147,11 @@ exports.discObjFind = function(obj, name) {
 function findModServer(client, serverJson, console) {
     let retval = {id: "", chans: {}, pending: [],"auto-role" :[]};
     try {
+        if (serverJson.name == "dm") {
+            console.log("ERROR: \"dm\" is a reserved keyword for server names. Please use another regex instead.")
+            throw new Error("\"dm\" is a reserved keyword for server names");
+        }
+
         let server = discObjFind(client.guilds, serverJson.name);
 //        console.log(server);
 
@@ -181,6 +190,28 @@ function findModServer(client, serverJson, console) {
                 roleAdmin.push(exports.discObjFind(server.roles, role).id);
             }
         }
+
+        var ratelimitConfig = Object.assign({}, rateLimiterDefaultConfig);
+
+        rateLimiters[server.id] = {};
+
+        if (serverJson.ratelimit) {
+            if (serverJson.ratelimit.server) {
+                ratelimitConfig.server = serverJson.ratelimit.server;
+            }
+            if (serverJson.ratelimit.channel) {
+                ratelimitConfig.channel = serverJson.ratelimit.channel;
+            }
+        } else {
+            console.log("[ratelimit] WARN: using default configuration for server " + serverConfig.name);
+        }
+
+        for (var ratelimitType in ratelimitConfig) {
+            if (ratelimitConfig.hasOwnProperty(ratelimitType)) {
+                rateLimiters[server.id][ratelimitType] = new FastRateLimit(ratelimitConfig[ratelimitType]);
+            }
+        }
+
         return retval;
     } catch(e) {
         console.log(e);
@@ -206,7 +237,7 @@ exports.hasRoles = function(roleType, guild, member, console) {
 }
 exports.getRoles = function(roleType, guild) {
   var server = findServer(guild);
-  return server[roleType] || [];	
+  return server[roleType] || [];
 }
 exports.log = function(msg, message) {
   var server = findServer(msg.guild);
@@ -287,4 +318,51 @@ exports.argParse = function(str) {
         }
     }
     return spl;
+}
+
+exports.setRateLimiterDefaultConfig = function(rlConfig) {
+    rateLimiterDefaultConfig = rlConfig;
+}
+
+exports.setupDMRatelimiter = function() {
+    // Setup additional ratelimiter for DM messages based on defaults
+    rateLimiters["dm"] = {};
+    for (var ratelimitType in rateLimiterDefaultConfig) {
+        if (rateLimiterDefaultConfig.hasOwnProperty(ratelimitType)) {
+            rateLimiters["dm"][ratelimitType] = new FastRateLimit(rateLimiterDefaultConfig[ratelimitType]);
+        }
+    }
+}
+
+exports.consumeRateLimitToken = function(message) {
+    // Ratelimiter server selector
+    let ratelimiterServer;
+
+    // Is it a DM?
+    if (!message.guild) {
+        // Yes, the DMs ratelimiter is used.
+        ratelimiterServer = rateLimiters["dm"];
+
+    } else {
+        // No, the ratelimiter for that server is used, if it's there.
+        // Ratelimit blocks by default if the server is not registered into the system!
+        if (!rateLimiters[message.guild.id]) {
+            console.log("[ratelimit] WARN: guild not registered in system: " + message.guild.id);
+            return Promise.reject();
+        }
+
+        ratelimiterServer = rateLimiters[message.guild.id];
+    }
+
+    let serverNamespace = message.author.id;
+    let channelNamespace = message.channel.id + ":" + message.author.id
+
+    // Consume the tokens for each ratelimiter type
+    return Promise.all([
+        ratelimiterServer.server.consume(serverNamespace),
+        ratelimiterServer.channel.consume(channelNamespace)
+    ]).catch(() => {
+        //console.log("[ratelimit] block uid=" + message.author.id + " mid=" + message.id);
+        return Promise.reject("[ratelimit] block uid=" + message.author.id + " mid=" + message.id);
+    });
 }

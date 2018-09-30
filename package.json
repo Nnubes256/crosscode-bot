@@ -12,6 +12,7 @@
   "main": "index.html",
   "dependencies": {
     "discord.js": "^11.3.2",
+    "fast-ratelimit": "^2.2.0",
     "ffmpeg-binaries": "^3.2.2-3",
     "grapheme-splitter": "^1.0.2",
     "node-fetch": "^2.1.2",

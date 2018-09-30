@@ -33,6 +33,17 @@
         "WATCHING"
     ],
 
+    "ratelimit-defaults": {
+        "server": {
+            "threshold": 30,
+            "ttl": 60
+        },
+        "channel": {
+            "threshold": 8,
+            "ttl": 45
+        }
+    },
+
     "role-servers": [
         {
             "name": "CrossCode$",
@@ -50,6 +61,16 @@
                 "whitelist": [],
                 "blacklist" : [],
                 "admin" : []
+            },
+            "ratelimit": {
+                "server": {
+                    "threshold": 30,
+                    "ttl": 60
+                },
+                "channel": {
+                    "threshold": 8,
+                    "ttl": 45
+                }
             }
         },
         {
@@ -77,6 +98,16 @@
                 "admin" : [
                   "admin"
                 ]
+            },
+            "ratelimit": {
+                "server": {
+                    "threshold": 30,
+                    "ttl": 60
+                },
+                "channel": {
+                    "threshold": 8,
+                    "ttl": 45
+                }
             }
         },
         {
@@ -93,6 +124,16 @@
                 "whitelist": [],
                 "blacklist": [],
                 "admin" : []
+            },
+            "ratelimit": {
+                "server": {
+                    "threshold": 30,
+                    "ttl": 60
+                },
+                "channel": {
+                    "threshold": 8,
+                    "ttl": 45
+                }
             }
         },
         {
@@ -109,6 +150,16 @@
                 "whitelist": [],
                 "blacklist": [],
                 "admin" : []
+            },
+            "ratelimit": {
+                "server": {
+                    "threshold": 30,
+                    "ttl": 60
+                },
+                "channel": {
+                    "threshold": 8,
+                    "ttl": 45
+                }
             }
         }
     ]
