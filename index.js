@@ -33,7 +33,6 @@ Array.prototype.random = Array.prototype.random || function() {
     return this[parseInt(Math.random() * this.length)];
 }
 client.on('ready', () => {
-    manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setPresence({type: 0, name: "CrossCode 1.0!!"});
