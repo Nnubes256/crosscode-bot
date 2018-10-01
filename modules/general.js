@@ -112,35 +112,6 @@ module.exports = function(instance, util) {
                 msg.channel.send(`sent back in ${newDuration} ms`)
             })
         },
-        box: function(msg, args) {
-            if (msg.channel.name !== "spam")
-                return;
-            let phrase = args.join(' ').replace(/\n+/g, '\n');
-            if(!phrase.length) return;
-            let charLimit = 80;
-            if (phrase.length > charLimit) {
-                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
-                return;
-            }
-            let arr = splitter.splitGraphemes(phrase);
-            boxGenerate(phrase, arr).forEach(function(message) {
-                msg.channel.send('```js\n' + message + '```');
-            });
-        },
-        rbox: function randomBox(msg, args) {
-            if (msg.channel.name !== "spam")
-                return;
-            let phrase = args.join(' ');
-            let charLimit = 80;
-            if (phrase.length > charLimit) {
-                msg.reply(`Due to complaints by users, it has now been nerfed to max of ${charLimit} characters (emojis lengths vary). Sorry about that.`);
-                return;
-            }
-            let arr = splitter.splitGraphemes(phrase).reverse();
-            boxGenerate(arr.join(''), arr).forEach(function(message) {
-                msg.channel.send('```js\n' + message + '```');
-            });
-        },
         setname: function setName(msg, args, command) {
             if (!isFromAdmin(msg))
                 return;

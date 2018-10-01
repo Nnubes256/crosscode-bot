@@ -32,148 +32,11 @@ for (let type of cmdTypes) {
 Array.prototype.random = Array.prototype.random || function() {
     return this[parseInt(Math.random() * this.length)];
 }
-
-let activities = [];
-for(let act of configuration.activities)
-{
-    act.type = configuration["activity-types"].indexOf(act.type);
-    activities.push(act);
-}
-
-/*function newGame() {
-    var ran = activities.random();
-    client.user.setPresence({
-        game: ran
-    });
-};*/
-
-function singularPluralMaker(time, baseTimeString) {
-    return baseTimeString + (time > 1? "s" : "");
-}
-function timeUnitStringNormalizer(time) {
-   if(time < 10) {
-	return "0" + time;
-   }
-   return "" + time;
-}
-function getCountDown() {
-  let releaseDate = new Date('Thu, 20 Sep 2018 20:00:00 GMT+02:00');
-  let currentDate = new Date();
-  let diffDays = Math.floor((releaseDate - currentDate)/ (1000 * 60**2 * 24));// below * 24 hours in a day
-  let diffHrs = Math.floor((releaseDate - currentDate)/ (1000      // ms in a second
-                                                       * 60     // second in a minute
-                                                       * 60)); // minutes in an hour 
-  let diffMinutes = Math.floor(((releaseDate - currentDate)/(1000 * 60 * 60)%(diffHrs ? diffHrs : 1)) * 60);
-  let timeType = "";
-  let timeString = "";
-  let watchType = ["the calendar", "the clock", "the last hour"];
-  let watchTypeIndex = 0;
-
-  if(diffMinutes >= 1) {
-      timeType = singularPluralMaker(diffMinutes, "minute"); 
-      timeString = timeUnitStringNormalizer(diffMinutes) + " " + timeType;
-      watchTypeIndex = 2;
-   }
-   if(diffHrs >= 1) {
-      timeType = singularPluralMaker(diffHrs, "hour");
-      timeString = timeUnitStringNormalizer(diffHrs) + " " + timeType + " " + timeString;
-      watchTypeIndex = 1;
-   }
-   if(diffDays >= 1) {
-      timeType = singularPluralMaker(diffDays, "day");
-      timeString = timeUnitStringNormalizer(diffDays)  + " " + timeType + " " + timeString;
-      watchTypeIndex = 0;
-   }
-
-  let name = "";
-  let type = 3;
-   if(timeType) {
-        let watching = watchType[watchTypeIndex];
- 	name = `${watching} - ${timeString} left`;
-    } else {
-        type = 0;
-	name = "CrossCode v1";
-   }
-  
-    return {type, name};
-}
-function onCountDown() {
-     client.user.setPresence({
-      game: getCountDown()
-     });
-}
 client.on('ready', () => {
     manageServs = util.getAllServers(client, servers, console);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
-    onCountDown();
-    setInterval(onCountDown, 30 * 1000);// every 30 seconds it updates to be more precise
-});
-client.on('guildMemberAdd', function(newMember) {
-    for (let serv of manageServs)
-        if (newMember.guild.id === serv.id) {
-            if(serv.pending.length) {
-              //newMember.addRoles(serv.pending).catch(console.log);
-              //serv.chans.syslog.send(`Added ${serv.pending[0].name} role to ${newMember}`);
-            }
-            var newGreet = util.greetingsParse(newMember.guild, serv.greet);
-            serv.chans.greet && serv.chans.greet.send(`${newMember}, ${newGreet}`);
-            break;
-        }
-});
-client.on('guildMemberRemove', member => {
-    for (let serv of manageServs)
-        if (member.guild.id === serv.id) {
-            if(!serv.chans.editlog)
-                break;
-            try {
-              serv.chans.editlog.send(`Member left the server: ${member}`, util.createRichEmbed({
-                  fields:[{
-                      name:"Had roles",
-                      value: member.roles.array().join('\r\n')
-                  }]
-              })).catch(console.log);
-            }catch(e) {
-              console.log(e);
-            }
-
-            break;
-        }
-});
-client.on('messageUpdate', (oldMsg, newMsg) => {
-    var author = oldMsg.author;
-    if(author.bot || oldMsg.content == newMsg.content)
-        return;
-    for (let serv of manageServs)
-        if (oldMsg.guild.id === serv.id) {
-            if(!serv.chans.editlog)
-                break;
-
-            serv.chans.editlog.send(`Member updated message in ${oldMsg.channel}: ${author}`, util.createRichEmbed({
-                fields: [
-                    { name: "From", value: oldMsg.content },
-                    { name: "To", value: newMsg.content }
-                ]
-            })).catch(console.log);
-            break;
-        }
-});
-client.on('messageDelete', msg => {
-    var author = msg.author;
-    if(author.bot)
-        return;
-    for (let serv of manageServs)
-        if (msg.guild.id === serv.id) {
-            if(!serv.chans.editlog)
-                break;
-
-            serv.chans.editlog.send(`A message was deleted in ${msg.channel}: ${author}`, util.createRichEmbed({
-                fields: [
-                    { name: "Content", value: msg.content }
-                ]
-            })).catch(console.log);
-            break;
-        }
+    client.user.setPresence({type: 0, name: "CrossCode 1.0!!"});
 });
 async function getDriveFileDirLink(url) {
 	var regexfileID = /\/d\/(.*?)\//;
@@ -191,34 +54,10 @@ function getJPGUrl(msg) {
 }
 
 async function onMessage(msg) {
-    if (msg.content.toLowerCase().startsWith("?release")) {
-	msg.channel.send("Watching " + getCountDown().name);
-    }
-
     if (msg.content.toLowerCase().startsWith("failed to load")) {
         msg.channel.send("oof");
         return;
     }
-    // Get stream drawings links automatically
-	if(msg.channel.name === "media") {
-        var ccChan = util.discObjFind(msg.guild.channels, "^crosscode$");
-        if(ccChan) {
-            var url = getJPGUrl(msg.content);
-            if(!url)
-              return;
-            if(url.includes("dropbox")) {
-                // this will auto redirect to raw location
-                var res = await fetch(url);
-                ccChan.send(`<@!208763015657553921>! Add this url to stream drawings. ${res.url}`);
-            } else if(url.includes("drive.google.com")) {
-                var directLink = await getDriveFileDirLink(url);
-                ccChan.send(`<@!208763015657553921>! Add this url to stream drawings. ${directLink}`);
-            }
-        }
-
-        return;
-    }
-    //Allow for new line parsing
 	var message = msg.content.replace(/<@!?(.*?)>/g,"") // Remove mentions
 	                                    .replace(/^\s+|\s+$/g, '')
     let args = util.argParse(message);
