@@ -7,6 +7,7 @@ let roleBlacklist = [];
 let roleWhitelist = [];
 let roleAdmin = [];
 let rateLimiters = {};
+let selfRateLimiters = {};
 let syslogSilencedUserIDs = [];
 let rateLimiterDefaultConfig = {};
 
@@ -331,6 +332,15 @@ exports.messageToURL = messageToURL;
 
 exports.setRateLimiterDefaultConfig = function(rlConfig) {
     rateLimiterDefaultConfig = rlConfig;
+}
+
+exports.setupSelfRateLimiters = function(config) {
+    if (config["syslog-ratelimit-user"]) {
+        selfRateLimiters.syslogRatelimit = new FastRateLimit(config["syslog-ratelimit-user"]);
+    } else {
+        console.log("[ratelimit] WARN: using default configuration for self: syslog RL alerts ratelimiter");
+        selfRateLimiters.syslogRatelimit = new FastRateLimit(rateLimiterDefaultConfig);
+    }
 }
 
 exports.setupDMRatelimiter = function(config) {

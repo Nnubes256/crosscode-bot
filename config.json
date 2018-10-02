@@ -44,6 +44,13 @@
         }
     },
 
+    "self-ratelimit": {
+        "syslog-ratelimit-user": {
+            "threshold": 2,
+            "ttl": 240
+        }
+    },
+
     "role-servers": [
         {
             "name": "CrossCode$",
