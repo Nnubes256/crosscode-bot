@@ -7,6 +7,7 @@ let roleBlacklist = [];
 let roleWhitelist = [];
 let roleAdmin = [];
 let rateLimiters = {};
+let syslogSilencedUserIDs = [];
 let rateLimiterDefaultConfig = {};
 
 exports.getAllEmotes = function(client) {
@@ -320,16 +321,26 @@ exports.argParse = function(str) {
     return spl;
 }
 
+function messageToURL(message) {
+    return "https://discordapp.com/channels/" +
+    (message.guild ? message.guild.id : "@me") + "/" +
+    message.channel.id + "/" + message.id
+}
+
+exports.messageToURL = messageToURL;
+
 exports.setRateLimiterDefaultConfig = function(rlConfig) {
     rateLimiterDefaultConfig = rlConfig;
 }
 
-exports.setupDMRatelimiter = function() {
+exports.setupDMRatelimiter = function(config) {
     // Setup additional ratelimiter for DM messages based on defaults
     rateLimiters["dm"] = {};
-    for (var ratelimitType in rateLimiterDefaultConfig) {
+    for (var ratelimitType in config) {
+        // Check for rateLimiterDefaultConfig is intended; we don't want ghost
+        // ratelimiter types polluting the namespace.
         if (rateLimiterDefaultConfig.hasOwnProperty(ratelimitType)) {
-            rateLimiters["dm"][ratelimitType] = new FastRateLimit(rateLimiterDefaultConfig[ratelimitType]);
+            rateLimiters["dm"][ratelimitType] = new FastRateLimit(config[ratelimitType]);
         }
     }
 }
@@ -337,32 +348,72 @@ exports.setupDMRatelimiter = function() {
 exports.consumeRateLimitToken = function(message) {
     // Ratelimiter server selector
     let ratelimiterServer;
+    let guild = message.guild;
+    let user = message.author;
 
     // Is it a DM?
-    if (!message.guild) {
+    if (!guild) {
         // Yes, the DMs ratelimiter is used.
         ratelimiterServer = rateLimiters["dm"];
 
     } else {
         // No, the ratelimiter for that server is used, if it's there.
         // Ratelimit blocks by default if the server is not registered into the system!
-        if (!rateLimiters[message.guild.id]) {
-            console.log("[ratelimit] WARN: guild not registered in system: " + message.guild.id);
+        if (!rateLimiters[guild.id]) {
+            console.log("[ratelimit] WARN: guild not registered in system: " + guild.id);
             return Promise.reject();
         }
 
-        ratelimiterServer = rateLimiters[message.guild.id];
+        ratelimiterServer = rateLimiters[guild.id];
     }
 
-    let serverNamespace = message.author.id;
-    let channelNamespace = message.channel.id + ":" + message.author.id
+    let serverNamespace = user.id;
+    let channelNamespace = message.channel.id + ":" + user.id
 
     // Consume the tokens for each ratelimiter type
     return Promise.all([
-        ratelimiterServer.server.consume(serverNamespace),
-        ratelimiterServer.channel.consume(channelNamespace)
-    ]).catch(() => {
-        //console.log("[ratelimit] block uid=" + message.author.id + " mid=" + message.id);
-        return Promise.reject("[ratelimit] block uid=" + message.author.id + " mid=" + message.id);
+        ratelimiterServer.server.consume(serverNamespace).catch(() => {return Promise.reject("server")}),
+        ratelimiterServer.channel.consume(channelNamespace).catch(() => {return Promise.reject("channel")}),
+    ]).catch((scope) => {
+        if (guild) {
+            let server = findServer(guild);
+            if (server && server.chans["syslog"]) {
+                selfRateLimiters.syslogRatelimit.consume(serverNamespace + ":" + scope).then(() => {
+                    if (syslogSilencedUserIDs.includes(user.id)) {
+                        syslogSilencedUserIDs.splice(syslogSilencedUserIDs.indexOf(user.id), 1);
+                    }
+                    switch (scope) {
+                        case "server":
+                            server.chans["syslog"].send(
+                                "[RateLimit] User " + user +
+                                " has exceeded the server ratelimit threshold for this server. Message link: " +
+                                messageToURL(message)
+                            );
+                            break;
+                        case "channel":
+                            server.chans["syslog"].send(
+                                "[RateLimit] User " + user +
+                                " has exceeded the channel ratelimit threshold for channel " + message.channel + ". Message ID: " +
+                                messageToURL(message)
+                            );
+                            break;
+                        default:
+
+                    }
+                }).catch(() => {
+                    if (!syslogSilencedUserIDs.includes(user.id)) {
+                        server.chans["syslog"].send(
+                            "[RateLimit] User " + user +
+                            " has been blocked on scope \"" + scope + "\" too much; silencing alerts for a couple of minutes."
+                        );
+                        syslogSilencedUserIDs.push(user.id);
+                    }
+                });
+            }
+        }
+        return Promise.reject(
+            "[ratelimit] block " + scope + " uid=" + user.id + " mid=" + message.id +
+            (scope == "channel" ? (" chid=" + message.channel.id) : "")
+        );
     });
 }

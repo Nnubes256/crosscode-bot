@@ -106,7 +106,7 @@ function onCountDown() {
 }
 client.on('ready', () => {
     manageServs = util.getAllServers(client, servers, console);
-    util.setupDMRatelimiter();
+    util.setupDMRatelimiter(configuration["ratelimit-defaults"]);
     util.getAllEmotes(client);
     console.log(`Logged in as ${client.user.tag}!`);
     onCountDown();
