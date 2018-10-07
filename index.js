@@ -49,6 +49,19 @@ util.setRateLimiterDefaultConfig(configuration["ratelimit-defaults"]);
     });
 };*/
 
+function EXIT_HANDLER() {
+    try {
+        if (client) client.destroy();
+        process.exit();
+    } catch(e) {}
+}
+
+process.on('exit', exitHandler.bind(null));    // Normal exit
+process.on('SIGINT', exitHandler.bind(null));  // Ctrl+C
+process.on('SIGUSR1', exitHandler.bind(null, {exit:true})); // Common supervisor signals
+process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
+process.on('uncaughtException', exitHandler.bind(null, {exit:true})); // Exceptions
+
 function singularPluralMaker(time, baseTimeString) {
     return baseTimeString + (time > 1? "s" : "");
 }
