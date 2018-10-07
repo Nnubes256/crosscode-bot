@@ -56,11 +56,11 @@ function EXIT_HANDLER() {
     } catch(e) {}
 }
 
-process.on('exit', exitHandler.bind(null));    // Normal exit
-process.on('SIGINT', exitHandler.bind(null));  // Ctrl+C
-process.on('SIGUSR1', exitHandler.bind(null, {exit:true})); // Common supervisor signals
-process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
-process.on('uncaughtException', exitHandler.bind(null, {exit:true})); // Exceptions
+process.on('exit', EXIT_HANDLER.bind(null));    // Normal exit
+process.on('SIGINT', EXIT_HANDLER.bind(null));  // Ctrl+C
+process.on('SIGUSR1', EXIT_HANDLER.bind(null, {exit:true})); // Common supervisor signals
+process.on('SIGUSR2', EXIT_HANDLER.bind(null, {exit:true}));
+process.on('uncaughtException', EXIT_HANDLER.bind(null, {exit:true})); // Exceptions
 
 function singularPluralMaker(time, baseTimeString) {
     return baseTimeString + (time > 1? "s" : "");
