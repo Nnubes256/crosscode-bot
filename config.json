@@ -8,7 +8,7 @@
         "nsfw",
         "roles",
         "streams",
-        "voice"
+        "voice" 
     ],
     "default-module": "general",
 
