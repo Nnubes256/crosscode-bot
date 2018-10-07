@@ -8,6 +8,7 @@ let roleWhitelist = [];
 let roleAdmin = [];
 
 let rateLimiters = {};
+let banLists = {};
 let selfRateLimiters = {};
 let syslogSilencedUserIDs = [];
 let rateLimiterDefaultConfig = {};
@@ -206,12 +207,24 @@ function findModServer(client, serverJson, console) {
             if (serverJson.ratelimit.channel) {
                 ratelimitConfig.channel = serverJson.ratelimit.channel;
             }
+            if (serverJson.ratelimit.abuse) {
+                ratelimitConfig.abuse = serverJson.ratelimit.abuse;
+            }
         } else {
             console.log("[ratelimit] WARN: using default configuration for server " + serverConfig.name);
         }
 
         for (var ratelimitType in ratelimitConfig) {
             if (ratelimitConfig.hasOwnProperty(ratelimitType)) {
+                if (ratelimitConfig[ratelimitType].hasOwnProperty("bantime")) {
+                    if (!banLists[server.id]) {
+                        banLists[server.id] = {};
+                    }
+                    banLists[server.id][ratelimitType] = new FastRateLimit({
+                        ttl: ratelimitConfig[ratelimitType].bantime,
+                        threshold: 1
+                    });
+                }
                 rateLimiters[server.id][ratelimitType] = new FastRateLimit(ratelimitConfig[ratelimitType]);
             }
         }
@@ -415,17 +428,34 @@ exports.consumeRateLimitToken = function(message) {
         }
 
         ratelimiterServer = rateLimiters[guild.id];
+
+        // Test against banlist
+        var isBanned = false;
+        for (var servenBanType in banLists[guild.id]) {
+            if (banLists[guild.id].hasOwnProperty(servenBanType)) {
+                if (!(banLists[guild.id][servenBanType].hasTokenSync(user.id))) {
+                    isBanned = true;
+                    break;
+                }
+            }
+        }
+        if (isBanned) {
+            return Promise.reject("banlist");
+        }
     }
 
     let serverNamespace = user.id;
     let channelNamespace = message.channel.id + ":" + user.id
 
-    // Consume the tokens for each ratelimiter type
+    // Consume the tokens for each ratelimiter type, and test against abuse bucket
     return Promise.all([
+        ratelimiterServer.abuse.hasToken(channelNamespace).catch(() => {return Promise.reject("abuse")}),
         ratelimiterServer.server.consume(serverNamespace).catch(() => {return Promise.reject("server")}),
-        ratelimiterServer.channel.consume(channelNamespace).catch(() => {return Promise.reject("channel")}),
+        ratelimiterServer.channel.consume(channelNamespace).catch(() => {return Promise.reject("channel")})
     ]).catch((scope) => {
         if (guild) {
+            if (scope == "abuse") return;
+
             let server = findServer(guild);
             if (server && server.chans["syslog"]) {
                 selfRateLimiters.syslogRatelimit.consume(serverNamespace + ":" + scope).then(() => {
@@ -448,16 +478,27 @@ exports.consumeRateLimitToken = function(message) {
                             );
                             break;
                         default:
-
+                            break;
                     }
                 }).catch(() => {
                     if (!syslogSilencedUserIDs.includes(user.id)) {
                         server.chans["syslog"].send(
                             "[RateLimit] User " + user +
-                            " has been blocked on scope \"" + scope + "\" too much; silencing alerts for a couple of minutes."
+                            " has been blocked on scope \"" + scope + "\" too much; silencing minor alerts for a couple of minutes."
                         );
                         syslogSilencedUserIDs.push(user.id);
                     }
+                });
+
+                // Consume tokens on abuse bucket
+                ratelimiterServer.abuse.consume(serverNamespace).catch(() => {
+                    server.chans["syslog"].send(
+                        "[RateLimit] User " + user +
+                        " keeps spamming the bot; blocked for " +
+                        banLists[guild.id].abuse.__options.ttl_millisec / 1000 +
+                        " seconds."
+                    );
+                    banLists[guild.id].abuse.consume(serverNamespace).catch(() => {});
                 });
             }
         }

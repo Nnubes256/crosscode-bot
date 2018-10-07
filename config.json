@@ -35,12 +35,17 @@
 
     "ratelimit-defaults": {
         "server": {
-            "threshold": 30,
+            "threshold": 20,
             "ttl": 60
         },
         "channel": {
             "threshold": 8,
             "ttl": 45
+        },
+        "abuse": {
+            "threshold": 5,
+            "ttl": 600,
+            "bantime": 600
         }
     },
 
@@ -81,6 +86,11 @@
                 "channel": {
                     "threshold": 8,
                     "ttl": 45
+                },
+                "abuse": {
+                    "threshold": 5,
+                    "ttl": 600,
+                    "bantime": 600
                 }
             }
         },
@@ -91,7 +101,7 @@
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
-                "syslog": "admin-watchtower"
+                "syslog": "ratelimit-test"
             },
             "roles": {
                 "pending" : [],
@@ -118,6 +128,11 @@
                 "channel": {
                     "threshold": 8,
                     "ttl": 45
+                },
+                "abuse": {
+                    "threshold": 5,
+                    "ttl": 600,
+                    "bantime": 600
                 }
             }
         },
@@ -144,6 +159,11 @@
                 "channel": {
                     "threshold": 8,
                     "ttl": 45
+                },
+                "abuse": {
+                    "threshold": 5,
+                    "ttl": 600,
+                    "bantime": 600
                 }
             }
         },
@@ -170,6 +190,11 @@
                 "channel": {
                     "threshold": 8,
                     "ttl": 45
+                },
+                "abuse": {
+                    "threshold": 5,
+                    "ttl": 600,
+                    "bantime": 600
                 }
             }
         }

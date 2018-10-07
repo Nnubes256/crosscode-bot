@@ -281,7 +281,9 @@ async function onMessage(msg) {
                 resolve(result);
             });
         }).then(function(res) {}, function(err) {
-            console.log(err);
+            if (err && err != "banlist") {
+                console.log(err);
+            }
         });
     }
 }
