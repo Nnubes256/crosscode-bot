@@ -76,8 +76,8 @@ module.exports = function(instance, util, config, console) {
           value : `Stream language: ${stream.language}\n[Join Stream](https://www.twitch.tv/${stream.user.login})`
         };
     }
-    setInterval(async function() {
 
+    util.setSafeInterval(async function() {
         var streamData = streams.getStreamers();
         if(streamData.size === 0)
           return;

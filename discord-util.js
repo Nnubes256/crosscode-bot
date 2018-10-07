@@ -6,10 +6,12 @@ let manageServs = []; // cache
 let roleBlacklist = [];
 let roleWhitelist = [];
 let roleAdmin = [];
+
 let rateLimiters = {};
 let selfRateLimiters = {};
 let syslogSilencedUserIDs = [];
 let rateLimiterDefaultConfig = {};
+let timerCounter = 0;
 
 exports.getAllEmotes = function(client) {
     //to minimize the possibility of spawning deleted emotes
@@ -330,6 +332,37 @@ function messageToURL(message) {
 
 exports.messageToURL = messageToURL;
 
+exports.setSafeInterval = function(fn, time) {
+    // Check for overflows
+    if (time > 2147483647) {
+        throw new Exception("Potential misbehaving timer detected!");
+    }
+
+    // Get the stack-trace up to here, for debugging purposes.
+    let error;
+
+    try {
+        throw new Error();
+    } catch(e) {
+        error = e.stack.replace(/^Error\n/g, "");
+    }
+
+    // Obtain a suitable name-space
+    let namespace = ++timerCounter;
+
+    let interval = setInterval(async () => {
+        try {
+            await selfRateLimiters.timersRatelimit.consume(namespace);
+        } catch(e) {
+            console.log("[ratelimit] ratelimited timer !!! declaration stack:");
+            console.log(error);
+            clearInterval(interval);
+            console.log("[ratelimit] timer disabled");
+        }
+        fn();
+    }, time);
+}
+
 exports.setRateLimiterDefaultConfig = function(rlConfig) {
     rateLimiterDefaultConfig = rlConfig;
 }
@@ -340,6 +373,13 @@ exports.setupSelfRateLimiters = function(config) {
     } else {
         console.log("[ratelimit] WARN: using default configuration for self: syslog RL alerts ratelimiter");
         selfRateLimiters.syslogRatelimit = new FastRateLimit(rateLimiterDefaultConfig);
+    }
+
+    if (config["timers-ratelimit"]) {
+        selfRateLimiters.timersRatelimit = new FastRateLimit(config["timers-ratelimit"]);
+    } else {
+        console.log("[ratelimit] WARN: using default configuration for self: timers ratelimiter");
+        selfRateLimiters.timersRatelimit = new FastRateLimit(rateLimiterDefaultConfig);
     }
 }
 

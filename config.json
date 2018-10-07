@@ -48,6 +48,10 @@
         "syslog-ratelimit-user": {
             "threshold": 2,
             "ttl": 240
+        },
+        "timers-ratelimit": {
+            "threshold": 5,
+            "ttl": 1
         }
     },
 
