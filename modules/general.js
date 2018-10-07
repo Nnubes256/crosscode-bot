@@ -68,14 +68,15 @@ module.exports = function(instance, util) {
             if (!emoji)
                 return;
 
-            // Now validate the char limit.
-            if ((height + emoji.length * (width * height)) > charcap) {
+            // Now create the rectangle
+            let army = ('\n' + emoji.repeat(width)).repeat(height);
+
+            // Then, validate the char limit.
+            if (army.length > charcap) {
                 msg.reply("This message may be too long!");
                 return;
             }
 
-            // Now create the rectangle and print it
-            let army = ('\n' + emoji.repeat(width)).repeat(height);
             msg.channel.send(`**You are being raided!${army}**`);
         },
         purge: function(msg, args) {
