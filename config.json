@@ -101,7 +101,7 @@
             "channels": {
                 "greet": "requests",
                 "info": "role-list",
-                "syslog": "ratelimit-test"
+                "syslog": "admin-watchtower"
             },
             "roles": {
                 "pending" : [],
