@@ -39,6 +39,7 @@ module.exports = function(client, util, config, console) {
         for (var i = 0; i < rolesToAdd_Ref.length; i++) {
             if (set.has(rolesToAdd_Ref[i].id)) {
                 rolesToAdd_Ref.splice(i, 1);
+                i--;
             }
         }
 
