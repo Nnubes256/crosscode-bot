@@ -56,6 +56,9 @@ module.exports = function(client, util, config, console) {
             var guild = msg.guild;
             var member = msg.member;
 
+            console.log("User " + msg.author.id +
+                " executed add role with arguments: [" + args + "]");
+
             // users were mentioned
             if (msg.mentions.members.size) {
                 if (!util.isFromAdmin(msg)) {
@@ -126,6 +129,9 @@ module.exports = function(client, util, config, console) {
         },
         rm: function takeRoles(msg, args) {
             var member = msg.member;
+
+            console.log("User " + msg.author.id +
+                " executed rm role with arguments: [" + args + "]");
 
             // users were mentioned
             if (msg.mentions.members.size) {
