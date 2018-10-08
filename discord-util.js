@@ -205,7 +205,7 @@ function findModServer(client, serverJson, console) {
                     }
                     for (let exRole_innerCheck of roleSet) {
                         var roleToAddID = exports.discObjFind(server.roles, exRole_innerCheck).id;
-                        if (roleToAddID != exRoleID) {
+                        if (roleToAddID !== exRoleID) {
                             retval.exclusiveSets[exRoleID].add(roleToAddID);
                         }
                     }

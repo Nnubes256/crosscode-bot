@@ -26,19 +26,24 @@ module.exports = function(client, util, config, console) {
             return element.name;
         });
     }
-    async function removeOtherRolesFromSet(user, rolesToAdd, roleMatched, set) {
-        let rolesToRemoveFromUser = user.roles.array().filter((role) => {
-            return set.has(role.id);
-        }).map((v) => v.id);
 
-        for (var i = 0; i < rolesToAdd.length; i++) {
-            if (set.has(rolesToAdd[i].id)) {
-                rolesToAdd.splice(i, 1);
+    /**
+    * Removes roles not pertaining to set `set` from Discord user `user`
+    * and role array **reference** `rolesToAdd_Ref`
+    * @param {Discord::GuildMember} user - User to remove roles from
+    * @param {Discord::Role[]} rolesToAdd_Ref - Reference to role array to
+    *                                           remove roles from
+    * @param {Set} set - Set that defines which roles will be removed
+    */
+    async function removeOtherRolesFromSet(user, rolesToAdd_Ref, set) {
+        for (var i = 0; i < rolesToAdd_Ref.length; i++) {
+            if (set.has(rolesToAdd_Ref[i].id)) {
+                rolesToAdd_Ref.splice(i, 1);
             }
         }
 
         for (var role of user.roles.array()) {
-            if (rolesToRemoveFromUser.includes(role.id)) {
+            if (set.has(role.id)) {
                 await user.removeRole(role);
             }
         }
@@ -93,7 +98,7 @@ module.exports = function(client, util, config, console) {
             let exclusiveSets = util.getRoles('exclusiveSets', guild);
             for (role of roles) {
                 if (exclusiveSets[role.id]) {
-                    await removeOtherRolesFromSet(member, roles, role.id, exclusiveSets[role.id]);
+                    await removeOtherRolesFromSet(member, roles, exclusiveSets[role.id]);
                 }
             }
 
