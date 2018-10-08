@@ -150,7 +150,7 @@ exports.discObjFind = function(obj, name) {
     return null;
 }
 function findModServer(client, serverJson, console) {
-    let retval = {id: "", chans: {}, pending: [], "auto-role": [], exclusiveSets: []};
+    let retval = {id: "", chans: {}, pending: [], "auto-role": [], exclusiveSets: {}};
     try {
         if (serverJson.name == "dm") {
             console.log("ERROR: \"dm\" is a reserved keyword for server names. Please use another regex instead.")
@@ -198,12 +198,18 @@ function findModServer(client, serverJson, console) {
 
         if (serverJson.roles.exclusivities) {
             for (let roleSet of serverJson.roles.exclusivities) {
-                var set = [];
                 for (let exRole of roleSet) {
-                    console.log(exRole);
-                    set.push(exports.discObjFind(server.roles, exRole).id);
+                    var exRoleID = exports.discObjFind(server.roles, exRole).id;
+                    if (!retval.exclusiveSets.hasOwnProperty(exRoleID)) {
+                        retval.exclusiveSets[exRoleID] = new Set();
+                    }
+                    for (let exRole_innerCheck of roleSet) {
+                        var roleToAddID = exports.discObjFind(server.roles, exRole_innerCheck).id;
+                        if (roleToAddID != exRoleID) {
+                            retval.exclusiveSets[exRoleID].add(roleToAddID);
+                        }
+                    }
                 }
-                retval.exclusiveSets.push(set);
             }
         }
 

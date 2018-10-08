@@ -27,28 +27,21 @@ module.exports = function(client, util, config, console) {
         });
     }
     async function removeOtherRolesFromSet(user, rolesToAdd, roleMatched, set) {
-        let ret = [];
-        for (var i = 0; i < set.length; i++) {
-            if (set[i] != roleMatched.id) {
-                for (var j = 0; j < rolesToAdd.length; j++) {
-                    if (set[i] == rolesToAdd[j].id) {
-                        rolesToAdd.splice(j, 1);
-                    }
-                }
-                for (role of user.roles.array()) {
-                    if (set[i] == role.id) {
-                        ret.push(role.id);
-                    }
-                }
+        let rolesToRemoveFromUser = user.roles.array().filter((role) => {
+            return set.has(role.id);
+        }).map((v) => v.id);
+
+        for (var i = 0; i < rolesToAdd.length; i++) {
+            if (set.has(rolesToAdd[i].id)) {
+                rolesToAdd.splice(i, 1);
             }
         }
-        await user.removeRoles(ret).then(async (c) => {
-            for (var role of c.roles.array()) {
-                if (ret.includes(role.id)) {
-                    await user.removeRole(role);
-                }
+
+        for (var role of user.roles.array()) {
+            if (rolesToRemoveFromUser.includes(role.id)) {
+                await user.removeRole(role);
             }
-        });
+        }
     }
     let commands = {
         countMembers: function countAmount(msg, args) {
@@ -91,22 +84,15 @@ module.exports = function(client, util, config, console) {
                     roles.push(role);
                 }
             }
-            console.log("algo start");
 
             // Find inputted roles within existing exclusivity sets,
             // and remove the other roles from each set from the users' roles.
-            // TODO improve algorithm so it doesn't have O(n^5) complexity
+            let exclusiveSets = util.getRoles('exclusiveSets', guild);
             for (role of roles) {
-                for (exclusiveSet of util.getRoles('exclusiveSets', guild)) {
-                    for (setRole of exclusiveSet) {
-                        if (role.id == setRole) {
-                            await removeOtherRolesFromSet(member, roles, role, exclusiveSet);
-                        }
-                    }
+                if (exclusiveSets[role.id]) {
+                    await removeOtherRolesFromSet(member, roles, role.id, exclusiveSets[role.id]);
                 }
             }
-
-            console.log("algo end");
 
             member.addRoles(roles).then(function(member) {
                 if (roles.length) {
