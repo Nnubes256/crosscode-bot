@@ -23,6 +23,30 @@ module.exports = function(client, util, config, console) {
            return element.name;
         });
     }
+    async function removeOtherRolesFromSet(user, rolesToAdd, roleMatched, set) {
+        let ret = [];
+        for (var i = 0; i < set.length; i++) {
+            if(set[i] != roleMatched.id) {
+                for (var j = 0; j < rolesToAdd.length; j++) {
+                    if (set[i] == rolesToAdd[j].id) {
+                        rolesToAdd.splice(j, 1);
+                    }
+                }
+                for (role of user.roles.array()) {
+                    if (set[i] == role.id) {
+                        ret.push(role.id);
+                    }
+                }
+            }
+        }
+        await user.removeRoles(ret).then(async (c) => {
+            for (var role of c.roles.array()) {
+                if (ret.includes(role.id)) {
+                    await user.removeRole(role);
+                }
+            }
+        });
+    }
     let commands = {
 		countMembers : function countAmount(msg, args) {
 			var guild = msg.guild;
@@ -35,7 +59,7 @@ module.exports = function(client, util, config, console) {
         add: async function giveRoles(msg, args) {
 			var guild = msg.guild;
 			var member = msg.member;
-			
+
 			// users were mentioned
 			if(msg.mentions.members.size) {
 				if(!util.isFromAdmin(msg)) {
@@ -53,6 +77,7 @@ module.exports = function(client, util, config, console) {
                 dupRoles = dupRoles.concat(roles.splice(index, 1));
               }
             }
+
             if(roles.length === 0) {
               msg.channel.send(`Could not add any new roles.`);
               return;
@@ -63,6 +88,23 @@ module.exports = function(client, util, config, console) {
 				  roles.push(role);
 			  }
             }
+            console.log("algo start");
+
+            // Find inputted roles within existing exclusivity sets,
+            // and remove the other roles from each set from the users' roles.
+            // TODO improve algorithm so it doesn't have O(n^5) complexity
+            for (role of roles) {
+                for (exclusiveSet of util.getRoles('exclusiveSets', guild)) {
+                    for (setRole of exclusiveSet) {
+                        if (role.id == setRole) {
+                            await removeOtherRolesFromSet(member, roles, role, exclusiveSet);
+                        }
+                    }
+                }
+            }
+
+            console.log("algo end");
+
             member.addRoles(roles).then(function(member) {
                 if(roles.length) {
                   var newRolesName = getRolesName(roles).listjoin('and');
@@ -95,7 +137,7 @@ module.exports = function(client, util, config, console) {
         },
         rm: function takeRoles(msg, args) {
 			var member = msg.member;
-		
+
 			// users were mentioned
 			if(msg.mentions.members.size) {
 				if(!util.isFromAdmin(msg)) {
